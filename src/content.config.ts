@@ -15,7 +15,7 @@ const blogSchema = z.object({
 });
 
 const learnCollection = defineCollection({
-	// Load Markdown and MDX files in the `src/content/blog/` directory.
+        // Load Markdown and MDX files in the `src/content/learn/` directory.
 	loader: glob({ base: "./src/content/learn", pattern: "**/*.{md,mdx}" }),
 	// Type-check frontmatter using a schema
 	schema: blogSchema,
