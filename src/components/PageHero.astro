@@ -1,0 +1,42 @@
+---
+export interface Props {
+  heroTagline?: string;
+  heroImage: string;
+  heroAlt: string;
+}
+
+// src/components/PageHero.astro
+const { heroTagline, heroImage, heroAlt } = Astro.props;
+---
+<style>
+	.hero-image {
+		width: 100%;
+		height: calc(100vh - var(--header-height));
+	}
+	.hero-image p {
+		position: relative;
+		top: 15%;
+		left: 30px;
+		width: 40%;
+		font-size: 3em;
+		line-height: 1.2;
+		color: var(--catppuccin-blue);
+		font-weight: 800;
+		text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+	}
+</style>
+
+<section
+  class="relative w-full flex"
+  style={`
+    height: calc(100vh - var(--header-height));
+    background-image: url('${heroImage}');
+    background-size: cover;
+    background-position: center;
+  `}
+  aria-label={heroAlt}
+>  
+	<div class="hero-image">
+		<p>{heroTagline}</p>
+  </div>
+</section>

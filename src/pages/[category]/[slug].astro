@@ -1,0 +1,87 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getReadingTime } from '../../lib/blog';
+import { render } from 'astro:content';
+import { ArrowLeft, Calendar, Clock } from '@lucide/astro';
+
+export async function getStaticPaths() {
+  const collections = await Promise.all([
+    getCollection('learn'),
+    getCollection('share'),
+    getCollection('journey')
+  ]);
+  
+  const posts = collections.flat();
+  
+  return posts.map((post) => ({
+    params: { 
+      category: post.collection, 
+      slug: post.filePath?.split('/').pop()?.replace('.md', '') || ''
+    },
+    props: { post },
+  }));
+}
+
+type Props = {
+  post: CollectionEntry<'learn' | 'share' | 'journey'>;
+};
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.summary}
+  heroImage={post.data.heroImage}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Back Navigation -->
+    <a 
+      href={`/${post.collection}`}
+      class="inline-flex items-center text-blue hover:text-blue mb-8"
+    >
+      <ArrowLeft size="16" />
+      Back to {post.collection}
+    </a>
+
+    <!-- Article Header -->
+    <header class="mb-8">
+      <div class="flex flex-wrap items-center gap-6 text-sm text-mauve mb-6">
+        <span class="flex items-center gap-2">
+          <Calendar size="16" />
+          {post.data.publishedDate.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          })}
+        </span>
+        <span class="flex items-center gap-2">
+          <Clock size="16" />
+          {readingTime}
+        </span>
+        <span class="bg-peach text-text px-3 py-1 rounded-full text-sm font-medium">
+          {post.collection}
+        </span>
+      </div>
+
+      {post.data.tags && post.data.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2">
+          {post.data.tags.map((tag) => (
+            <span class="bg-surface2 text-subtext0 px-3 py-1 rounded-full text-sm">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Article Content -->
+    <div class="prose prose-lg max-w-none">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+

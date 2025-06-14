@@ -1,0 +1,54 @@
+---
+const darkTheme = 'mocha';
+const lightTheme = 'latte';
+---
+
+<div class="relative w-16 h-8 bg-surface0 rounded-full transition-colors flex items-center justify-between px-1 text-lg" id="theme-toggle-wrapper">
+  <span class="z-10">🌞</span>
+  <span class="z-10">🌚</span>
+  <button
+    id="theme-toggle"
+    aria-label="Toggle theme"
+    class="absolute top-0 left-0 w-8 h-8 bg-surface1 rounded-full shadow-md transition-all duration-300 transform"
+  ></button>
+</div>
+
+<script type="module" client:load>
+  const themes = {
+    dark: { name: 'mocha', icon: '🌚', pos: 'translate-x-8' },
+    light: { name: 'latte', icon: '🌞', pos: 'translate-x-0' }
+  };
+
+  const toggleBtn = document.getElementById('theme-toggle');
+  const wrapper = document.getElementById('theme-toggle-wrapper');
+
+  const setTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme.name);
+    localStorage.setItem('theme', theme.name);
+
+    toggleBtn.classList.remove(...Object.values(themes).map(t => t.pos));
+    toggleBtn.classList.add(theme.pos);
+
+    // Lazy load theme CSS
+    if (!document.getElementById(`theme-css-${theme.name}`)) {
+      const link = document.createElement('link');
+      link.id = `theme-css-${theme.name}`;
+      link.rel = 'stylesheet';
+      link.href = `/styles/catppuccin-${theme.name}.css`;
+      document.head.appendChild(link);
+    }
+  };
+
+  // Initial theme setup
+  const saved = localStorage.getItem('theme') || 'mocha';
+  const initial = Object.values(themes).find(t => t.name === saved) || themes.dark;
+  setTheme(initial);
+
+  // Click toggle
+  toggleBtn.addEventListener('click', () => {
+    const newTheme = document.documentElement.getAttribute('data-theme') === 'mocha'
+      ? themes.light
+      : themes.dark;
+    setTheme(newTheme);
+  });
+</script>

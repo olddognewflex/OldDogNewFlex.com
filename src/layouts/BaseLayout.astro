@@ -1,0 +1,86 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import PageHero from '../components/PageHero.astro';
+
+import "../styles/global.css";
+
+// src/layouts/BaseLayout.astro
+export interface Props {
+  title: string;
+  description?: string;
+  canonicalURL?: string;
+  heroImage?: string;
+  heroTagline?: string;
+  heroAlt?: string;
+}
+
+const { 
+	title,
+	description = "Proving it's never too late to refactor your comfort zone",
+	canonicalURL,
+	heroImage, 
+	heroTagline,
+	heroAlt = "An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones",
+} = Astro.props;
+
+const headerHeight = '100px'; 
+---
+
+<!DOCTYPE html>
+<html data-theme="mocha" lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: calc(100%);
+				max-width: 100%;
+				margin: auto;
+			}
+			.prose {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				color: var(--catppuccin-text);
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+			}
+			.date {
+				margin-bottom: 0.5em;
+				color: var(--catppuccin-blue);
+			}
+			.last-updated-on {
+				font-style: italic;
+			}
+		</style>
+	</head>
+  <body>
+		<Header />
+			{heroImage && (
+			<PageHero heroImage={heroImage} heroAlt={heroAlt} heroTagline={heroTagline} />
+			)}
+    	<main class="flex-1 justify-center">
+      	<slot />
+    	</main>
+
+    <footer class="bg-base text-text py-12">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+					<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="mx-auto"/>
+          <p class="text-blue text-md mb-4">Proving it's never too late to refactor your comfort zone</p>
+          <p class="text-text text-sm">© 2024 Old Dog, New Flex. Built with Astro and TypeScript.</p>
+        </div>
+      </div>
+    </footer>
+		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="absolute top-5 left-5 w-65"/>
+  </body>
+</html>
+

@@ -1,0 +1,71 @@
+---
+// src/pages/[category]/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogCard from '../../components/blog/BlogCard.astro';
+import { getAllPosts } from '../../lib/blog';
+
+export async function getStaticPaths() {
+  return [
+    { params: { category: 'learn' } },
+    { params: { category: 'share' } },
+    { params: { category: 'journey' } }
+  ];
+}
+
+const { category } = Astro.params;
+const posts = await getAllPosts(category as 'learn' | 'share' | 'journey');
+
+const categoryInfo = {
+  learn: {
+    title: 'Learning & Technical Deep Dives',
+    description: 'Exploring new technologies and sharing technical insights from the trenches.',
+    icon: '🎓',
+  },
+  share: {
+    title: 'Knowledge Sharing & Mentorship',  
+    description: 'Lessons learned from 30 years in software development, shared with the community.',
+    icon: '🤝',
+  },
+  journey: {
+    title: 'Personal Learning Journey',
+    description: 'The real stories behind learning new things at any stage of your career.',
+    icon: '🚀',
+  },
+};
+
+const info = categoryInfo[category as keyof typeof categoryInfo];
+---
+
+<BaseLayout title={`${info.title} | Old Dog, New Flex`} description={info.description}>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Category Header -->
+    <header class="text-center mb-12">
+      <div class="text-6xl mb-4">{info.icon}</div>
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+        {info.title}
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+        {info.description}
+      </p>
+    </header>
+
+    <!-- Posts Grid -->
+    {posts.length > 0 ? (
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post) => (
+          <BlogCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">📝</div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+          No posts yet in this category
+        </h2>
+        <p class="text-gray-600">
+          Check back soon for new content in {info.title.toLowerCase()}!
+        </p>
+      </div>
+    )}
+  </div>
+</BaseLayout>
