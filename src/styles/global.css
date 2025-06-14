@@ -1,38 +1,132 @@
 @import "tailwindcss";
 
 @plugin '@tailwindcss/typography';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
+:root {
   --header-height: 80px;
-  --catppuccin-rosewater: #f5e0dc;
-  --catppuccin-flamingo: #f2cdcd;
-  --catppuccin-pink: #f5c2e7;
-  --catppuccin-mauve: #cba6f7;
-  --catppuccin-red: #f38ba8;
-  --catppuccin-maroon: #eba0ac;
-  --catppuccin-peach: #fab387;
-  --catppuccin-yellow: #f9e2af;
-  --catppuccin-green: #a6e3a1;
-  --catppuccin-teal: #94e2d5;
-  --catppuccin-sky: #89dceb;
-  --catppuccin-sapphire: #74c7ec;
-  --catppuccin-blue: #89b4fa;
-  --catppuccin-lavender: #b4befe;
-  --catppuccin-text: #cdd6f4;
-  --catppuccin-subtext1: #bac2de;
-  --catppuccin-subtext0: #a6adc8;
-  --catppuccin-overlay2: #9399b2;
-  --catppuccin-overlay1: #7f849c;
-  --catppuccin-overlay0: #6c7086;
-  --catppuccin-surface2: #585b70;
-  --catppuccin-surface1: #45475a;
-  --catppuccin-surface0: #313244;
-  --catppuccin-base: #1e1e2e;
-  --catppuccin-crust: #11111b;
-  --catppuccin-mantle: #181825;
-  --box-shadow: 0 2px 6px var(--catppuccin-overlay0),
-    0 8px 24px var(--catppuccin-overlay0),
-    0 16px 32px var(--catppuccin-overlay0);
+}
+
+/* Latte */
+:root[data-theme="latte"] {
+  --catppuccin-rosewater: oklch(92.6% 0.13 29.5);
+  --catppuccin-flamingo: oklch(85.6% 0.13 29.5);
+  --catppuccin-pink: oklch(87.7% 0.19 328.2);
+  --catppuccin-mauve: oklch(62.7% 0.27 295.2);
+  --catppuccin-red: oklch(62.2% 0.23 29.5);
+  --catppuccin-maroon: oklch(72.2% 0.15 27.7);
+  --catppuccin-peach: oklch(87.7% 0.22 56.2);
+  --catppuccin-yellow: oklch(90.7% 0.19 99.6);
+  --catppuccin-green: oklch(77.2% 0.19 142.2);
+  --catppuccin-teal: oklch(74.2% 0.15 190.2);
+  --catppuccin-sky: oklch(76.2% 0.19 210.2);
+  --catppuccin-sapphire: oklch(62.7% 0.23 230.2);
+  --catppuccin-blue: oklch(74.2% 0.23 250.2);
+  --catppuccin-lavender: oklch(81.2% 0.17 280.2);
+  --catppuccin-text: oklch(44.2% 0.04 270.2);
+  --catppuccin-subtext1: oklch(52.2% 0.06 270.2);
+  --catppuccin-subtext0: oklch(60.2% 0.06 270.2);
+  --catppuccin-overlay2: oklch(68.2% 0.06 270.2);
+  --catppuccin-overlay1: oklch(76.2% 0.06 270.2);
+  --catppuccin-overlay0: oklch(84.2% 0.06 270.2);
+  --catppuccin-surface2: oklch(92.2% 0.06 270.2);
+  --catppuccin-surface1: oklch(96.2% 0.06 270.2);
+  --catppuccin-surface0: oklch(100% 0.06 270.2);
+  --catppuccin-base: oklch(98.2% 0.06 270.2);
+  --catppuccin-mantle: oklch(96.2% 0.060.2);
+  --catppuccin-crust: oklch(94.2% 0.06 270.2);
+}
+
+/* Frappé */
+:root[data-theme=""] {
+  --catppuccin-rosewater: oklch(91.2% 0.11 29.5);
+  --catppuccin-flamingo: oklch(85.2% 0.11 29.5);
+  --catppuccin-pink: oklch(87.2% 0.16 328.2);
+  --catppuccin-mauve: oklch(74.2% 0.19 295.2);
+  --catppuccin-red: oklch(74.2% 0.16 29.5);
+  --catppuccin-maroon: oklch(80.2% 0.11 27.7);
+  --catppuccin-peach: oklch(87.2% 0.17 56.2);
+  --catppuccin-yellow: oklch(90.2% 0.15 99.6);
+  --catppuccin-green: oklch(82.2% 0.15 142.2);
+  --catppuccin-teal: oklch(80.2% 0.12 190.2);
+  --catppuccin-sky: oklch(82.2% 0.15 210.2);
+  --catppuccin-sapphire: oklch(74.2% 0.19 230.2);
+  --catppuccin-blue: oklch(80.2% 0.19 250.2);
+  --catppuccin-lavender: oklch(86.2% 0.14 280.2);
+  --catppuccin-text: oklch(92.2% 0.03 270.2);
+  --catppuccin-subtext1: oklch(88.2% 0.04 270.2);
+  --catppuccin-subtext0: oklch(84.2% 0.04 270.2);
+  --catppuccin-overlay2: oklch(80.2% 0.04 270.2);
+  --catppuccin-overlay1: oklch(76.2% 0.04 270.2);
+  --catppuccin-overlay0: oklch(72.2% 0.04 270.2);
+  --catppuccin-surface2: oklch(68.2% 0.04 270.2);
+  --catppuccin-surface1: oklch(64.2% 0.04 270.2);
+  --catppuccin-surface0: oklch(60.2% 0.04 270.2);
+  --catppuccin-base: oklch(56.2% 0.04 270.2);
+  --catppuccin-mantle: oklch(52.2% 0.04 270.2);
+  --catppuccin-crust: oklch(48.2% 0.04 270.2);
+}
+
+/* Macchiato */
+:root[data-theme="macchiato"] {
+  --catppuccin-rosewater: oklch(92.2% 0.12 29.5);
+  --catppuccin-flamingo: oklch(86.2% 0.12 29.5);
+  --catppuccin-pink: oklch(88.2% 0.18 328.2);
+  --catppuccin-mauve: oklch(76.2% 0.22 295.2);
+  --catppuccin-red: oklch(76.2% 0.19 29.5);
+  --catppuccin-maroon: oklch(82.2% 0.13 27.7);
+  --catppuccin-peach: oklch(88.2% 0.18 56.2);
+  --catppuccin-yellow: oklch(91.2% 0.16 99.6);
+  --catppuccin-green: oklch(83.2% 0.16 142.2);
+  --catppuccin-teal: oklch(81.2% 0.13 190.2);
+  --catppuccin-sky: oklch(83.2% 0.16 210.2);
+  --catppuccin-sapphire: oklch(76.2% 0.22 230.2);
+  --catppuccin-blue: oklch(82.2% 0.22 250.2);
+  --catppuccin-lavender: oklch(87.2% 0.16 280.2);
+  --catppuccin-text: oklch(93.2% 0.03 270.2);
+  --catppuccin-subtext1: oklch(89.2% 0.04 270.2);
+  --catppuccin-subtext0: oklch(85.2% 0.04 270.2);
+  --catppuccin-overlay2: oklch(81.2% 0.04 270.2);
+  --catppuccin-overlay1: oklch(77.2% 0.04 270.2);
+  --catppuccin-overlay0: oklch(73.2% 0.04 270.2);
+  --catppuccin-surface2: oklch(69.2% 0.04 270.2);
+  --catppuccin-surface1: oklch(65.2% 0.04 270.2);
+  --catppuccin-surface0: oklch(61.2% 0.04 270.2);
+  --catppuccin-base: oklch(57.2% 0.04 270.2);
+  --catppuccin-mantle: oklch(53.2% 0.04 270.2);
+  --catppuccin-crust: oklch(49.2% 0.04 270.2);
+}
+
+/* Mocha */
+:root[data-theme="mocha"] {
+  --catppuccin-rosewater: oklch(0.9226 0.0238 30.49);
+  --catppuccin-flamingo: oklch(0.8797 0.0418 17.98);
+  --catppuccin-pink: oklch(0.87 0.0752 336.3);
+  --catppuccin-mauve: oklch(0.7871 0.1187 304.77);
+  --catppuccin-red: oklch(0.7556 0.1297 2.76);
+  --catppuccin-maroon: oklch(0.7556 0.1297 2.76);
+  --catppuccin-peach: oklch(0.8237 0.1015 52.63);
+  --catppuccin-yellow: oklch(0.8577 0.1092 142.72);
+  --catppuccin-green: oklch(84.2% 0.17 142.2);
+  --catppuccin-teal: oklch(0.8585 0.0792 182.75);
+  --catppuccin-sky: oklch(0.8467 0.0833 210.25);
+  --catppuccin-sapphire: oklch(0.7906 0.0965 228.65);
+  --catppuccin-blue: oklch(0.7664 0.1113 259.88);
+  --catppuccin-lavender: oklch(0.8166 0.091 277.31);
+  --catppuccin-text: oklch(0.8787 0.0426 272.28);
+  --catppuccin-subtext1: oklch(0.8168 0.0403 272.86);
+  --catppuccin-subtext0: oklch(0.751 0.0396 273.93);
+  --catppuccin-overlay2: oklch(0.6865 0.0374 274.73);
+  --catppuccin-overlay1: oklch(0.6176 0.0367 276);
+  --catppuccin-overlay0: oklch(0.5497 0.0345 277.1);
+  --catppuccin-surface2: oklch(0.4765 0.034 278.64);
+  --catppuccin-surface1: oklch(0.4037 0.032 280.15);
+  --catppuccin-surface0: oklch(0.324 0.0319 281.98);
+  --catppuccin-base: oklch(0.2429 0.0304 283.91);
+  --catppuccin-mantle: oklch(0.2155 0.0254 284.06);
+  --catppuccin-crust: oklch(0.1828 0.0204 284.2);
 }
 
 @font-face {
@@ -85,41 +179,46 @@ h4,
 h5,
 h6 {
   margin: 0 0 0.5rem 0;
-  color: var(--catppuccin-blue);
   line-height: 1.2;
 }
 
 h1 {
+  color: var(--catppuccin-blue);
   font-size: 3.052em;
 }
 
 h2 {
+  color: var(--catppuccin-sapphire);
   font-size: 2.441em;
 }
 
 h3 {
+  color: var(--catppuccin-sky);
   font-size: 1.953em;
 }
 
 h4 {
+  color: var(--catppuccin-lavender);
   font-size: 1.563em;
 }
 
 h5 {
+  color: var(--catppuccin-flamingo);
   font-size: 1.25em;
 }
 
 strong,
 b {
   font-weight: 700;
+  color: var(--catppuccin-mauve);
 }
 
 a {
-  color: var(--accent);
+  color: var(--catppuccin-mauve);
 }
 
 a:hover {
-  color: var(--accent);
+  color: var(--catppuccin-mauve);
 }
 
 p {
@@ -128,6 +227,38 @@ p {
 
 .prose p {
   margin-bottom: 2em;
+  color: var(--catppuccin-text);
+}
+
+.prose ul {
+  margin-bottom: 1em;
+  color: var(--catppuccin-text);
+}
+
+.prose ol {
+  margin-bottom: 1em;
+  color: var(--catppuccin-text);
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+  color: var(--catppuccin-text);
+}
+
+.collection-pill {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  border-radius: 9999px;
+  background-color: var(--catppuccin-peach);
+  color: var(--catppuccin-surface0);
+}
+
+.tag-pill {
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  border-radius: 9999px;
+  background-color: var(--catppuccin-teal);
+  color: var(--catppuccin-surface0);
 }
 
 textarea {
@@ -165,7 +296,7 @@ pre>code {
 }
 
 blockquote {
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid var(--catppuccin-mauve);
   padding: 0 0 0 20px;
   margin: 0px;
   font-size: 1.333em;
@@ -174,6 +305,16 @@ blockquote {
 hr {
   border: none;
   border-top: 1px solid var(--catppuccin-overlay2);
+}
+
+.emphasized-point {
+  color: var(--catppuccin-mauve);
+  font-weight: 700;
+}
+
+.emphasized-sub {
+  color: var(--catppuccin-teal);
+  font-weight: 500;
 }
 
 .sr-only {

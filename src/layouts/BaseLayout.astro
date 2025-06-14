@@ -60,6 +60,9 @@ const headerHeight = '100px';
 			.last-updated-on {
 				font-style: italic;
 			}
+			.tagline {
+				color: var(--catppuccin-blue);
+			}
 		</style>
 	</head>
   <body>
@@ -71,16 +74,16 @@ const headerHeight = '100px';
       	<slot />
     	</main>
 
-    <footer class="bg-base text-text py-12">
+    <footer class="bg-base text-blue py-12">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center">
 					<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="mx-auto"/>
-          <p class="text-blue text-md mb-4">Proving it's never too late to refactor your comfort zone</p>
+          <p class="tagline text-lg mb-4">Proving it's never too late to refactor your comfort zone</p>
           <p class="text-text text-sm">© 2024 Old Dog, New Flex. Built with Astro and TypeScript.</p>
         </div>
       </div>
     </footer>
-		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="absolute top-5 left-5 w-65"/>
+		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="absolute top-6 left-5 w-65"/>
   </body>
 </html>
 

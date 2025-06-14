@@ -41,7 +41,7 @@ const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
     <!-- Back Navigation -->
     <a 
       href={`/${post.collection}`}
-      class="inline-flex items-center text-blue hover:text-blue mb-8"
+      class="inline-flex items-center text-text hover:text-blue mb-8"
     >
       <ArrowLeft size="16" />
       Back to {post.collection}
@@ -49,7 +49,7 @@ const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
 
     <!-- Article Header -->
     <header class="mb-8">
-      <div class="flex flex-wrap items-center gap-6 text-sm text-mauve mb-6">
+      <div class="flex flex-wrap items-center gap-6 text-sm mb-6">
         <span class="flex items-center gap-2">
           <Calendar size="16" />
           {post.data.publishedDate.toLocaleDateString('en-US', { 
@@ -62,7 +62,7 @@ const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
           <Clock size="16" />
           {readingTime}
         </span>
-        <span class="bg-peach text-text px-3 py-1 rounded-full text-sm font-medium">
+        <span class="collection-pill text-text px-3 py-1 rounded-full text-sm font-medium">
           {post.collection}
         </span>
       </div>
@@ -70,7 +70,7 @@ const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
       {post.data.tags && post.data.tags.length > 0 && (
         <div class="flex flex-wrap gap-2">
           {post.data.tags.map((tag) => (
-            <span class="bg-surface2 text-subtext0 px-3 py-1 rounded-full text-sm">
+            <span class="tag-pill text-text px-3 py-1 rounded-full text-sm">
               #{tag}
             </span>
           ))}
