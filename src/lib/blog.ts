@@ -35,7 +35,7 @@ export function getReadingTime(content: string): string {
 
 export function getPostUrl(post: BlogPost): string {
   const category = post.collection;
-  return `/${category}/${
-    post.filePath?.split("/").pop()?.replace(".md", "") || ""
-  }`;
+  const filename = post.filePath?.split("/").pop() || "";
+  const slug = filename.replace(/\.(md|mdx)$/, "");
+  return `/${category}/${slug}`;
 }
