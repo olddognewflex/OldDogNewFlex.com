@@ -3,4 +3,4 @@
 
 export const SITE_TITLE = "Old Dog New Flex";
 export const SITE_DESCRIPTION =
-  "Proving its not to late to refactor your comfort zone!";
+  "Proving it’s not too late to refactor your comfort zone!";
