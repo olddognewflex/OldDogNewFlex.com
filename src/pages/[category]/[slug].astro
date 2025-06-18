@@ -1,6 +1,6 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogPost from '../../layouts/BlogPost.astro';
 import { getReadingTime } from '../../lib/blog';
 import { render } from 'astro:content';
 import { ArrowLeft, Calendar, Clock } from '@lucide/astro';
@@ -32,9 +32,11 @@ const { Content } = await render(post);
 const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
 ---
 
-<BaseLayout
+<BlogPost
   title={post.data.title}
-  description={post.data.summary}
+  summary={post.data.summary}
+  publishedDate={post.data.publishedDate}
+  updatedDate={post.data.updatedDate}
   heroImage={post.data.heroImage}
 >
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

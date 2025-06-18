@@ -6,7 +6,8 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://olddognewflex.dev",
+  site: "https://olddognewflex.com",
+  output: "static",
 
   integrations: [
     mdx(),

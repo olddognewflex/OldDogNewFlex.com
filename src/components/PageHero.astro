@@ -1,12 +1,12 @@
 ---
 export interface Props {
-  heroTagline?: string;
   heroImage: string;
   heroAlt: string;
+  heroTaglineElement?: any;
 }
 
 // src/components/PageHero.astro
-const { heroTagline, heroImage, heroAlt } = Astro.props;
+const { heroImage, heroAlt, heroTaglineElement } = Astro.props;
 ---
 <style>
 	.hero-image {
@@ -14,10 +14,6 @@ const { heroTagline, heroImage, heroAlt } = Astro.props;
 		height: calc(100vh - var(--header-height));
 	}
 	.hero-image p {
-		position: relative;
-		top: 15%;
-		left: 30px;
-		width: 40%;
 		font-size: 3em;
 		line-height: 1.2;
 		color: var(--catppuccin-blue);
@@ -36,7 +32,5 @@ const { heroTagline, heroImage, heroAlt } = Astro.props;
   `}
   aria-label={heroAlt}
 >  
-	<div class="hero-image">
-		<p>{heroTagline}</p>
-  </div>
+	<slot name="heroTaglineElement">
 </section>

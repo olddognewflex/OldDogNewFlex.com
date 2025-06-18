@@ -11,8 +11,8 @@ export interface Props {
   description?: string;
   canonicalURL?: string;
   heroImage?: string;
-  heroTagline?: string;
   heroAlt?: string;
+  heroTaglineElement?: any;
 }
 
 const { 
@@ -20,7 +20,7 @@ const {
 	description = "Proving it's never too late to refactor your comfort zone",
 	canonicalURL,
 	heroImage, 
-	heroTagline,
+	heroTaglineElement,
 	heroAlt = "An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones",
 } = Astro.props;
 
@@ -67,12 +67,14 @@ const headerHeight = '100px';
 	</head>
   <body>
 		<Header />
-			{heroImage && (
-			<PageHero heroImage={heroImage} heroAlt={heroAlt} heroTagline={heroTagline} />
-			)}
-    	<main class="flex-1 justify-center">
-      	<slot />
-    	</main>
+		{heroImage && 
+			<PageHero heroImage={heroImage} heroAlt={heroAlt}>
+				<slot name="heroTaglineElement">
+			</PageHero> 
+		}
+    <main class="flex-1 justify-center">
+      <slot />
+    </main>
 
     <footer class="bg-base text-blue py-12">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -83,7 +85,7 @@ const headerHeight = '100px';
         </div>
       </div>
     </footer>
-		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="absolute top-6 left-5 w-65"/>
-  </body>
+		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="absolute top-5 left-5 w-65"/>
+		</body>
 </html>
 

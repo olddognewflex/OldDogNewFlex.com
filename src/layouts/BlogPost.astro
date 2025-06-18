@@ -9,26 +9,46 @@ const { title, summary, publishedDate, updatedDate, heroImage } = Astro.props;
 ---
 
 		<style>
+			main {
+				width: calc(100%);
+				max-width: 100%;
+				margin: auto;
+			}
+			.prose {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				color: var(--catppuccin-text);
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+			}
+			.date {
+				margin: auto;
+				margin-bottom: 0.5em;
+				color: var(--catppuccin-blue);
+			}
+			.last-updated-on {
+				font-style: italic;
+			}
+			.tagline {
+				color: var(--catppuccin-blue);
+			}
 			.hero-image {
 				width: 100%;
-				height: 0;
-				padding-top: 50%;
 				position: relative;
 			}
 			.hero-image img {
-				position: absolute;
-				top: 0;
-				left: 0;
 				width: 100%;
-				height: 100%;
-				object-fit: cover;
-			}
-			.prose {
-				max-width: 800px;
-				margin: auto;
-			}
-			.title {
-				text-align: center;
+				height: auto;
+				border-radius: 0.5em;
 			}
 			.date {
 				color: var(--catppuccin-blue);
@@ -38,13 +58,9 @@ const { title, summary, publishedDate, updatedDate, heroImage } = Astro.props;
 			}
 		</style>
 
-<BaseLayout title={title} description={summary} heroImage={heroImage}>
+<BaseLayout title={title} description={summary}>
 			<article>
-				<div class="hero-image w-full h-0 pt-[50%] relative">
-					{heroImage && <img src={heroImage} alt={title} />}
-				</div>
 				<div class="prose">
-					<div class="title">
 						<div class="date">
 							<FormattedDate date={publishedDate} />
 							{
@@ -55,11 +71,17 @@ const { title, summary, publishedDate, updatedDate, heroImage } = Astro.props;
 								)
 							}
 						</div>
+						{!heroImage && 
+					<div class="title">
 						<h1>{title}</h1>
+</div>
+						}
+						<div class="hero-image relative">
+							{heroImage && <img src={heroImage} alt={title} />}
+						</div>
 						<hr />
 					</div>
 					<slot />
-				</div>
 			</article>
 </BaseLayout>
 
