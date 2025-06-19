@@ -1,5 +1,7 @@
 # Old Dog New Flex
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/SITE_ID/deploy-status)](https://app.netlify.com/sites/SITE_NAME/deploys)
+
 Proving it’s never too late to refactor your comfort zone!
 
 This is a static blog site built with [Astro](https://astro.build) featuring MDX content, React components, and Tailwind CSS with the Catppuccin theme palette.
