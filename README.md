@@ -1,6 +1,6 @@
 # Old Dog New Flex
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/SITE_ID/deploy-status)](https://app.netlify.com/sites/SITE_NAME/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d96e6dc3-ee06-4297-a109-df9df0305576/deploy-status)](https://app.netlify.com/projects/old-dog-new-flex/deploys)
 
 Proving it’s never too late to refactor your comfort zone!
 
