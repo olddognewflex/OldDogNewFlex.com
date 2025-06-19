@@ -21,67 +21,32 @@ const { title, summary, publishedDate, updatedDate, heroImage } = Astro.props;
 				padding: 1em;
 				color: var(--catppuccin-text);
 			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin: auto;
-				margin-bottom: 0.5em;
-				color: var(--catppuccin-blue);
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-			.tagline {
-				color: var(--catppuccin-blue);
-			}
-			.hero-image {
-				width: 100%;
-				position: relative;
-			}
-			.hero-image img {
-				width: 100%;
-				height: auto;
-				border-radius: 0.5em;
-			}
-			.date {
-				color: var(--catppuccin-blue);
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
 		</style>
 
 <BaseLayout title={title} description={summary}>
-			<article>
-				<div class="prose">
-						<div class="date">
-							<FormattedDate date={publishedDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
+	<article>
+		<div class="prose">
+			<div class="text-(--catppuccin-flamingo) text-center">
+				<FormattedDate date={publishedDate} />
+				{
+					updatedDate && (
+						<div class="last-updated-on">
+							Last updated on <FormattedDate date={updatedDate} />
 						</div>
-						{!heroImage && 
-					<div class="title">
-						<h1>{title}</h1>
-</div>
-						}
-						<div class="hero-image relative">
-							{heroImage && <img src={heroImage} alt={title} />}
-						</div>
-						<hr />
-					</div>
-					<slot />
-			</article>
+					)
+				}
+			</div>
+			{!heroImage && 
+			<div class="m-0 margin-bottom-1 text-center">
+				<h1>{title}</h1>
+			</div>
+			}
+			<div class="hero-image relative">
+				{heroImage && <img src={heroImage} alt={title} />}
+			</div>
+			<hr />
+		</div>
+		<slot />
+	</article>
 </BaseLayout>
 

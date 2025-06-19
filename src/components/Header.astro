@@ -5,17 +5,16 @@ import ThemePills from './ThemePills.astro';
 
 <header>
 	<nav>
-		<div class="w-32"></div>
-		<div class="internal-links">
+		<div class="w-1/2 md:w-32"></div>
+  
+		<div class="internal-links hidden md:flex gap-4">
 			<HeaderLink href="/">Home</HeaderLink>
-			<!-- TODO: Add links to other sections -->
 			<HeaderLink href="/learn">Learn</HeaderLink>
 			<HeaderLink href="/journey">Journey</HeaderLink>
 			<HeaderLink href="/share">Share</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
 		</div>
-		<!-- TODO: Update the links below to point to the correct social media accounts -->
-		<div class="social-links">
+		<div class="social-links hidden md:flex md:gap-4">
 			<a href="https://techhub.social/@olddognewflex" target="_blank">
 				<span class="sr-only">Follow Old Dog, New Flex on Mastodon</span>
 				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
@@ -32,6 +31,51 @@ import ThemePills from './ThemePills.astro';
 				</svg>
 			</a>
 		</div>
+		<!-- Hamburger Icon -->
+  	<button
+    	class="focus:outline-none top-10 right-10 xs:top-20 xs:right-20 md:hidden"
+    	x-data="{ open: false }"
+    	@click="open = !open"
+    	aria-label="Toggle Menu"
+  	>
+    	<svg
+      	x-show="!open"
+      	xmlns="http://www.w3.org/2000/svg"
+      	class="w-12 h-12"
+      	fill="none"
+      	viewBox="0 0 24 24"
+      	stroke="currentColor"
+    	>
+      	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        	d="M4 6h16M4 12h16M4 18h16" />
+    	</svg>
+
+    	<svg
+      	x-show="open"
+      	xmlns="http://www.w3.org/2000/svg"
+      	class="w-12 h-12"
+      	fill="none"
+      	viewBox="0 0 24 24"
+      	stroke="currentColor"
+    	>
+      	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        	d="M6 18L18 6M6 6l12 12" />
+    	</svg>
+
+    	<!-- Slideout Menu -->
+    	<div
+      	x-show="open"
+      	x-transition
+      		class="fixed top-12 right-0 w-3/4 h-full text-white p-6 sm:hidden z-50"
+      		style="background-color: var(--catppuccin-base); border-left: 2px solid var(--catppuccin-mauve);"
+    	>
+				<HeaderLink href="/" class="block w-9/10 py-2 border-b border-mantle">Home</HeaderLink>
+				<HeaderLink href="/learn" class="block w-9/10 py-2 border-b border-mantle">Learn</HeaderLink>
+				<HeaderLink href="/journey" class="block w-9/10 py-2 border-b border-mantle">Journey</HeaderLink>
+				<HeaderLink href="/share" class="block w-9/10 py-2 border-b border-mantle">Share</HeaderLink>
+				<HeaderLink href="/about" class="block w-9/10 py-2">About</HeaderLink>
+			</div>
+  	</button>
 	</nav>
 </header>
 <style>
@@ -65,14 +109,5 @@ import ThemePills from './ThemePills.astro';
 	nav a.active {
 		text-decoration: none;
 		border-bottom-color: var(--catppuccin-teal);
-	}
-	.social-links,
-	.social-links a {
-		display: flex;
-	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
 	}
 </style>

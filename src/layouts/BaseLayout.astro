@@ -31,6 +31,7 @@ const headerHeight = '100px';
 <html data-theme="mocha" lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
+		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 		<style>
 			main {
 				width: calc(100%);
@@ -44,22 +45,6 @@ const headerHeight = '100px';
 				padding: 1em;
 				color: var(--catppuccin-text);
 			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: var(--catppuccin-blue);
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
 			.tagline {
 				color: var(--catppuccin-blue);
 			}
@@ -68,9 +53,7 @@ const headerHeight = '100px';
   <body>
 		<Header />
 		{heroImage && 
-			<PageHero heroImage={heroImage} heroAlt={heroAlt}>
-				<slot name="heroTaglineElement">
-			</PageHero> 
+		<PageHero heroImage={heroImage} heroAlt={heroAlt} />
 		}
     <main class="flex-1 justify-center">
       <slot />
@@ -85,7 +68,7 @@ const headerHeight = '100px';
         </div>
       </div>
     </footer>
-		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="absolute top-5 left-5 w-65"/>
+		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="absolute top-5 left-5 md:w-65"/>
 		</body>
 </html>
 
