@@ -57,15 +57,18 @@ npm run test
 │   ├── pages/              # Astro pages and dynamic routes
 │   ├── layouts/            # Layout components (BaseLayout, BlogPost)
 │   ├── components/         # Reusable UI components (Header, Footer, ThemePills, etc.)
+│   ├── middleware/         # Astro middleware (cookies, auth guards)
 │   ├── styles/             # Tailwind directives and global CSS (Catppuccin variables)
 │   └── utils/              # Utility modules (theme list)
-├── public/                 # Static assets (images, fonts, favicon)
+├── functions/              # Serverless functions
+├── scripts/                # Dev tooling or seed data
+├── public/                 # Static assets (images, fonts, favicon)k
 └── tests/                  # Vitest test suite
 ```
 
 ## Content & Routing
 
-- **Content Collections:** Defined in `src/content.config.ts` using Astro’s Content Collections API.  Supports `learn`, `share`, and `journey` categories.
+- **Content Collections:** Defined in `src/content.config.ts` using Astro’s Content Collections API. Supports `learn`, `share`, and `journey` categories.
 - **Adding a Post:** Place a `.md` or `.mdx` file in the appropriate folder under `src/content/{learn,share,journey}` and add frontmatter per the Zod schema.
 - **Dynamic Routes:** `src/pages/[category]/[slug].astro` generates static pages for each post.
 

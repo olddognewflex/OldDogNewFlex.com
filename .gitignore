@@ -31,3 +31,6 @@ drafts/
 
 # Affinity Photo source files
 *.afphoto
+
+# Local Netlify folder
+.netlify
