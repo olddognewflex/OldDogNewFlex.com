@@ -1,0 +1,38 @@
+---
+import type { ButtonProps } from '../../types';
+
+const { 
+  href, 
+  variant = 'primary', 
+  size = 'md', 
+  disabled = false, 
+  class: className = '',
+  type = 'button'
+}: ButtonProps = Astro.props;
+
+const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
+const variantClasses = {
+  primary: 'bg-blue text-white hover:bg-sapphire focus:ring-blue',
+  secondary: 'bg-mauve text-white hover:bg-pink focus:ring-mauve',
+  outline: 'border-2 border-blue text-blue hover:bg-blue hover:text-white focus:ring-blue',
+  ghost: 'text-blue hover:bg-blue hover:text-white focus:ring-blue'
+};
+const sizeClasses = {
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-4 py-2 text-base',
+  lg: 'px-6 py-3 text-lg'
+};
+const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : '';
+
+const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${disabledClasses} ${className}`;
+---
+
+{href ? (
+  <a href={href} class={classes} aria-disabled={disabled}>
+    <slot />
+  </a>
+) : (
+  <button type={type} class={classes} disabled={disabled}>
+    <slot />
+  </button>
+)} 

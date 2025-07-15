@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import PageHero from '../components/PageHero.astro';
 
 import "../styles/global.css";
+import "../styles/layout.css";
 
 // src/layouts/BaseLayout.astro
 export interface Props {
@@ -33,8 +34,6 @@ const {
 	author,
 	tags = []
 } = Astro.props;
-
-const headerHeight = '100px'; 
 ---
 
 <!DOCTYPE html>
@@ -50,23 +49,6 @@ const headerHeight = '100px';
 			author={author}
 			tags={tags}
 		/>
-		<style>
-			main {
-				width: calc(100%);
-				max-width: 100%;
-				margin: auto;
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: var(--color-text);
-			}
-			.tagline {
-				color: var(--color-blue);
-			}
-		</style>
 	</head>
   <body>
 		<Header />
@@ -77,16 +59,16 @@ const headerHeight = '100px';
       <slot />
     </main>
 
-    <footer class="bg-base text-blue py-12">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer class="footer">
+      <div class="footer-content">
         <div class="text-center">
-					<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="mx-auto"/>
-          <p class="tagline text-lg mb-4">Proving it's never too late to refactor your comfort zone</p>
-          <p class="text-text text-sm">© 2024 Old Dog, New Flex. Built with Astro and TypeScript.</p>
+					<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="footer-logo"/>
+          <p class="footer-tagline">Proving it's never too late to refactor your comfort zone</p>
+          <p class="footer-copyright">© 2024 Old Dog, New Flex. Built with Astro and TypeScript.</p>
         </div>
       </div>
     </footer>
-		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="absolute top-5 left-5 md:w-65"/>
+		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="logo-absolute"/>
 		
 		<!-- Alpine.js -->
 		<script>

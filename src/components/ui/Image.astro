@@ -1,13 +1,5 @@
 ---
-interface Props {
-  src: string;
-  alt: string;
-  width?: number;
-  height?: number;
-  class?: string;
-  loading?: 'lazy' | 'eager';
-  decoding?: 'async' | 'sync' | 'auto';
-}
+import type { ImageProps } from '../../types';
 
 const { 
   src, 
@@ -17,7 +9,7 @@ const {
   class: className = '',
   loading = 'lazy',
   decoding = 'async'
-} = Astro.props;
+}: ImageProps = Astro.props;
 ---
 
 <img 

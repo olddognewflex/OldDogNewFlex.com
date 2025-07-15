@@ -1,6 +1,7 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
+// Re-export constants from the centralized constants file
+import { SITE_CONFIG } from './constants/index';
+export { SITE_CONFIG, THEME_COLORS, BREAKPOINTS, COLLECTIONS, POSTS_PER_PAGE, FEATURED_POSTS_LIMIT, SOCIAL_LINKS } from './constants/index';
 
-export const SITE_TITLE = "Old Dog New Flex";
-export const SITE_DESCRIPTION =
-  "Proving it’s not too late to refactor your comfort zone!";
+// Legacy exports for backward compatibility
+export const SITE_TITLE = SITE_CONFIG.title;
+export const SITE_DESCRIPTION = SITE_CONFIG.description;

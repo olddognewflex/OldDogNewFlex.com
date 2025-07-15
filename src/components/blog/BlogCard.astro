@@ -3,6 +3,8 @@
 import { Calendar, Clock, Tag } from '@lucide/astro';
 import type { BlogPost } from '../../lib/blog';
 import { getPostUrl, getReadingTime } from '../../lib/blog';
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
 
 export interface Props {
   post: BlogPost;
@@ -12,12 +14,9 @@ export interface Props {
 const { post, featured = false } = Astro.props;
 const postUrl = getPostUrl(post);
 const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
-const cardClass = featured 
-  ? "bg-gradient-to-br from-[var(--color-flamingo)] to-[var(--color-mauve)] border-2 border-orange-200" 
-  : "bg-gradient-to-br from-[var(--color-mauve)]/75 to-[var(--color-mauve)]/50 border border-gray-200 hover:border-orange-300";
 ---
 
-<article class={`rounded-lg p-6 transition-all duration-200 hover:shadow-lg ${cardClass}`}>
+<Card variant={featured ? 'featured' : 'default'}>
   <div class="flex items-center gap-4 text-sm text-gray-600 mb-3">
     <span class="flex items-center gap-1">
       <Calendar size="4" />
@@ -31,9 +30,9 @@ const cardClass = featured
       <Clock size="4" />
       {readingTime}
     </span>
-    <span class="collection-pill rounded-full text-xs font-medium">
+    <Badge variant="collection" size="sm">
       {post.collection}
-    </span>
+    </Badge>
   </div>
   
   <a href={postUrl} class="group block">
@@ -46,11 +45,11 @@ const cardClass = featured
   {post.data.tags && post.data.tags.length > 0 && (
     <div class="flex flex-wrap gap-2">
       {post.data.tags.map((tag) => (
-        <span class="tag-pill flex items-center gap-1 text-xs px-2 py-1 rounded-full">
+        <Badge variant="tag" size="sm">
           <Tag size="3" />
           {tag}
-        </span>
+        </Badge>
       ))}
     </div>
   )}
-</article>
+</Card>

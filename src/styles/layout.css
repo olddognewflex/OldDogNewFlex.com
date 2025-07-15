@@ -1,0 +1,60 @@
+/* Layout-specific styles extracted from BaseLayout.astro */
+
+main {
+  width: calc(100%);
+  max-width: 100%;
+  margin: auto;
+}
+
+.prose {
+  width: 720px;
+  max-width: calc(100% - 2em);
+  margin: auto;
+  padding: 1em;
+  color: var(--color-text);
+}
+
+.tagline {
+  color: var(--color-blue);
+}
+
+/* Footer styles */
+.footer {
+  background-color: var(--color-base);
+  color: var(--color-blue);
+  padding: 3rem 0;
+}
+
+.footer-content {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer-logo {
+  margin: 0 auto;
+}
+
+.footer-tagline {
+  color: var(--color-blue);
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+}
+
+.footer-copyright {
+  color: var(--color-text);
+  font-size: 0.875rem;
+}
+
+/* Logo positioning */
+.logo-absolute {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .logo-absolute {
+    width: 16.25rem;
+  }
+} 
