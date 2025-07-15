@@ -3,30 +3,28 @@ import type { CollectionEntry } from 'astro:content';
 import FormattedDate from '../components/FormattedDate.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-type Props = CollectionEntry<'learn'|'share'|'journey'>['data'];
+type Props = CollectionEntry<'learn'|'share'|'journey'>['data'] & {
+	post: CollectionEntry<'learn'|'share'|'journey'>;
+};
 
-const { title, summary, publishedDate, updatedDate, heroImage } = Astro.props;
+const { title, summary, publishedDate, updatedDate, heroImage, tags = [], post } = Astro.props;
+const author = 'Old Dog New Flex';
 ---
 
-		<style>
-			main {
-				width: calc(100%);
-				max-width: 100%;
-				margin: auto;
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: var(--catppuccin-text);
-			}
-		</style>
-
-<BaseLayout title={title} description={summary}>
+<BaseLayout 
+	title={title} 
+	description={summary}
+	article={true}
+	publishedDate={publishedDate}
+	updatedDate={updatedDate}
+	author={author}
+	tags={tags}
+	heroImage={heroImage}
+	heroAlt={title}
+>
 	<article>
 		<div class="prose">
-			<div class="text-(--catppuccin-flamingo) text-center">
+			<div class="text-(--color-flamingo) text-center">
 				<FormattedDate date={publishedDate} />
 				{
 					updatedDate && (
@@ -42,7 +40,15 @@ const { title, summary, publishedDate, updatedDate, heroImage } = Astro.props;
 			</div>
 			}
 			<div class="hero-image relative">
-				{heroImage && <img src={heroImage} alt={title} />}
+				{heroImage && (
+					<img 
+						src={heroImage} 
+						alt={title} 
+						loading="lazy"
+						width="1200"
+						height="630"
+					/>
+				)}
 			</div>
 			<hr />
 		</div>

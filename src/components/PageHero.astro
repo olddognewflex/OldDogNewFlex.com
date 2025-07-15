@@ -1,4 +1,6 @@
 ---
+import Image from './ui/Image.astro';
+
 export interface Props {
   heroImage: string;
   heroAlt: string;
@@ -11,12 +13,19 @@ const { heroImage, heroAlt, heroTaglineElement } = Astro.props;
 
 <section
   class="relative w-full flex"
-  style={`
-    height: calc(100vh - var(--header-height));
-    background-image: url('${heroImage}');
-    background-size: cover;
-    background-position: center;
-  `}
+  style="height: calc(100vh - var(--header-height));"
   aria-label={heroAlt}
 >  
+  <Image 
+    src={heroImage}
+    alt={heroAlt}
+    class="absolute inset-0 w-full h-full object-cover"
+    loading="eager"
+    decoding="async"
+  />
+  {heroTaglineElement && (
+    <div class="relative z-10 flex items-center justify-center w-full h-full">
+      {heroTaglineElement}
+    </div>
+  )}
 </section>

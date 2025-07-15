@@ -2,23 +2,59 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
-import { SITE_TITLE } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 interface Props {
 	title: string;
 	description: string;
 	image?: string;
+	canonicalURL?: string;
+	article?: boolean;
+	publishedDate?: Date;
+	updatedDate?: Date;
+	author?: string;
+	tags?: string[];
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
+const { 
+	title, 
+	description, 
+	image = '/images/old-dog-new-flex-logo.svg',
+	article = false,
+	publishedDate,
+	updatedDate,
+	author = 'Old Dog New Flex',
+	tags = []
+} = Astro.props;
+
+// Generate structured data
+const structuredData = {
+	"@context": "https://schema.org",
+	"@type": article ? "Article" : "WebSite",
+	"name": title,
+	"description": description,
+	"url": canonicalURL.toString(),
+	"image": new URL(image, Astro.url).toString(),
+	"publisher": {
+		"@type": "Person",
+		"name": author,
+		"url": "https://olddognewflex.com"
+	},
+	...(article && publishedDate && {
+		"datePublished": publishedDate.toISOString(),
+		...(updatedDate && { "dateModified": updatedDate.toISOString() }),
+		...(tags.length > 0 && { "keywords": tags.join(", ") })
+	})
+};
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="manifest" href="/manifest.json" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
 	rel="alternate"
@@ -28,9 +64,13 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 />
 <meta name="generator" content={Astro.generator} />
 
+<!-- Performance optimizations -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
 <!-- Font preloads -->
 <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin /> 
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -39,17 +79,47 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+<meta name="author" content={author} />
+<meta name="robots" content="index, follow" />
+<meta name="language" content="English" />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:type" content={article ? "article" : "website"} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:locale" content="en_US" />
+{article && publishedDate && (
+	<meta property="article:published_time" content={publishedDate.toISOString()} />
+)}
+{article && updatedDate && (
+	<meta property="article:modified_time" content={updatedDate.toISOString()} />
+)}
+{article && author && (
+	<meta property="article:author" content={author} />
+)}
+{article && tags.length > 0 && tags.map(tag => (
+	<meta property="article:tag" content={tag} />
+))}
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:creator" content="@OldDogNewFlex" />
+<meta property="twitter:site" content="@OldDogNewFlex" />
+
+<!-- Additional SEO Meta Tags -->
+<meta name="theme-color" content="#1e1e2e" />
+<meta name="msapplication-TileColor" content="#1e1e2e" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />

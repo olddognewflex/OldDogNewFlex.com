@@ -8,11 +8,11 @@ import ThemePills from './ThemePills.astro';
 		<div class="w-1/2 md:w-32"></div>
   
 		<div class="internal-links hidden md:flex gap-4">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/learn">Learn</HeaderLink>
-			<HeaderLink href="/journey">Journey</HeaderLink>
-			<HeaderLink href="/share">Share</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href="/">HOME</HeaderLink>
+			<HeaderLink href="/learn">LEARN</HeaderLink>
+			<HeaderLink href="/journey">JOURNEY</HeaderLink>
+			<HeaderLink href="/share">SHARE</HeaderLink>
+			<HeaderLink href="/about">ABOUT</HeaderLink>
 		</div>
 		<div class="social-links hidden md:flex md:gap-4">
 			<a href="https://techhub.social/@olddognewflex" target="_blank">
@@ -67,13 +67,13 @@ import ThemePills from './ThemePills.astro';
       	x-show="open"
       	x-transition
       		class="fixed top-12 right-0 w-3/4 h-full text-white p-6 sm:hidden z-50"
-      		style="background-color: var(--catppuccin-base); border-left: 2px solid var(--catppuccin-mauve);"
+      		style="background-color: var(--color-base); border-left: 2px solid var(--color-mauve);"
     	>
-				<HeaderLink href="/" class="block w-9/10 py-2 border-b border-mantle">Home</HeaderLink>
-				<HeaderLink href="/learn" class="block w-9/10 py-2 border-b border-mantle">Learn</HeaderLink>
-				<HeaderLink href="/journey" class="block w-9/10 py-2 border-b border-mantle">Journey</HeaderLink>
-				<HeaderLink href="/share" class="block w-9/10 py-2 border-b border-mantle">Share</HeaderLink>
-				<HeaderLink href="/about" class="block w-9/10 py-2">About</HeaderLink>
+				<HeaderLink href="/" class="block w-9/10 py-2 border-b border-mantle">HOME</HeaderLink>
+				<HeaderLink href="/learn" class="block w-9/10 py-2 border-b border-mantle">LEARN</HeaderLink>
+				<HeaderLink href="/journey" class="block w-9/10 py-2 border-b border-mantle">JOURNEY</HeaderLink>
+				<HeaderLink href="/share" class="block w-9/10 py-2 border-b border-mantle">SHARE</HeaderLink>
+				<HeaderLink href="/about" class="block w-9/10 py-2">ABOUT</HeaderLink>
 			</div>
   	</button>
 	</nav>
@@ -83,8 +83,8 @@ import ThemePills from './ThemePills.astro';
 		margin: 0;
 		padding: 0;
 		height: var(--header-height);
-		background: var(--catppuccin-base);
-		border-bottom: 2px solid var(--catppuccin-mauve);
+		background: var(--color-base);
+		border-bottom: 2px solid var(--color-mauve);
 	}
 	h2 {
 		margin: 0;
@@ -102,12 +102,12 @@ import ThemePills from './ThemePills.astro';
 	}
 	nav a {
 		padding: 1em 0.5em;
-		color: var(--catppuccin-blue);
+		color: var(--color-blue);
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
 	}
 	nav a.active {
 		text-decoration: none;
-		border-bottom-color: var(--catppuccin-teal);
+		border-bottom-color: var(--color-teal);
 	}
 </style>

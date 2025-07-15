@@ -13,8 +13,8 @@ const { post, featured = false } = Astro.props;
 const postUrl = getPostUrl(post);
 const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
 const cardClass = featured 
-  ? "bg-gradient-to-br from-(--catppuccin-flamingo) to-(--catppuccin-mauve) border-2 border-orange-200" 
-  : "bg-(--catppuccin-surface2) border border-gray-200 hover:border-orange-300";
+  ? "bg-gradient-to-br from-[var(--color-flamingo)] to-[var(--color-mauve)] border-2 border-orange-200" 
+  : "bg-gradient-to-br from-[var(--color-mauve)]/75 to-[var(--color-mauve)]/50 border border-gray-200 hover:border-orange-300";
 ---
 
 <article class={`rounded-lg p-6 transition-all duration-200 hover:shadow-lg ${cardClass}`}>

@@ -13,6 +13,11 @@ export interface Props {
   heroImage?: string;
   heroAlt?: string;
   heroTaglineElement?: any;
+  article?: boolean;
+  publishedDate?: Date;
+  updatedDate?: Date;
+  author?: string;
+  tags?: string[];
 }
 
 const { 
@@ -22,6 +27,11 @@ const {
 	heroImage, 
 	heroTaglineElement,
 	heroAlt = "An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones",
+	article = false,
+	publishedDate,
+	updatedDate,
+	author,
+	tags = []
 } = Astro.props;
 
 const headerHeight = '100px'; 
@@ -30,8 +40,16 @@ const headerHeight = '100px';
 <!DOCTYPE html>
 <html data-theme="mocha" lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
-		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+		<BaseHead 
+			title={title} 
+			description={description} 
+			canonicalURL={canonicalURL}
+			article={article}
+			publishedDate={publishedDate}
+			updatedDate={updatedDate}
+			author={author}
+			tags={tags}
+		/>
 		<style>
 			main {
 				width: calc(100%);
@@ -43,10 +61,10 @@ const headerHeight = '100px';
 				max-width: calc(100% - 2em);
 				margin: auto;
 				padding: 1em;
-				color: var(--catppuccin-text);
+				color: var(--color-text);
 			}
 			.tagline {
-				color: var(--catppuccin-blue);
+				color: var(--color-blue);
 			}
 		</style>
 	</head>
@@ -69,6 +87,13 @@ const headerHeight = '100px';
       </div>
     </footer>
 		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="absolute top-5 left-5 md:w-65"/>
+		
+		<!-- Alpine.js -->
+		<script>
+			import Alpine from 'alpinejs';
+			window.Alpine = Alpine;
+			Alpine.start();
+		</script>
 		</body>
 </html>
 
