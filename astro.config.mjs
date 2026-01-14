@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, passthroughImageService } from "astro/config";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
@@ -8,6 +8,9 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://olddognewflex.com",
   output: "static",
+  image: {
+    service: passthroughImageService(),
+  },
 
   integrations: [
     mdx(),
