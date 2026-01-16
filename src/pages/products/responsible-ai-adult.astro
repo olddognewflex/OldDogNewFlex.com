@@ -4,8 +4,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 const product = {
   title: "Responsible AI Adult — Core Execution Pack",
   description: "A production-safety framework for AI-assisted software engineering.",
-  status: "Coming Soon", // e.g., "Available", "Coming Soon", "Discontinued"
-  gumroadUrl: null, // set later
+  status: "Available", // e.g., "Available", "Coming Soon", "Discontinued"
+  gumroadUrl: "https://olddognewflex.gumroad.com/l/responsible-ai-adult-core", // set later
 };
 ---
 
@@ -30,7 +30,7 @@ const product = {
       </div>
 
       <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-        {product.status == "available" && product.gumroadUrl ? (
+        {product.status == "Available" && product.gumroadUrl ? (
           <a
             href={product.gumroadUrl}
             class="inline-flex items-center justify-center rounded-xl bg-primaryText text-background px-5 py-2 text-sm font-semibold hover:opacity-90 transition"
@@ -47,7 +47,7 @@ const product = {
         )}
 
         <a
-          href="/blog/ai-is-fast-production-is-fragile"
+          href="/learn/ai-is-fast-production-is-fragile"
           class="inline-flex items-center justify-center rounded-xl border border-primaryText/15 px-5 py-2 text-sm font-semibold text-primaryText hover:border-primaryText/30 transition"
         >
           Read the story →
