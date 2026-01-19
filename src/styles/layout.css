@@ -1,14 +1,14 @@
 /* Layout-specific styles extracted from BaseLayout.astro */
 
 main {
-  width: calc(100%);
-  max-width: 100%;
-  margin: auto;
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
 }
 
 .prose {
-  width: 720px;
-  max-width: calc(100% - 2em);
+  width: 100%;
+  max-width: 650px;
   margin: auto;
   padding: 1em;
   color: var(--color-text);
@@ -51,10 +51,20 @@ main {
   position: absolute;
   top: 1.25rem;
   left: 1.25rem;
+  z-index: 60;
 }
 
 @media (min-width: 768px) {
+  main {
+    max-width: 70%;
+  }
+
+  .prose {
+    max-width: 70%;
+  }
+
   .logo-absolute {
+    position: fixed;
     width: 16.25rem;
   }
 } 
