@@ -12,14 +12,13 @@ const { heroImage, heroAlt, heroTaglineElement } = Astro.props;
 ---
 
 <section
-  class="relative w-full flex"
-  style="height: calc(100vh - var(--header-height));"
+  class="relative w-full"
   aria-label={heroAlt}
->  
+>
   <Image 
     src={heroImage}
     alt={heroAlt}
-    class="absolute inset-0 w-full h-full object-cover"
+    class="block w-full h-auto object-cover"
     loading="eager"
     decoding="async"
   />

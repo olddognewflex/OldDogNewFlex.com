@@ -12,6 +12,7 @@ import ThemePills from './ThemePills.astro';
 			<HeaderLink href="/learn">LEARN</HeaderLink>
 			<HeaderLink href="/journey">JOURNEY</HeaderLink>
 			<HeaderLink href="/share">SHARE</HeaderLink>
+			<HeaderLink href="/start-here">START HERE</HeaderLink>
 			<HeaderLink href="/products">PRODUCTS</HeaderLink>
 			<HeaderLink href="/about">ABOUT</HeaderLink>
 		</div>
@@ -86,6 +87,8 @@ import ThemePills from './ThemePills.astro';
 		height: var(--header-height);
 		background: var(--color-base);
 		border-bottom: 2px solid var(--color-mauve);
+		display: flex;
+		align-items: center;
 	}
 	h2 {
 		margin: 0;
@@ -100,9 +103,12 @@ import ThemePills from './ThemePills.astro';
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		width: 100%;
 	}
 	nav a {
-		padding: 1em 0.5em;
+		padding: 0.6em 0.3em 0.35em;
+		line-height: 1.1;
+		font-size: 1.05rem;
 		color: var(--color-blue);
 		border-bottom: 4px solid transparent;
 		text-decoration: none;
@@ -110,5 +116,38 @@ import ThemePills from './ThemePills.astro';
 	nav a.active {
 		text-decoration: none;
 		border-bottom-color: var(--color-teal);
+	}
+
+	@media (min-width: 768px) {
+		header {
+			position: sticky;
+			top: 0;
+			z-index: 50;
+		}
+
+		nav {
+			padding-left: calc(10rem);
+		}
+
+		.internal-links {
+			flex: 1 1 auto;
+			justify-content: center;
+			min-width: 0;
+			gap: clamp(0.35rem, 1vw, 0.9rem);
+		}
+
+		.internal-links a {
+			font-size: clamp(0.75rem, 1.15vw, 1.05rem);
+		}
+
+		@media (max-width: 900px) {
+			.internal-links {
+				gap: 0.35rem;
+			}
+
+			.internal-links a {
+				font-size: 0.7rem;
+			}
+		}
 	}
 </style>

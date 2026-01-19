@@ -2,11 +2,14 @@
 # src/content/learn/astro-migration-journey.md
 title: "From Next.js to Astro: A Migration Journey"
 subtitle: "Why I chose Astro for my personal blog and what I learned"
-publishedDate: 2026-01-01
+publishedDate: 2025-07-01
 summary: "After starting with Next.js, I discovered Astro's content-focused approach was perfect for my blog. Here's what I learned during the migration."
 tags: ["astro", "nextjs", "migration", "performance"]
 featured: false
 ---
+
+> **Context Note**  
+> This post was written earlier in the life of Old Dog, New Flex while I was still shaping the editorial direction. I’m leaving it here because it reflects how I think — even as the framing continues to evolve.
 
 # From Next.js to Astro: A Migration Journey
 

@@ -1,0 +1,210 @@
+---
+// src/pages/start-here.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogCard from '../components/blog/BlogCard.astro';
+import Container from '../components/ui/Container.astro';
+import { getAllPosts, getFeaturedPosts } from '../lib/blog';
+
+const [featuredPosts, recentPosts] = await Promise.all([
+  getFeaturedPosts(),
+  getAllPosts()
+]);
+
+const latestPosts = recentPosts.slice(0, 6);
+---
+
+<BaseLayout 
+  title="Old Dog, New Flex | Start Here" 
+  description="If you're new here, welcome. Old Dog, New Flex exists because I reached a point in my career where I stopped asking “What’s next?” and started asking “What lasts?”"
+  heroImage="/images/old-dog-drawing-map.webp" 
+  heroAlt="An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, large headphones sitting at a table in a coffee shop with a couple other people drawing a map on a piece of notebook paper. The background scene is a busy coffee shop with a some other people at tables in the backgroud. Some working on laptops. Others talking to friends.">
+
+  <div class="hero-image absolute left-10 w-8/10 md:w-2/3 lg:w-1/3 top-[140px] md:left-20">
+	<h1 class="text-2xl font-extrabold text-left" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);">
+       Start Here 
+    </h1>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="py-10">
+    <Container>
+      <div class="text-center">
+        <h1 class="text-5xl font-bold text-blue mb-4">Start Here</h1>
+		<h2 class="text-3xl font-bold text-blue mb-4">If you're new here, welcome.</h2>
+        <p class="text-xl text-text max-w-3xl mx-auto">
+            <b>Old Dog, New Flex</b> exists because I reached a point in my career where I stopped asking <i>“What’s
+            next?”</i> and started asking <i>“What lasts?”</i>
+        </p>
+        <p class="mt-6 text-2xl">
+            After 30 years in software, I've learned a few things the hard way:
+            <ul>
+                <li>Most breakthroughs are rebranded patterns</li>
+                <li>Speed without judgment creates fragility</li>
+                <li>Tools don't replace responsibility — they redistribute it</li>
+            </ul>
+        </p>
+		<p class="mt-6 text-2xl font-bold emphasized-point">
+            This site is my way of documenting how I'm navigating modern tech - especially AI - <b>without abandoning experience, ethics, or sanity.</b>  
+        </p>    
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-10">
+    <Container>
+      <div class="text-center">
+        <h2 class="text-3xl font-bold mb-4">How I Write Here</h2>
+        <p class="text-xl">
+          I publish in three modes, depending on what the moment calls for:
+        </p>
+        <ul>
+            <li><b>Learn</b> - When I've figured something out well enough to explain it clearly</li>
+            <li><b>Share</b> - When I'm building, shipping, or testing ideas in the open</li>
+            <li><b>Journey</b> - When reflection matters more than instruction</li>
+        </ul>
+        <p class="text-xl">
+            Not everything is polished.
+            Everything is intentional.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-10">
+    <Container>
+      <div class="text-center">
+        <h2 class="text-3xl font-bold mb-4">If You Want a Starting Path</h2>
+          <p class="w-full text-xl">
+            Read these first:
+          </p>
+          <p class="w-full text-xl">
+          <ul>
+            <li><a href="/burnout-wasnt-the-end">Burnout Wasn't the End — It's Where My New Flex Began</a></li>
+            <li><a href="/ai-is-fast-production-is-fragile">AI Is Fast, Production Is Fragile</a></li>
+            <li><a href="/stop-coding-start-supervising">Stop Coding, Start Supervising</a></li>
+          </ul>
+          </p>
+      </div>
+    </Container>
+  </section>
+
+  <section class="py-10">
+    <Container>
+      <div class="text-center">
+        <h2 class="text-3xl font-bold mb-4">Why I'm Building This in Public</h2>
+          <p class="text-xl">
+            I'm not here to win the algorithm.
+            I'm here to:
+            <ul>
+                <li><b>think clearly</b></li>
+                <li><b>build responsibly</b><li>
+                <li><b>share what experience has made visible</b><li>
+            </ul>
+          </p>
+          <p></p>
+          <p class="text-xl">
+            If you're early in your career, I hope this saves you time.<br />
+            If you're later in your career, I hope this feels familiar.
+          </p>
+          <p class="text-xl">
+            Either way — welcome.
+          </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Featured Posts -->
+  {featuredPosts.length > 0 && (
+    <section class="py-12">
+      <Container>
+        <h2 class="text-3xl font-bold mb-8">Featured</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          {featuredPosts.map((post) => (
+            <BlogCard post={post} featured />
+          ))}
+        </div>
+      </Container>
+    </section>
+  )}
+
+  <!-- Latest Posts -->
+  <section class="py-12">
+    <Container>
+      <h2 class="text-3xl font-bold mb-8">Latest</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {latestPosts.map((post) => (
+          <BlogCard post={post} />
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <section class="py-16">
+    <Container size="md">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-blue mb-4">Join the Learning Journey</h2>
+        <p class="text-text mb-8">Get updates on new posts and learning adventures. No spam, just growth.</p>
+        <div class="bg-overlay2 p-6 rounded-lg">
+          <p class="text-text">Newsletter signup coming soon!</p>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>
+
+Start Here
+
+If you’re new here, welcome.
+
+Old Dog, New Flex exists because I reached a point in my career where I stopped asking “What’s next?” and started asking “What lasts?”
+
+After 30 years in software, I’ve learned a few things the hard way:
+
+Most breakthroughs are rebranded patterns
+
+Speed without judgment creates fragility
+
+Tools don’t replace responsibility — they redistribute it
+
+This site is my way of documenting how I’m navigating modern tech — especially AI — without abandoning experience, ethics, or sanity.
+
+How I Write Here
+
+I publish in three modes:
+
+Learn — When I’ve figured something out well enough to explain it clearly
+Share — When I’m building, shipping, or testing ideas in the open
+Journey — When reflection matters more than instruction
+
+Not everything is polished.
+Everything is intentional.
+
+If You Want a Starting Path
+
+Read these first:
+
+Burnout Wasn’t the End — It’s Where My New Flex Began
+
+AI Is Fast. Production Is Fragile.
+
+Stop Coding, Start Supervising
+
+They form the emotional, technical, and philosophical core of this project.
+
+Why I’m Building This in Public
+
+I’m not here to win the algorithm.
+
+I’m here to:
+
+think clearly
+
+build responsibly
+
+share what experience has made visible
+
+If you’re early in your career, I hope this saves you time.
+If you’re later in your career, I hope this feels familiar.
+
+Either way — welcome.

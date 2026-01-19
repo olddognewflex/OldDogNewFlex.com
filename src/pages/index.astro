@@ -19,8 +19,8 @@ const latestPosts = recentPosts.slice(0, 6);
   heroImage="/images/odnf-home-hero.webp" 
   heroAlt="An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, sitting confidently at a modern computer keyboard. The scene is colorful, vibrant, and filled with 80s-inspired nostalgia. The background is a cozy, cluttered room with toys and gadgets. The style is cinematic, realistic, and expressive, with dramatic lighting and detailed textures.">
 
-  <div class="hero-image absolute left-10 w-9/10 top-1/2 md:top-1/5 md:left-20 lg:w-1/3">
-		<h1 class="text-2xl md:text-5xl font-extrabold text-left" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);">
+  <div class="hero-image absolute left-10 w-8/10 md:w-2/3 lg:w-1/3 top-[140px] md:left-20">
+		<h1 class="text-2xl font-extrabold text-left" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);">
       Proving it's never too late to refactor your comfort zone
     </h1>
   </div>
@@ -35,8 +35,8 @@ const latestPosts = recentPosts.slice(0, 6);
           I've speant nearly three decades building software through multiple hype cycles, architectural shifts, and
           "this changes everything" moments that... didn't.
         </p>
-        <p class="mt-6 text-2xl font-bold emphasized-point">
-          This site is where I document how I am **learning**, **building**, and **shipping** now - in an era of AI,
+        <p class="mt-6 text-2xl">
+          This site is where I document how I am <b>learning</b>, <b>building</b>, and <b>shipping</b> <i>now</i> - in an era of AI,
           automation, an accelerating noise - with context, restraint, and responsiblity.
         </p>
 				<p class="mt-6 text-2xl font-bold emphasized-point">
@@ -81,9 +81,8 @@ const latestPosts = recentPosts.slice(0, 6);
     <Container>
       <div class="text-center">
         <h2 class="text-3xl font-bold mb-4">What This Site Is (and Isn't)</h2>
-        <div class="flex flex-col md:flex-row gap-y-8 md:gap-y-0 md:gap-x-8 text-left">
+        <div class="flex flex-col md:flex-row gap-y-8 md:gap-y-0 md:gap-x-8 text-center">
           <div class="flex-1 p-6 rounded-lg shadow-lg">
-            <h4 class="text-xl font-bold mb-2">Learn</h4>
             <p class="text-xl">
               This isn't a new site.<br />
               It isn't a trend report.
@@ -106,7 +105,7 @@ const latestPosts = recentPosts.slice(0, 6);
     <section class="py-12">
       <Container>
         <h2 class="text-3xl font-bold mb-8">Featured</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-2 gap-8">
           {featuredPosts.map((post) => (
             <BlogCard post={post} featured />
           ))}
