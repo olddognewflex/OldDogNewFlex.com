@@ -72,7 +72,8 @@ body {
 main {
   max-width: calc(100% - 2em);
   margin: auto;
-  padding: 3em 1em;
+  padding-top: 10px;
+  padding-bottom: 1em;
 }
 
 h1,

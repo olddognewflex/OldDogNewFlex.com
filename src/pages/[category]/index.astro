@@ -18,16 +18,22 @@ const posts = await getAllPosts(category as 'learn' | 'share' | 'journey');
 const categoryInfo = {
   learn: {
     title: 'Learning & Technical Deep Dives',
+    heroImage: '/images/old-dog-teaching.webp',
+    heroAlt: 'An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, standing at a podium',
     description: 'Exploring new technologies and sharing technical insights from the trenches.',
     icon: '🎓',
   },
   share: {
     title: 'Knowledge Sharing & Mentorship',  
+    heroImage: '/images/old-dog-sharing.webp',
+    heroAlt: 'An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, talking to a group of people showing them something on a tablet',
     description: 'Lessons learned from 30 years in software development, shared with the community.',
     icon: '🤝',
   },
   journey: {
     title: 'Personal Learning Journey',
+    heroImage: '/images/old-dog-hiking.webp',
+    heroAlt: 'An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, hiking up a mountain trail with a scenic view',
     description: 'The real stories behind learning new things at any stage of your career.',
     icon: '🚀',
   },
@@ -36,9 +42,14 @@ const categoryInfo = {
 const info = categoryInfo[category as keyof typeof categoryInfo];
 ---
 
-<BaseLayout title={`${info.title} | Old Dog, New Flex`} description={info.description}>
+<BaseLayout title={`${info.title} | Old Dog, New Flex`} description={info.description} heroImage={info.heroImage} heroAlt={info.heroAlt}>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Category Header -->
+    <div class="hero-image" style="position: absolute; top: 140px; left: 30px; width: 40%;">
+		  <h1 class="text-4xl font-extrabold text-left" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);">
+		    {info.title}
+		  </h1>
+    </div>
     <header class="text-center mb-12">
       <div class="text-6xl mb-4">{info.icon}</div>
       <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
