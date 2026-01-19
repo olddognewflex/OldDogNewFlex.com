@@ -3,8 +3,7 @@
 title: "Burnout Wasn’t the End — It’s Where My New Flex Began"
 subtitle: "How 30 years in tech nearly burned me out — and how I found my second wind."
 summary: "After 30 years in software development, burnout nearly cost me my passion — and my career. This is the story of how I rediscovered my love for building, learning, and mentoring, and how Old Dog New Flex was born."
-publishedDate: 2026-01-08
-updatedDate: 2024-01-13
+publishedDate: 2025-06-30
 tags:
   [
     "burnout",
