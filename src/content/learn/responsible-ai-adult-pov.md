@@ -1,3 +1,12 @@
+---
+title: "The Responsible AI Adult: Why We Still Need Humans in the Loop"
+subtitle: "If AI can write code, fix the bugs, and ship the product... why do we need you?"
+publishedDate: 2026-01-17
+summary: "We need Responsible AI Adults in software—just like we need them in healthcare, education, journalism, and yes, graphic design. Not to control the outcomes, but to safeguard the inputs and validate the behavior."
+tags: ["AI", "Software Engineering", "Prompt Engineering", "Responsible AI"]
+featured: false
+---
+
 # The Responsible AI Adult: Why We Still Need Humans in the Loop
 
 If AI can write the code, fix the bugs, and ship the product… why do we need you?
