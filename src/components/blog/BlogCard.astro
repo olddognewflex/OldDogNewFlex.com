@@ -5,6 +5,7 @@ import type { BlogPost } from '../../lib/blog';
 import { getPostUrl, getReadingTime } from '../../lib/blog';
 import Card from '../ui/Card.astro';
 import Badge from '../ui/Badge.astro';
+import FormattedDate from '../FormattedDate.astro';
 
 export interface Props {
   post: BlogPost;
@@ -20,11 +21,7 @@ const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
   <div class="flex items-center gap-4 text-sm text-gray-600 mb-3">
     <span class="flex items-center gap-1">
       <Calendar size="4" />
-      {post.data.publishedDate.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'short', 
-        day: 'numeric' 
-      })}
+      <FormattedDate date={post.data.publishedDate} />
     </span>
     <span class="flex items-center gap-1">
       <Clock size="4" />
