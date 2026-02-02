@@ -1,3 +1,20 @@
+---
+# src/content/learn/prediction-is-not-resilience.md
+title: "Prediction Is Not Resilience"
+subtitle: "Last week’s winter storm was not abstract or theoretical."
+publishedDate: 2026-02-02
+summary: "An examination of why better prediction — especially with AI — doesn’t automatically make systems resilient, and how over-trust in forecasts can increase fragility when real-world failures cascade."
+tags:
+  [
+    "ai",
+    "resilience",
+    "systems-thinking",
+    "engineering-judgement",
+    "responsible-ai",
+  ]
+featured: true
+---
+
 # Prediction Is Not Resilience
 
 Last week’s winter storm was not abstract or theoretical.

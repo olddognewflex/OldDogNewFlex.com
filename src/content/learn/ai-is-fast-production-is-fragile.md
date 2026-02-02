@@ -6,11 +6,11 @@ publishedDate: 2026-01-14
 summary: "AI can write code fast — but production is fragile. A practical look at why bad prompts cause real outages, and the system I use to apply AI safely in real software engineering."
 tags:
   [
-    "AI",
-    "Software Engineering",
-    "Prompt Engineering",
-    "Context Engineering",
-    "Responsible AI",
+    "ai",
+    "software-engineering",
+    "prompt-engineering",
+    "context-engineering",
+    "responsible-ai",
   ]
 featured: true
 ---

@@ -7,16 +7,16 @@ publishedDate: 2025-06-30
 tags:
   [
     "burnout",
-    "developer burnout",
-    "tech career",
-    "career pivot",
-    "midlife career",
-    "reinventing yourself",
-    "burnout recovery",
-    "second career",
-    "coding passion",
-    "personal growth",
-    "Old Dog New Flex",
+    "developer-burnout",
+    "tech-career",
+    "career-pivot",
+    "midlife-career",
+    "reinventing-yourself",
+    "burnout-recovery",
+    "second-career",
+    "coding-passion",
+    "personal-growth",
+    "odnf",
   ]
 featured: true
 draft: false

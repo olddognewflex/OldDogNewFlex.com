@@ -6,18 +6,18 @@ publishedDate: 2026-01-16
 updatedDate: 2026-01-16
 tags:
   [
-    "AI",
-    "Software Engineering",
-    "Nvidia",
-    "Jensen Huang",
-    "Prompt Engineering",
-    "Responsible AI",
-    "Developer Identity",
-    "Creative Destruction",
-    "Future of Work",
-    "Old Dog New Flex",
-    "AI Agents",
-    "Tech Trends 2026",
+    "ai",
+    "software-engineering",
+    "nvidia",
+    "jensen-huang",
+    "prompt-engineering",
+    "responsible-ai",
+    "developer-identity",
+    "creative-destruction",
+    "future-of-work",
+    "odnf",
+    "ai-agents",
+    "tech-trends-2026",
   ]
 featured: true
 draft: false
