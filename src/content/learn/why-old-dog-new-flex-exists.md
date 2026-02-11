@@ -2,10 +2,10 @@
 title: "Why Old Dog, New Flex Exists"
 summary: "A personal and editorial statement on why Old Dog, New Flex exists: documenting how an experienced software engineer is adapting to AI, learning in public, and drawing clear lines around responsibility, clarity, and long-term thinking."
 section: learn
-status: published
 publishedDate: 2026-01-20
-tags: ["odnf", "editorial", "ai", "learning", "career"]
+tags: ["ai", "career", "editorial", "learning", "odnf"]
 featured: true
+status: published
 ---
 
 # Why Old Dog, New Flex Exists

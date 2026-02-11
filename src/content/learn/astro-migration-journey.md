@@ -2,10 +2,12 @@
 # src/content/learn/astro-migration-journey.md
 title: "From Next.js to Astro: A Migration Journey"
 subtitle: "Why I chose Astro for my personal blog and what I learned"
-publishedDate: 2025-07-01
 summary: "After starting with Next.js, I discovered Astro's content-focused approach was perfect for my blog. Here's what I learned during the migration."
-tags: ["astro", "nextjs", "migration", "performance"]
+section: learn
+publishedDate: 2025-07-01
+tags: ["astro", "migration", "nextjs", "performance"]
 featured: false
+status: published
 ---
 
 > **Context Note**  

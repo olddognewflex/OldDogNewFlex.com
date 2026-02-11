@@ -1,9 +1,9 @@
 ---
 title: "What I Mean By Learning, and What I Don't"
 subtitle: "Defining learning that survives interruption, change, and time"
+summary: "Learning isn’t consumption or speed. It’s what survives interruption, shapes decisions, and holds up when tools and certainty change."
 section: "learn"
 publishedDate: 2026-02-10
-summary: "Learning isn’t consumption or speed. It’s what survives interruption, shapes decisions, and holds up when tools and certainty change."
 tags: ["learning", "software-engineering"]
 featured: true
 status: "published"

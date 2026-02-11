@@ -2,8 +2,9 @@
 # src/content/learn/astro-migration-journey.md
 title: "AI is Fast, Production is Fragile"
 subtitle: "The Responsible AI Adult Origin Story"
-publishedDate: 2026-01-14
 summary: "AI can write code fast — but production is fragile. A practical look at why bad prompts cause real outages, and the system I use to apply AI safely in real software engineering."
+section: learn
+publishedDate: 2026-01-14
 tags:
   [
     "ai",
@@ -12,7 +13,8 @@ tags:
     "context-engineering",
     "responsible-ai",
   ]
-featured: true
+featured: false
+status: published
 ---
 
 # AI Is Fast. Production Is Fragile.

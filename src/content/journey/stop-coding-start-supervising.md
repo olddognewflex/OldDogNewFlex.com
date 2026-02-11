@@ -2,8 +2,8 @@
 title: "Stop Coding, Start Supervising"
 subtitle: "What happens when one of the most powerful voices in tech tells developers to stop coding?"
 summary: "In a bold statement at CES 2026, Nvidia CEO Jensen Huang told engineers to stop writing code and start supervising it. This post explores how that single line reveals a major paradigm shift in software engineering—from coding as craft to AI-guided orchestration. For veteran developers, it’s not just a workflow change—it’s an identity crisis. And it’s not limited to tech. Drawing inspiration from adjacent fields like design, this post argues that engineers aren’t being replaced, but promoted."
+section: journey
 publishedDate: 2026-01-16
-updatedDate: 2026-01-16
 tags:
   [
     "ai",
@@ -20,7 +20,8 @@ tags:
     "tech-trends-2026",
   ]
 featured: true
-draft: false
+status: published
+updatedDate: 2026-01-16
 canonicalURL: "https://olddognewflex.com/stop-coding-start-supervising"
 heroImage: "/images/posts/odnf-stop-coding-hero.png"
 ---
