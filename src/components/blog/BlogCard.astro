@@ -12,9 +12,16 @@ export interface Props {
   featured?: boolean;
 }
 
+const COLLECTION_LABELS: Record<string, string> = {
+  learn: 'Learn',
+  share: 'Share',
+  journey: 'Journey',
+};
+
 const { post, featured = false } = Astro.props;
 const postUrl = getPostUrl(post);
 const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
+const collectionLabel = COLLECTION_LABELS[post.collection] ?? post.collection;
 ---
 
 <Card variant={featured ? 'featured' : 'default'}>
@@ -28,7 +35,7 @@ const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
       {readingTime}
     </span>
     <Badge variant="collection" size="sm">
-      {post.collection}
+      {collectionLabel}
     </Badge>
   </div>
   

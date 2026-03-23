@@ -6,6 +6,12 @@ import { render } from 'astro:content';
 import { ArrowLeft, Calendar, Clock } from '@lucide/astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 
+const COLLECTION_LABELS: Record<string, string> = {
+  learn: 'Learn',
+  share: 'Share',
+  journey: 'Journey',
+};
+
 export async function getStaticPaths() {
   const collections = await Promise.all([
     getCollection('learn'),
@@ -31,6 +37,7 @@ type Props = {
 const { post } = Astro.props;
 const { Content } = await render(post);
 const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
+const collectionLabel = COLLECTION_LABELS[post.collection] ?? post.collection;
 ---
 
 <BlogPost
@@ -46,10 +53,10 @@ const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
     <!-- Back Navigation -->
     <a 
       href={`/${post.collection}`}
-      class="inline-flex items-center text-text hover:text-blue mb-8"
+      class="inline-flex items-center gap-1 text-text hover:text-blue mb-8"
     >
-      <ArrowLeft size="16" />
-      Back to {post.collection}
+      <ArrowLeft size="16" aria-hidden="true" />
+      Back to {collectionLabel}
     </a>
 
     <!-- Article Header -->
@@ -64,7 +71,7 @@ const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
           {readingTime}
         </span>
         <span class="collection-pill text-text px-3 py-1 rounded-full text-sm font-medium">
-          {post.collection}
+          {collectionLabel}
         </span>
       </div>
 
@@ -80,8 +87,8 @@ const readingTime = post.body ? getReadingTime(post.body) : 'Unknown';
     </header>
 
     <!-- Article Content -->
-    <article class="prose prose-lg max-w-none prose-ul:list-disc prose-ol:list-decimal prose-li:my-1 prose-ul:pl-6 prose-ol:pl-6">
+    <div class="prose prose-lg max-w-none prose-ul:list-disc prose-ol:list-decimal prose-li:my-1 prose-ul:pl-6 prose-ol:pl-6">
       <Content />
-    </article>
+    </div>
   </article>
 </BlogPost>

@@ -138,14 +138,20 @@ const latestPosts = recentPosts.slice(0, 6);
     </Container>
   </section>
 
-  <!-- Newsletter Signup -->
+  <!-- Follow Along -->
   <section class="py-16">
     <Container size="md">
       <div class="text-center">
-        <h2 class="text-3xl font-bold text-blue mb-4">Join the Learning Journey</h2>
-        <p class="text-text mb-8">Get updates on new posts and learning adventures. No spam, just growth.</p>
-        <div class="bg-overlay2 p-6 rounded-lg">
-          <p class="text-text">Newsletter signup coming soon!</p>
+        <h2 class="text-3xl font-bold text-blue mb-4">Stay in the loop</h2>
+        <p class="text-text mb-8">No newsletter yet — follow along where I post.</p>
+        <div class="bg-overlay2 p-6 rounded-lg flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a href="https://techhub.social/@olddognewflex" target="_blank" rel="noopener noreferrer" class="text-mauve hover:text-blue transition-colors">
+            Follow on Mastodon →
+          </a>
+          <span class="hidden sm:inline text-overlay2" aria-hidden="true">·</span>
+          <a href="https://x.com/OldDogNewFlex" target="_blank" rel="noopener noreferrer" class="text-mauve hover:text-blue transition-colors">
+            Follow on X →
+          </a>
         </div>
       </div>
     </Container>
