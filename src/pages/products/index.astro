@@ -20,21 +20,21 @@ const products = [
 <BaseLayout title="Products | Old Dog New Flex" description="Tools I actually use. No hype. Just scar tissue packaged nicely." heroImage="/images/old-dog-selling-show.webp" heroAlt="An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, holding a tablet pointing to the screen while standing on a stage with colorful lights and a tv studio atmosphere">
   <div class="mx-auto max-w-4xl px-4 py-12">
     <div class="hero-image" style="position: absolute; top: 120px; right: 30px; width: 50%;">
-		  <h1 class="text-5xl font-extrabold text-right" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);">
-		    Tools I Actually Use
-		  </h1>
+      <p class="text-5xl font-extrabold text-right" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);">
+        Tools I Actually Use
+      </p>
     </div>
 
-  <section class="py-10">
-    <Container>
-      <div class="text-center">
-        <h1 class="text-5xl font-bold text-blue mb-4">Products</h1>
-        <p class="text-xl text-text max-w-3xl mx-auto">
-        These are tools I actually use. They exist because I got tired of cleaning up the same messes over and over.
-        </p>
-      </div>
-    </Container>
-  </section>
+    <section class="py-10">
+      <Container>
+        <div class="text-center">
+          <h1 class="text-5xl font-bold text-blue mb-4">Products</h1>
+          <p class="text-xl text-text max-w-3xl mx-auto">
+            These are tools I actually use. They exist because I got tired of cleaning up the same messes over and over.
+          </p>
+        </div>
+      </Container>
+    </section>
 
     <section class="space-y-4">
       {products.map((p) => (
@@ -42,18 +42,18 @@ const products = [
       ))}
     </section>
 
-    <div class="my-10 h-px bg-primaryText/10" />
+    <div class="my-10 h-px bg-text/10" />
 
-    <section class="rounded-2xl border border-primaryText/10 bg-surface p-6 shadow-neon">
-      <h2 class="font-heading text-lg text-primaryText">Want a heads-up when something drops?</h2>
-      <p class="mt-2 text-sm text-secondaryText">
-        I don’t spam. I don’t do funnels. If you want a ping when a product goes live, this is the least annoying option.
+    <section class="rounded-2xl border border-surface1 bg-surface0 p-6">
+      <h2 class="text-lg font-bold text-text">Want a heads-up when something drops?</h2>
+      <p class="mt-2 text-sm text-subtext0">
+        I don't spam. I don't do funnels. If you want a ping when a product goes live, this is the least annoying option.
       </p>
 
       <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
         <a
           href="mailto:raymond@olddognewflex.com?subject=Old%20Dog%20New%20Flex%20Product%20Updates&body=Hey%20Raymond%2C%20let%20me%20know%20when%20new%20products%20drop."
-          class="inline-flex items-center justify-center rounded-xl border border-primaryText/15 px-4 py-2 text-sm font-medium text-primaryText hover:border-primaryText/30 hover:shadow-neon transition"
+          class="inline-flex items-center justify-center rounded-xl border border-mauve/30 px-4 py-2 text-sm font-medium text-text hover:border-mauve/60 transition"
         >
           Email me for updates
         </a>

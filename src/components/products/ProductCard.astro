@@ -3,20 +3,20 @@ const { product } = Astro.props;
 const href = `/products/${product.slug}`;
 ---
 
-<article class="rounded-2xl border border-primaryText/10 bg-surface p-6 hover:border-primaryText/25 hover:shadow-neon transition">
+<article class="rounded-2xl border border-surface1 bg-surface0 p-6 hover:border-mauve/40 transition">
   <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
     <div>
-      <h2 class="font-heading text-xl leading-tight text-primaryText">
-        <a href={href} class="hover:underline decoration-accent-cyan/70 underline-offset-4">
+      <h2 class="text-xl leading-tight text-text font-bold">
+        <a href={href} class="hover:underline decoration-teal/70 underline-offset-4">
           {product.title}
         </a>
       </h2>
 
-      <p class="mt-2 text-sm text-secondaryText">{product.subtitle}</p>
+      <p class="mt-2 text-sm text-subtext0">{product.subtitle}</p>
 
       <div class="mt-4 flex flex-wrap gap-2">
         {product.badges?.map((b) => (
-          <span class="rounded-full border border-primaryText/10 bg-background px-3 py-1 text-xs text-secondaryText">
+          <span class="rounded-full border border-surface2 bg-base px-3 py-1 text-xs text-subtext0">
             {b}
           </span>
         ))}
@@ -24,18 +24,18 @@ const href = `/products/${product.slug}`;
     </div>
 
     <div class="shrink-0">
-      <span class="inline-flex items-center rounded-full border border-primaryText/10 bg-background px-3 py-1 text-xs text-secondaryText">
+      <span class="inline-flex items-center rounded-full border border-surface2 bg-base px-3 py-1 text-xs text-subtext0">
         {product.status}
       </span>
     </div>
   </div>
 
-  <p class="mt-4 text-sm text-secondaryText">{product.description}</p>
+  <p class="mt-4 text-sm text-subtext0">{product.description}</p>
 
   <div class="mt-6">
     <a
       href={href}
-      class="inline-flex items-center justify-center rounded-xl border border-primaryText/15 px-4 py-2 text-sm font-medium text-primaryText hover:border-primaryText/30 transition"
+      class="inline-flex items-center justify-center rounded-xl border border-mauve/30 px-4 py-2 text-sm font-medium text-text hover:border-mauve/60 transition"
     >
       {product.ctaLabel ?? "Learn more"} <span class="ml-2 opacity-80">→</span>
     </a>

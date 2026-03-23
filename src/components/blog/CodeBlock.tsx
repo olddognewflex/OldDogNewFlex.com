@@ -27,7 +27,7 @@ export function CodeBlock({ children, class: className = "" }: CodeBlockProps) {
     <div className="relative group">
       <button
         onClick={copyToClipboard}
-        className="absolute right-2 top-2 p-2 rounded bg-gray-800 text-white opacity-0 group-hover:opacity-100 transition-opacity z-10"
+        className="absolute right-2 top-2 p-2 rounded bg-surface0 text-text opacity-0 group-hover:opacity-100 transition-opacity z-10"
         aria-label="Copy code"
         type="button"
       >
@@ -35,7 +35,7 @@ export function CodeBlock({ children, class: className = "" }: CodeBlockProps) {
       </button>
 
       <pre
-        className={`${className} bg-gray-900 text-gray-100 rounded-lg p-4 overflow-x-auto`}
+        className={`${className} bg-mantle text-text rounded-lg p-4 overflow-x-auto`}
       >
         <code>{code}</code>
       </pre>

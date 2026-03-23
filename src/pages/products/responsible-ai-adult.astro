@@ -12,7 +12,7 @@ const product = {
 <BaseLayout title={`${product.title} | Old Dog New Flex`} description={product.description}>
   <div class="mx-auto max-w-4xl px-4 py-12">
     <nav class="mb-8">
-      <a href="/products" class="text-sm text-secondaryText hover:text-primaryText transition">
+      <a href="/products" class="text-sm text-subtext0 hover:text-text transition">
         ← Back to Products
       </a>
     </nav>
@@ -20,11 +20,11 @@ const product = {
     <header class="mb-10">
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 class="font-heading text-3xl tracking-tight text-primaryText">{product.title}</h1>
-          <p class="mt-3 text-base text-secondaryText max-w-2xl">{product.description}</p>
+          <h1 class="text-3xl tracking-tight font-bold text-text">{product.title}</h1>
+          <p class="mt-3 text-base text-subtext0 max-w-2xl">{product.description}</p>
         </div>
 
-        <span class="inline-flex items-center rounded-full border border-primaryText/10 bg-surface px-3 py-1 text-xs text-secondaryText">
+        <span class="inline-flex items-center rounded-full border border-surface2 bg-surface0 px-3 py-1 text-xs text-subtext0">
           {product.status}
         </span>
       </div>
@@ -33,14 +33,14 @@ const product = {
         {product.status == "Available" && product.gumroadUrl ? (
           <a
             href={product.gumroadUrl}
-            class="inline-flex items-center justify-center rounded-xl bg-primaryText text-background px-5 py-2 text-sm font-semibold hover:opacity-90 transition"
+            class="inline-flex items-center justify-center rounded-xl bg-text text-base px-5 py-2 text-sm font-semibold hover:opacity-90 transition"
           >
             Buy on Gumroad
           </a>
         ) : (
           <a
             href="mailto:raymond@olddognewflex.com?subject=Responsible%20AI%20Adult%20Launch%20Ping&body=Hey%20Raymond%2C%20ping%20me%20when%20Responsible%20AI%20Adult%20goes%20live."
-            class="inline-flex items-center justify-center rounded-xl border border-primaryText/15 px-5 py-2 text-sm font-semibold text-primaryText hover:border-primaryText/30 hover:shadow-neon transition"
+            class="inline-flex items-center justify-center rounded-xl border border-mauve/30 px-5 py-2 text-sm font-semibold text-text hover:border-mauve/60 transition"
           >
             Get notified when it drops
           </a>
@@ -48,7 +48,7 @@ const product = {
 
         <a
           href="/learn/ai-is-fast-production-is-fragile"
-          class="inline-flex items-center justify-center rounded-xl border border-primaryText/15 px-5 py-2 text-sm font-semibold text-primaryText hover:border-primaryText/30 transition"
+          class="inline-flex items-center justify-center rounded-xl border border-mauve/30 px-5 py-2 text-sm font-semibold text-text hover:border-mauve/60 transition"
         >
           Read: AI Is Fast, Production Is Fragile →
         </a>
@@ -57,10 +57,10 @@ const product = {
 
     <article class="prose prose-invert max-w-none">
       <!-- Paste the one-page sales copy here as Markdown-ish HTML. -->
-      <h2>You’re already using AI. The question is whether it’s using you.</h2>
+      <h2>You're already using AI. The question is whether it's using you.</h2>
       <p>
         AI can write code fast. It can also quietly expand scope, rewrite working systems, and introduce breaking changes
-        with confidence. Most AI-related incidents don’t start with bad intentions — they start with bad prompts.
+        with confidence. Most AI-related incidents don't start with bad intentions — they start with bad prompts.
       </p>
 
       <h2>What you get</h2>
