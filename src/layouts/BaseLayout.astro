@@ -54,7 +54,7 @@ const {
 		{heroImage && 
 		<PageHero heroImage={heroImage} heroAlt={heroAlt} />
 		}
-    <main class="flex-1 justify-center">
+    <main id="main-content" class="flex-1 justify-center">
       <slot />
     </main>
 
@@ -63,7 +63,7 @@ const {
         <div class="text-center">
 					<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="footer-logo"/>
           <p class="footer-tagline">Built slowly. On purpose.</p>
-          <p class="footer-copyright">© 2024 Old Dog, New Flex. Built with Astro and TypeScript.</p>
+          <p class="footer-copyright">© {new Date().getFullYear()} Old Dog, New Flex. Built with Astro and TypeScript.</p>
         </div>
       </div>
     </footer>

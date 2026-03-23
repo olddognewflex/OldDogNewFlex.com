@@ -1,7 +1,10 @@
 ---
 import HeaderLink from './HeaderLink.astro';
-import ThemePills from './ThemePills.astro';
 ---
+
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:rounded focus:bg-blue focus:text-base focus:text-white">
+  Skip to content
+</a>
 
 <header>
 	<nav>
@@ -16,8 +19,8 @@ import ThemePills from './ThemePills.astro';
 			<HeaderLink href="/products">PRODUCTS</HeaderLink>
 			<HeaderLink href="/about">ABOUT</HeaderLink>
 		</div>
-		<div class="social-links hidden md:flex md:gap-4">
-			<a href="https://techhub.social/@olddognewflex" target="_blank">
+		<div class="social-links hidden md:flex md:gap-2 md:items-center">
+			<a href="https://techhub.social/@olddognewflex" target="_blank" rel="noopener noreferrer">
 				<span class="sr-only">Follow Old Dog, New Flex on Mastodon</span>
 				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
 					><path
@@ -26,16 +29,16 @@ import ThemePills from './ThemePills.astro';
 					></path></svg
 				>
 			</a>
-			<a href="https://x.com/OldDogNewFlex" target="_blank">
-				<span class="sr-only">Go to Astro's GitHub repo</span>
-				<svg width="32" height="32" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path fill="currentColor" d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" fill="white"/>
+			<a href="https://x.com/OldDogNewFlex" target="_blank" rel="noopener noreferrer">
+				<span class="sr-only">Follow Old Dog, New Flex on X</span>
+				<svg width="32" height="32" viewBox="0 0 1200 1227" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					<path fill="currentColor" d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z"/>
 				</svg>
 			</a>
 		</div>
 		<!-- Hamburger Icon -->
   	<button
-    	class="focus:outline-none top-10 right-10 xs:top-20 xs:right-20 md:hidden"
+    	class="md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mauve"
     	x-data="{ open: false }"
     	@click="open = !open"
     	aria-label="Toggle Menu"
@@ -47,6 +50,7 @@ import ThemePills from './ThemePills.astro';
       	fill="none"
       	viewBox="0 0 24 24"
       	stroke="currentColor"
+      	aria-hidden="true"
     	>
       	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         	d="M4 6h16M4 12h16M4 18h16" />
@@ -59,6 +63,7 @@ import ThemePills from './ThemePills.astro';
       	fill="none"
       	viewBox="0 0 24 24"
       	stroke="currentColor"
+      	aria-hidden="true"
     	>
       	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         	d="M6 18L18 6M6 6l12 12" />
@@ -71,12 +76,12 @@ import ThemePills from './ThemePills.astro';
       		class="fixed top-12 right-0 w-3/4 h-full text-white p-6 sm:hidden z-50"
       		style="background-color: var(--color-base); border-left: 2px solid var(--color-mauve);"
     	>
-				<HeaderLink href="/" class="block w-9/10 py-2 border-b border-mantle">HOME</HeaderLink>
-				<HeaderLink href="/learn" class="block w-9/10 py-2 border-b border-mantle">LEARN</HeaderLink>
-				<HeaderLink href="/journey" class="block w-9/10 py-2 border-b border-mantle">JOURNEY</HeaderLink>
-				<HeaderLink href="/share" class="block w-9/10 py-2 border-b border-mantle">SHARE</HeaderLink>
-				<HeaderLink href="/about" class="block w-9/10 py-2">ABOUT</HeaderLink>
-			</div>
+			<HeaderLink href="/" class="block w-9/10 py-2 border-b border-mantle">HOME</HeaderLink>
+			<HeaderLink href="/learn" class="block w-9/10 py-2 border-b border-mantle">LEARN</HeaderLink>
+			<HeaderLink href="/journey" class="block w-9/10 py-2 border-b border-mantle">JOURNEY</HeaderLink>
+			<HeaderLink href="/share" class="block w-9/10 py-2 border-b border-mantle">SHARE</HeaderLink>
+			<HeaderLink href="/about" class="block w-9/10 py-2 border-b border-mantle">ABOUT</HeaderLink>
+		</div>
   	</button>
 	</nav>
 </header>
@@ -90,15 +95,7 @@ import ThemePills from './ThemePills.astro';
 		display: flex;
 		align-items: center;
 	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
 
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-	}
 	nav {
 		display: flex;
 		align-items: center;

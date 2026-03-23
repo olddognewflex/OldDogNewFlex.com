@@ -6,7 +6,7 @@ export interface BaseLayoutProps {
   canonicalURL?: string;
   heroImage?: string;
   heroAlt?: string;
-  heroTaglineElement?: any;
+  heroTaglineElement?: unknown;
   article?: boolean;
   publishedDate?: Date;
   updatedDate?: Date;
@@ -78,7 +78,7 @@ export interface HeaderLinkProps {
 export interface PageHeroProps {
   heroImage: string;
   heroAlt: string;
-  heroTaglineElement?: any;
+  heroTaglineElement?: unknown;
 }
 
 export interface BlogCardProps {

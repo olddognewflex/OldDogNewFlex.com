@@ -4,74 +4,80 @@
 
 <style>
 .theme-pill[aria-pressed="true"] {
-  outline: 3px solid var(--yellow, #f9e2af);
+  outline: 3px solid var(--color-yellow, #f9e2af);
   outline-offset: 2px;
 }
 .theme-pill {
   transition: outline 0.2s, box-shadow 0.2s;
   box-shadow: 0 1px 4px 0 rgba(0,0,0,0.08);
+  cursor: pointer;
 }
-.theme-pill:focus {
-  outline: 3px solid var(--mauve, #cba6f7);
+.theme-pill:focus-visible {
+  outline: 3px solid var(--color-mauve, #cba6f7);
   outline-offset: 2px;
 }
 </style>
 
-<div id="theme-pills" class="flex gap-3 my-4">
+<div id="theme-pills" class="flex gap-2 items-center">
   <button
-    class="theme-pill latte border-2 border-transparent rounded-full w-5 h-5"
+    class="theme-pill latte border-2 border-transparent rounded-full w-11 h-11 flex items-center justify-center text-lg"
     data-theme="latte"
-    title="Latte"
-    aria-label="Latte"
+    title="Latte (light)"
+    aria-label="Switch to Latte theme"
+    aria-pressed="false"
     type="button"
   >🌻</button>
   <button
-    class="theme-pill frappe border-2 border-transparent rounded-full w-5 h-5"
+    class="theme-pill frappe border-2 border-transparent rounded-full w-11 h-11 flex items-center justify-center text-lg"
     data-theme="frappe"
     title="Frappé"
-    aria-label="Frappé"
+    aria-label="Switch to Frappé theme"
+    aria-pressed="false"
     type="button"
   >🪴</button>
   <button
-    class="theme-pill macchiato border-2 border-transparent rounded-full w-5 h-5"
+    class="theme-pill macchiato border-2 border-transparent rounded-full w-11 h-11 flex items-center justify-center text-lg"
     data-theme="macchiato"
     title="Macchiato"
-    aria-label="Macchiato"
+    aria-label="Switch to Macchiato theme"
+    aria-pressed="false"
     type="button"
   >🌺</button>
   <button
-    class="theme-pill mocha border-2 border-transparent rounded-full w-5 h-5"
+    class="theme-pill mocha border-2 border-transparent rounded-full w-11 h-11 flex items-center justify-center text-lg"
     data-theme="mocha"
-    title="Mocha"
-    aria-label="Mocha"
+    title="Mocha (dark)"
+    aria-label="Switch to Mocha theme"
+    aria-pressed="false"
     type="button"
   >🌿</button>
 </div>
 
-<!-- Usage
+<script>
+  const themes = ["latte", "frappe", "macchiato", "mocha"] as const;
+  type Theme = typeof themes[number];
 
-		<ThemePills />
-		<script type="module" client:load>
-			const themes = ["latte", "frappe", "macchiato", "mocha"];
-			const pills = document.querySelectorAll("#theme-pills .theme-pill");
+  const pills = document.querySelectorAll<HTMLButtonElement>("#theme-pills .theme-pill");
 
-			function setTheme(theme) {
-				document.documentElement.setAttribute("data-theme", theme);
-				localStorage.setItem("theme", theme);
-				pills.forEach((pill) => {
-					const isActive = pill.dataset.theme === theme;
-					pill.setAttribute("aria-pressed", isActive ? "true" : "false");
-					pill.style.outline = isActive ? "3px solid var(--catppuccin-yellow, #f9e2af)" : "none";
-				});
-			}
-			pills.forEach((pill) => {
-				pill.addEventListener("click", () => {
-					setTheme(pill.dataset.theme);
-				});
-			});
-			// On load, set theme from localStorage or default to "mocha"
-			const stored = localStorage.getItem("theme");
-			setTheme(stored && themes.includes(stored) ? stored : "mocha");
-		</script>
+  function setTheme(theme: Theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    pills.forEach((pill) => {
+      const isActive = pill.dataset.theme === theme;
+      pill.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+  }
 
-*-->
+  pills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      const theme = pill.dataset.theme as Theme;
+      if (themes.includes(theme)) {
+        setTheme(theme);
+      }
+    });
+  });
+
+  // Restore from localStorage or default to "mocha"
+  const stored = localStorage.getItem("theme") as Theme | null;
+  setTheme(stored && themes.includes(stored) ? stored : "mocha");
+</script>
