@@ -1,23 +1,13 @@
 ---
-// src/pages/start-here.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BlogCard from '../components/blog/BlogCard.astro';
 import Container from '../components/ui/Container.astro';
-import { getAllPosts, getFeaturedPosts } from '../lib/blog';
-
-const [featuredPosts, recentPosts] = await Promise.all([
-  getFeaturedPosts(),
-  getAllPosts()
-]);
-
-const latestPosts = recentPosts.slice(0, 6);
 ---
 
 <BaseLayout 
-  title="Old Dog, New Flex | Start Here" 
+  title="Start Here | Old Dog, New Flex" 
   description={`If you're new here, welcome. Old Dog, New Flex exists because I reached a point in my career where I stopped asking "What's next?" and started asking "What lasts?"`}
   heroImage="/images/old-dog-drawing-map.webp" 
-  heroAlt="An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, large headphones sitting at a table in a coffee shop with a couple other people drawing a map on a piece of notebook paper. The background scene is a busy coffee shop with a some other people at tables in the backgroud. Some working on laptops. Others talking to friends.">
+  heroAlt="An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, large headphones sitting at a table in a coffee shop with a couple other people drawing a map on a piece of notebook paper.">
 
   <div class="hero-image hidden md:block md:absolute md:left-20 md:w-2/3 lg:w-1/3 md:top-[140px]">
     <p class="text-5xl font-extrabold text-left text-blue" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);">
@@ -25,134 +15,134 @@ const latestPosts = recentPosts.slice(0, 6);
     </p>
   </div>
 
-  <!-- Hero Section -->
-  <section class="py-10">
-    <Container>
-      <div class="text-center">
-        <h1 class="text-5xl font-bold text-blue mb-4">Start Here</h1>
-		<h2 class="text-3xl font-bold text-blue mb-4">If you're new here, welcome.</h2>
-        <p class="text-xl text-text max-w-3xl mx-auto">
-            <b>Old Dog, New Flex</b> exists because I reached a point in my career where I stopped asking <i>"What's
-            next?"</i> and started asking <i>"What lasts?"</i>
-        </p>
-        <p class="mt-6 text-2xl">
-            After 30 years in software, I've learned a few things the hard way:
-            <ul>
-                <li>Most breakthroughs are rebranded patterns</li>
-                <li>Speed without judgment creates fragility</li>
-                <li>Tools don't replace responsibility — they redistribute it</li>
-            </ul>
-        </p>
-		<p class="mt-6 text-2xl font-bold emphasized-point">
-            This site is my way of documenting how I'm navigating modern tech - especially AI - <b>without abandoning experience, ethics, or sanity.</b>  
-        </p>    
-      </div>
+  <!-- One-paragraph orientation -->
+  <section class="pt-16 pb-10">
+    <Container size="sm">
+      <h1 class="text-4xl font-bold text-blue mb-6">Start Here</h1>
+      <p class="text-xl">
+        You've already seen what this site is about. This page skips the intro and gets you to
+        the right first post — based on what actually brought you here.
+      </p>
     </Container>
   </section>
 
-  <section class="py-10">
-    <Container>
-      <div class="text-center">
-        <h2 class="text-3xl font-bold mb-4">How I Write Here</h2>
-        <p class="text-xl">
-          I publish in three modes, depending on what the moment calls for:
-        </p>
-        <ul>
-            <li><b>Learn</b> - When I've figured something out well enough to explain it clearly</li>
-            <li><b>Share</b> - When I'm building, shipping, or testing ideas in the open</li>
-            <li><b>Journey</b> - When reflection matters more than instruction</li>
-        </ul>
-        <p class="text-xl">
-            Not everything is polished.
-            Everything is intentional.
-        </p>
-      </div>
-    </Container>
-  </section>
-
-  <section class="py-10">
-    <Container>
-      <div class="text-center">
-        <h2 class="text-3xl font-bold mb-4">If You Want a Starting Path</h2>
-          <p class="w-full text-xl">
-            Read these first:
-          </p>
-          <p class="w-full text-xl">
-          <ul>
-            <li><a href="/journey/burnout-wasnt-the-end">Burnout Wasn't the End — It's Where My New Flex Began</a></li>
-            <li><a href="/learn/ai-is-fast-production-is-fragile">AI Is Fast, Production Is Fragile</a></li>
-            <li><a href="/journey/stop-coding-start-supervising">Stop Coding, Start Supervising</a></li>
-          </ul>
-          </p>
-      </div>
-    </Container>
-  </section>
-
-  <section class="py-10">
-    <Container>
-      <div class="text-center">
-        <h2 class="text-3xl font-bold mb-4">Why I'm Building This in Public</h2>
-          <p class="text-xl">
-            I'm not here to win the algorithm.
-            I'm here to:
-            <ul>
-                <li><b>think clearly</b></li>
-                <li><b>build responsibly</b></li>
-                <li><b>share what experience has made visible</b></li>
-            </ul>
-          </p>
-          <p class="text-xl">
-            If you're early in your career, I hope this saves you time.<br />
-            If you're later in your career, I hope this feels familiar.
-          </p>
-          <p class="text-xl">
-            Either way — welcome.
-          </p>
-      </div>
-    </Container>
-  </section>
-
-  <!-- Featured Posts -->
-  {featuredPosts.length > 0 && (
-    <section class="py-12">
-      <Container>
-        <h2 class="text-3xl font-bold mb-8">Featured</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-          {featuredPosts.map((post) => (
-            <BlogCard post={post} featured />
-          ))}
-        </div>
-      </Container>
-    </section>
-  )}
-
-  <!-- Latest Posts -->
-  <section class="py-12">
-    <Container>
-      <h2 class="text-3xl font-bold mb-8">Latest</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {latestPosts.map((post) => (
-          <BlogCard post={post} />
-        ))}
-      </div>
-    </Container>
-  </section>
-
-  <!-- Follow Along -->
-  <section class="py-16">
+  <!-- Self-select reading paths -->
+  <section class="py-10 border-t border-surface1">
     <Container size="md">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold text-blue mb-4">Stay in the loop</h2>
-        <p class="text-text mb-8">No newsletter yet — follow along where I post.</p>
-        <div class="bg-overlay2 p-6 rounded-lg flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a href="https://techhub.social/@olddognewflex" target="_blank" rel="noopener noreferrer" class="text-mauve hover:text-blue transition-colors">
-            Follow on Mastodon →
+      <h2 class="text-2xl font-bold mb-8 text-subtext0 uppercase tracking-wide text-sm">Pick your path</h2>
+
+      <!-- Path 1 -->
+      <div class="mb-12">
+        <h3 class="text-xl font-bold text-blue mb-2">
+          If AI is changing how you work — and you're not sure whether to trust it
+        </h3>
+        <p class="text-subtext0 mb-5">
+          These are for engineers who use AI tools daily but feel something off about how they're being used.
+          Not AI skepticism — AI judgment.
+        </p>
+        <div class="space-y-4">
+          <a href="/learn/ai-is-fast-production-is-fragile" class="block p-5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 transition-colors group">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-semibold text-text group-hover:text-blue transition-colors">AI Is Fast, Production Is Fragile</p>
+                <p class="text-sm text-subtext0 mt-1">Why speed without oversight creates the exact kind of debt that experience was supposed to prevent.</p>
+              </div>
+              <span class="text-subtext0 group-hover:text-blue transition-colors shrink-0 mt-1">→</span>
+            </div>
           </a>
-          <span class="hidden sm:inline text-overlay2" aria-hidden="true">·</span>
-          <a href="https://x.com/OldDogNewFlex" target="_blank" rel="noopener noreferrer" class="text-mauve hover:text-blue transition-colors">
-            Follow on X →
+          <a href="/learn/responsible-ai-adult-pov" class="block p-5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 transition-colors group">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-semibold text-text group-hover:text-blue transition-colors">What It Means to Be a Responsible AI Adult</p>
+                <p class="text-sm text-subtext0 mt-1">The framework I use for deciding when AI earns autonomy in my workflow — and when it doesn't.</p>
+              </div>
+              <span class="text-subtext0 group-hover:text-blue transition-colors shrink-0 mt-1">→</span>
+            </div>
           </a>
         </div>
+      </div>
+
+      <!-- Path 2 -->
+      <div class="mb-12 pt-10 border-t border-surface1">
+        <h3 class="text-xl font-bold text-blue mb-2">
+          If you've been at this for a while and something isn't working anymore
+        </h3>
+        <p class="text-subtext0 mb-5">
+          These are for experienced engineers who feel the gap between what they know and how they work.
+          Burnout, identity shifts, figuring out where experience fits in the current moment.
+        </p>
+        <div class="space-y-4">
+          <a href="/journey/burnout-wasnt-the-end" class="block p-5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 transition-colors group">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-semibold text-text group-hover:text-blue transition-colors">Burnout Wasn't the End — It's Where My New Flex Began</p>
+                <p class="text-sm text-subtext0 mt-1">The post that started all of this. What I learned by actually stopping, and why I came back differently.</p>
+              </div>
+              <span class="text-subtext0 group-hover:text-blue transition-colors shrink-0 mt-1">→</span>
+            </div>
+          </a>
+          <a href="/journey/stop-coding-start-supervising" class="block p-5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 transition-colors group">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-semibold text-text group-hover:text-blue transition-colors">Stop Coding, Start Supervising</p>
+                <p class="text-sm text-subtext0 mt-1">On making the shift from doing everything yourself to knowing what's worth directing — and what isn't.</p>
+              </div>
+              <span class="text-subtext0 group-hover:text-blue transition-colors shrink-0 mt-1">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Path 3 -->
+      <div class="mb-10 pt-10 border-t border-surface1">
+        <h3 class="text-xl font-bold text-blue mb-2">
+          If you're not sure what this site is or whether it's for you
+        </h3>
+        <p class="text-subtext0 mb-5">
+          These explain the thinking behind why this exists and what "learning" means in this context.
+          Start here if you want to know what you're signing up for before diving in.
+        </p>
+        <div class="space-y-4">
+          <a href="/learn/why-old-dog-new-flex-exists" class="block p-5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 transition-colors group">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-semibold text-text group-hover:text-blue transition-colors">Why Old Dog, New Flex Exists</p>
+                <p class="text-sm text-subtext0 mt-1">The honest origin story. Not a brand exercise — a career reckoning that turned into a writing habit.</p>
+              </div>
+              <span class="text-subtext0 group-hover:text-blue transition-colors shrink-0 mt-1">→</span>
+            </div>
+          </a>
+          <a href="/learn/what-i-mean-by-learning-and-what-i-dont" class="block p-5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 transition-colors group">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <p class="font-semibold text-text group-hover:text-blue transition-colors">What I Mean by Learning — and What I Don't</p>
+                <p class="text-sm text-subtext0 mt-1">How I distinguish chasing novelty from actually building understanding. The filter I use before writing anything.</p>
+              </div>
+              <span class="text-subtext0 group-hover:text-blue transition-colors shrink-0 mt-1">→</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Lightweight closing CTA -->
+  <section class="py-14 border-t border-surface1">
+    <Container size="sm">
+      <p class="text-xl mb-6">
+        Not sure which path is yours? Start anywhere. The writing is self-contained —
+        you don't need to read in order.
+      </p>
+      <div class="flex flex-wrap gap-4">
+        <a href="/learn" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 text-text transition-colors">
+          Browse Learn →
+        </a>
+        <a href="/journey" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 text-text transition-colors">
+          Browse Journey →
+        </a>
+        <a href="/about" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 text-text transition-colors">
+          About this site →
+        </a>
       </div>
     </Container>
   </section>

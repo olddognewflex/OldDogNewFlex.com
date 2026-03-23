@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+---
+
+<BaseLayout
+  title="Page Not Found | Old Dog, New Flex"
+  description="That page doesn't exist — but these ones do."
+>
+  <section class="pt-20 pb-16">
+    <Container size="sm">
+
+      <p class="text-subtext0 text-sm uppercase tracking-widest mb-4">404</p>
+      <h1 class="text-4xl font-bold text-blue mb-4">
+        That page doesn't exist.
+      </h1>
+      <p class="text-xl text-subtext0 mb-12">
+        Either the URL changed, or something was moved. Either way — here's where to go instead.
+      </p>
+
+      <!-- Suggested content: 3 direct paths -->
+      <div class="space-y-3 mb-12">
+        <a href="/learn/ai-is-fast-production-is-fragile" class="block p-5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 transition-colors group">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs text-subtext0 mb-1">Learn</p>
+              <p class="font-semibold text-text group-hover:text-blue transition-colors">AI Is Fast, Production Is Fragile</p>
+              <p class="text-sm text-subtext0 mt-1">Why speed without oversight creates the exact kind of debt that experience was supposed to prevent.</p>
+            </div>
+            <span class="text-overlay2 group-hover:text-blue transition-colors shrink-0 mt-1">→</span>
+          </div>
+        </a>
+
+        <a href="/journey/burnout-wasnt-the-end" class="block p-5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 transition-colors group">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs text-subtext0 mb-1">Journey</p>
+              <p class="font-semibold text-text group-hover:text-blue transition-colors">Burnout Wasn't the End — It's Where My New Flex Began</p>
+              <p class="text-sm text-subtext0 mt-1">The post that started all of this. What I learned by actually stopping.</p>
+            </div>
+            <span class="text-overlay2 group-hover:text-blue transition-colors shrink-0 mt-1">→</span>
+          </div>
+        </a>
+
+        <a href="/learn/why-old-dog-new-flex-exists" class="block p-5 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 transition-colors group">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="text-xs text-subtext0 mb-1">Learn</p>
+              <p class="font-semibold text-text group-hover:text-blue transition-colors">Why Old Dog, New Flex Exists</p>
+              <p class="text-sm text-subtext0 mt-1">The honest origin story behind this site and why it's worth your time.</p>
+            </div>
+            <span class="text-overlay2 group-hover:text-blue transition-colors shrink-0 mt-1">→</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Low-friction navigation -->
+      <div class="flex flex-wrap gap-3">
+        <a href="/" class="px-4 py-2 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 text-sm text-text transition-colors">
+          ← Home
+        </a>
+        <a href="/start-here" class="px-4 py-2 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 text-sm text-text transition-colors">
+          Start Here
+        </a>
+        <a href="/learn" class="px-4 py-2 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 text-sm text-text transition-colors">
+          All Learn posts
+        </a>
+        <a href="/journey" class="px-4 py-2 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 text-sm text-text transition-colors">
+          All Journey posts
+        </a>
+      </div>
+
+    </Container>
+  </section>
+</BaseLayout>
