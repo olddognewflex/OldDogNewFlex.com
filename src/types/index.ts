@@ -68,6 +68,7 @@ export interface ImageProps {
   class?: string;
   loading?: 'lazy' | 'eager';
   decoding?: 'async' | 'sync' | 'auto';
+  fetchpriority?: 'high' | 'low' | 'auto';
 }
 
 export interface HeaderLinkProps {

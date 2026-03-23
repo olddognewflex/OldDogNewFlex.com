@@ -8,7 +8,8 @@ const {
   height = 630, 
   class: className = '',
   loading = 'lazy',
-  decoding = 'async'
+  decoding = 'async',
+  fetchpriority,
 }: ImageProps = Astro.props;
 ---
 
@@ -20,4 +21,5 @@ const {
   loading={loading}
   decoding={decoding}
   class={className}
+  fetchpriority={fetchpriority}
 /> 

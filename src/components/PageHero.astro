@@ -13,14 +13,16 @@ const { heroImage, heroAlt, heroTaglineElement } = Astro.props;
 
 <section
   class="relative w-full"
+  style="aspect-ratio: 16/5;"
   aria-label={heroAlt}
 >
   <Image 
     src={heroImage}
     alt={heroAlt}
-    class="block w-full h-auto object-cover"
+    class="block w-full h-full object-cover"
     loading="eager"
     decoding="async"
+    fetchpriority="high"
   />
   {heroTaglineElement && (
     <div class="relative z-10 flex items-center justify-center w-full h-full">

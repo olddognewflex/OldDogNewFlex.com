@@ -45,7 +45,7 @@ const info = categoryInfo[category as keyof typeof categoryInfo];
 <BaseLayout title={`${info.title} | Old Dog, New Flex`} description={info.description} heroImage={info.heroImage} heroAlt={info.heroAlt}>
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Hero overlay text (decorative tagline over hero image) -->
-    <div class="hero-image" style="position: absolute; top: 140px; left: 30px; width: 40%;">
+    <div class="hero-image hidden md:block" style="position: absolute; top: 140px; left: 30px; width: 40%;">
 		  <p class="text-5xl font-extrabold text-left text-blue" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);">
 		    {info.title}
 		  </p>

@@ -13,7 +13,7 @@ export interface Props {
   canonicalURL?: string;
   heroImage?: string;
   heroAlt?: string;
-  heroTaglineElement?: any;
+  heroTaglineElement?: unknown;
   article?: boolean;
   publishedDate?: Date;
   updatedDate?: Date;
@@ -67,14 +67,9 @@ const {
         </div>
       </div>
     </footer>
-		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="logo-absolute"/>
+		<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="logo-absolute hidden md:block"/>
 		
-		<!-- Alpine.js -->
-		<script>
-			import Alpine from 'alpinejs';
-			window.Alpine = Alpine;
-			Alpine.start();
-		</script>
+
 		</body>
 </html>
 
