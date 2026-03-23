@@ -1,14 +1,14 @@
-/* Layout-specific styles extracted from BaseLayout.astro */
+/* Layout-specific styles */
 
 main {
   width: 100%;
-  max-width: 650px;
   margin: 0 auto;
 }
 
+/* Reading column: constrains prose to a comfortable line length */
 .prose {
   width: 100%;
-  max-width: 650px;
+  max-width: 680px;
   margin: auto;
   padding: 1em;
   color: var(--color-text);
@@ -55,10 +55,6 @@ main {
 }
 
 @media (min-width: 768px) {
-  main {
-    max-width: 70%;
-  }
-
   .prose {
     max-width: 70%;
   }
@@ -67,4 +63,4 @@ main {
     position: fixed;
     width: 16.25rem;
   }
-} 
+}

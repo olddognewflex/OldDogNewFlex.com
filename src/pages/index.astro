@@ -20,13 +20,13 @@ const latestPosts = recentPosts.slice(0, 6);
   heroAlt="An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, sitting confidently at a modern computer keyboard. The scene is colorful, vibrant, and filled with 80s-inspired nostalgia. The background is a cozy, cluttered room with toys and gadgets. The style is cinematic, realistic, and expressive, with dramatic lighting and detailed textures.">
 
   <div class="hero-image absolute left-10 w-8/10 md:w-2/3 lg:w-1/3 top-[140px] md:left-20">
-		<h1 class="text-2xl font-extrabold text-left" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);">
+		<p class="text-5xl font-extrabold text-left text-blue" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);">
       Proving it's never too late to refactor your comfort zone
-    </h1>
+    </p>
   </div>
 
-  <!-- Hero Section -->
-  <section class="py-10">
+  <!-- Hero: generous top padding, site intro -->
+  <section class="pt-16 pb-12">
     <Container>
       <div class="text-center">
         <h1 class="text-5xl font-bold text-blue mb-4">Old Dog, New Flex</h1>
@@ -36,8 +36,8 @@ const latestPosts = recentPosts.slice(0, 6);
           "this changes everything" moments that... didn't.
         </p>
         <p class="mt-6 text-2xl">
-          This site is where I document how I am <b>learning</b>, <b>building</b>, and <b>shipping</b> <i>now</i> - in an era of AI,
-          automation, and accelerating noise - with context, restraint, and responsibility.
+          This site is where I document how I am <b>learning</b>, <b>building</b>, and <b>shipping</b> <i>now</i> — in an era of AI,
+          automation, and accelerating noise — with context, restraint, and responsibility.
         </p>
 				<p class="mt-6 text-2xl font-bold emphasized-point">
 					No hype.<br />
@@ -48,61 +48,48 @@ const latestPosts = recentPosts.slice(0, 6);
     </Container>
   </section>
 
-  <section class="py-10">
+  <!-- What's here: tighter spacing, flows from the intro above -->
+  <section class="py-12 border-t border-surface1">
     <Container>
-      <div class="text-center">
-        <h2 class="text-3xl font-bold mb-4">What You'll Find Here</h2>
-        <div class="flex flex-col md:flex-row gap-y-8 md:gap-y-0 md:gap-x-8 text-left">
-          <div class="flex-1 p-6 rounded-lg shadow-lg">
-            <h3 class="text-xl font-bold mb-2">Learn</h3>
-            <p class="text-xl">
-              Clear explanations of what's actually changing in tech - and what isn't - based on lived
-							experience, not launch blogs.
-            </p>
-          </div>
-          <div class="flex-1 p-6 rounded-lg shadow-lg">
-            <h3 class="text-xl font-bold mb-2">Share</h3>
-            <p class="text-xl">
-              What I'm building, how I'm thinking about tools and systems, and why I make the tradeoffs I do.
-            </p>
-          </div>
-          <div class="flex-1 p-6 rounded-lg shadow-lg">
-            <h3 class="text-xl font-bold mb-2">Journey</h3>
-            <p class="text-xl">
-              Reflections on longevity, burnout, reinvention, and staying useful in an industry obsessed with newness.
-            </p>
-          </div>
+      <h2 class="text-3xl font-bold mb-8">What You'll Find Here</h2>
+      <div class="flex flex-col md:flex-row gap-6 text-left">
+        <div class="flex-1 p-6 rounded-lg bg-surface0 border border-surface1">
+          <h3 class="text-xl font-bold mb-3">Learn</h3>
+          <p class="text-xl text-subtext0">
+            Clear explanations of what's actually changing in tech — and what isn't — based on lived
+            experience, not launch blogs.
+          </p>
+        </div>
+        <div class="flex-1 p-6 rounded-lg bg-surface0 border border-surface1">
+          <h3 class="text-xl font-bold mb-3">Share</h3>
+          <p class="text-xl text-subtext0">
+            What I'm building, how I'm thinking about tools and systems, and why I make the tradeoffs I do.
+          </p>
+        </div>
+        <div class="flex-1 p-6 rounded-lg bg-surface0 border border-surface1">
+          <h3 class="text-xl font-bold mb-3">Journey</h3>
+          <p class="text-xl text-subtext0">
+            Reflections on longevity, burnout, reinvention, and staying useful in an industry obsessed with newness.
+          </p>
         </div>
       </div>
     </Container>
   </section>
 
-  <section class="py-10">
-    <Container>
-      <div class="text-center">
-        <h2 class="text-3xl font-bold mb-4">What This Site Is (and Isn't)</h2>
-        <div class="flex flex-col md:flex-row gap-y-8 md:gap-y-0 md:gap-x-8 text-center">
-          <div class="flex-1 p-6 rounded-lg shadow-lg">
-            <p class="text-xl">
-              This isn't a news site.<br />
-              It isn't a trend report.
-              It isn't a motivational feed.
-            </p>
-            <p class="text-xl">
-              It's a long-game project for people who care about <strong>durability over novelty</strong>.
-            </p>
-            <p class="text-xl">
-              If that resonates, you're in the right place.
-            </p>
-          </div>
-        </div>
-      </div>
+  <!-- Positioning statement: narrow, centered, visually distinct break -->
+  <section class="py-10 border-y border-surface1">
+    <Container size="sm">
+      <p class="text-xl text-center">
+        This isn't a news site. Not a trend report. Not a motivational feed.<br />
+        It's a long-game project for people who care about <strong>durability over novelty</strong>.<br />
+        If that resonates, you're in the right place.
+      </p>
     </Container>
   </section>
 
   <!-- Featured Posts -->
   {featuredPosts.length > 0 && (
-    <section class="py-12">
+    <section class="py-14">
       <Container>
         <h2 class="text-3xl font-bold mb-8">Featured</h2>
         <div class="grid md:grid-cols-2 gap-8">
@@ -115,7 +102,7 @@ const latestPosts = recentPosts.slice(0, 6);
   )}
 
   <!-- Latest Posts -->
-  <section class="py-12">
+  <section class="py-14 border-t border-surface1">
     <Container>
       <h2 class="text-3xl font-bold mb-8">Latest</h2>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -127,12 +114,12 @@ const latestPosts = recentPosts.slice(0, 6);
   </section>
 
   <!-- Follow Along -->
-  <section class="py-16">
+  <section class="py-16 border-t border-surface1">
     <Container size="md">
       <div class="text-center">
         <h2 class="text-3xl font-bold text-blue mb-4">Stay in the loop</h2>
         <p class="text-text mb-8">No newsletter yet — follow along where I post.</p>
-        <div class="bg-overlay2 p-6 rounded-lg flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div class="bg-surface0 p-6 rounded-lg flex flex-col sm:flex-row gap-4 justify-center items-center">
           <a href="https://techhub.social/@olddognewflex" target="_blank" rel="noopener noreferrer" class="text-mauve hover:text-blue transition-colors">
             Follow on Mastodon →
           </a>
