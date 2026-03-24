@@ -37,3 +37,4 @@ drafts/
 
 # Local Netlify folder
 .netlify
+/.opencode/skills

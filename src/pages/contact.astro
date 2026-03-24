@@ -1,15 +1,28 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/ui/Container.astro";
 ---
 
-<BaseLayout title="Contact" description="Get in touch with Old Dog New Flex">
-  <section class="max-w-3xl mx-auto text-center py-16">
-    <h1 class="text-4xl font-bold mb-4">Contact</h1>
-    <p>
-      Have questions or just want to say hi? Email me at
-      <a href="mailto:raymond@olddognewflex.com" class="text-flamingo">
+<BaseLayout title="Contact | Old Dog, New Flex" description="Get in touch with Old Dog, New Flex">
+  <section class="pt-16 pb-20">
+    <Container size="sm">
+      <h1 class="text-4xl font-bold text-blue mb-4">Get in touch</h1>
+      <p class="text-xl text-subtext0 mb-10">
+        Email is the best way to reach me. I read everything, though I can't always respond quickly.
+      </p>
+
+      <a
+        href="mailto:raymond@olddognewflex.com"
+        class="inline-flex items-center gap-3 px-6 py-3 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 text-text transition-colors text-lg font-medium"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         raymond@olddognewflex.com
-      </a>.
-    </p>
+      </a>
+
+      <div class="mt-12 space-y-4 text-subtext0">
+        <p><strong class="text-text">Good reasons to write:</strong> feedback on something you read, a question the writing raised, or just to say the site is (or isn't) useful to you.</p>
+        <p><strong class="text-text">Please don't:</strong> pitch products, send newsletters, or ask me to add a link. I don't respond to those.</p>
+      </div>
+    </Container>
   </section>
 </BaseLayout>
