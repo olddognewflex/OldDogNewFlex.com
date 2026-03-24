@@ -3,81 +3,84 @@
 ---
 
 <style>
-.theme-pill[aria-pressed="true"] {
-  outline: 3px solid var(--color-yellow, #f9e2af);
-  outline-offset: 2px;
-}
-.theme-pill {
-  transition: outline 0.2s, box-shadow 0.2s;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.08);
-  cursor: pointer;
-}
-.theme-pill:focus-visible {
-  outline: 3px solid var(--color-mauve, #cba6f7);
-  outline-offset: 2px;
-}
+  .theme-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+  }
+
+  .theme-label {
+    font-size: clamp(0.75rem, 1.15vw, 1.05rem);
+    color: var(--color-blue);
+    font-family: inherit;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .theme-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--color-surface0);
+    color: var(--color-text);
+    border: 1px solid var(--color-mauve);
+    border-radius: 6px;
+    padding: 0.25rem 1.6rem 0.25rem 0.5rem;
+    font-family: inherit;
+    font-size: clamp(0.7rem, 1vw, 0.9rem);
+    cursor: pointer;
+    outline: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23cba6f7' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.4rem center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .theme-select:hover {
+    border-color: var(--color-lavender);
+  }
+
+  .theme-select:focus-visible {
+    border-color: var(--color-mauve);
+    box-shadow: 0 0 0 2px var(--color-mauve);
+  }
+
+  .theme-select option {
+    background-color: var(--color-surface0);
+    color: var(--color-text);
+  }
 </style>
 
-<div id="theme-pills" class="flex gap-2 items-center">
-  <button
-    class="theme-pill latte border-2 border-transparent rounded-full w-11 h-11 flex items-center justify-center text-lg"
-    data-theme="latte"
-    title="Latte (light)"
-    aria-label="Switch to Latte theme"
-    aria-pressed="false"
-    type="button"
-  >🌻</button>
-  <button
-    class="theme-pill frappe border-2 border-transparent rounded-full w-11 h-11 flex items-center justify-center text-lg"
-    data-theme="frappe"
-    title="Frappé"
-    aria-label="Switch to Frappé theme"
-    aria-pressed="false"
-    type="button"
-  >🪴</button>
-  <button
-    class="theme-pill macchiato border-2 border-transparent rounded-full w-11 h-11 flex items-center justify-center text-lg"
-    data-theme="macchiato"
-    title="Macchiato"
-    aria-label="Switch to Macchiato theme"
-    aria-pressed="false"
-    type="button"
-  >🌺</button>
-  <button
-    class="theme-pill mocha border-2 border-transparent rounded-full w-11 h-11 flex items-center justify-center text-lg"
-    data-theme="mocha"
-    title="Mocha (dark)"
-    aria-label="Switch to Mocha theme"
-    aria-pressed="false"
-    type="button"
-  >🌿</button>
-</div>
+<label class="theme-selector">
+  <span class="theme-label">THEME</span>
+  <select class="theme-select" aria-label="Select color theme">
+    <option value="latte">🌻 Latte</option>
+    <option value="frappe">🪴 Frappé</option>
+    <option value="macchiato">🌺 Macchiato</option>
+    <option value="mocha">🌿 Mocha</option>
+  </select>
+</label>
 
 <script>
   const themes = ["latte", "frappe", "macchiato", "mocha"] as const;
   type Theme = typeof themes[number];
 
-  const pills = document.querySelectorAll<HTMLButtonElement>("#theme-pills .theme-pill");
+  const selects = document.querySelectorAll<HTMLSelectElement>(".theme-select");
 
   function setTheme(theme: Theme) {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-    pills.forEach((pill) => {
-      const isActive = pill.dataset.theme === theme;
-      pill.setAttribute("aria-pressed", isActive ? "true" : "false");
-    });
+    selects.forEach((s) => { s.value = theme; });
   }
 
-  pills.forEach((pill) => {
-    pill.addEventListener("click", () => {
-      const theme = pill.dataset.theme as Theme;
-      if (themes.includes(theme)) {
-        setTheme(theme);
-      }
+  selects.forEach((s) => {
+    s.addEventListener("change", () => {
+      const theme = s.value as Theme;
+      if (themes.includes(theme)) setTheme(theme);
     });
   });
 
-  // Restore from localStorage or default to "mocha"
   const stored = localStorage.getItem("theme") as Theme | null;
-  setTheme(stored && themes.includes(stored) ? stored : "mocha");
+  setTheme(stored && themes.includes(stored) ? stored : "macchiato");
 </script>
