@@ -36,8 +36,19 @@ const {
 ---
 
 <!DOCTYPE html>
-<html data-theme="mocha" lang="en">
+<html data-theme="macchiato" lang="en">
 	<head>
+		<script is:inline>
+			(function () {
+				try {
+					const saved = localStorage.getItem('theme');
+					const valid = ['latte', 'frappe', 'macchiato', 'mocha'];
+					if (saved && valid.includes(saved)) {
+						document.documentElement.setAttribute('data-theme', saved);
+					}
+				} catch (_) {}
+			})();
+		</script>
 		<BaseHead 
 			title={title} 
 			description={description} 
