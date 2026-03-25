@@ -20,24 +20,10 @@ log "Using Node ${NODE_VERSION}"
 log "Installing deps"; npm ci
 log "Building"; npm run build
 
-TS=$(date +%Y%m%d-%H%M%S)
-RELEASE_NAME="release-${TS}"
-REMOTE_RELEASE="${REMOTE_BASE}/releases/${RELEASE_NAME}"
-REMOTE_CURRENT="${REMOTE_BASE}/current"
+REMOTE_RELEASE="${REMOTE_BASE}"
 RSYNC_OPTS="-az --delete"
 [[ "$DRY_RUN" == "true" ]] && RSYNC_OPTS="${RSYNC_OPTS} --dry-run"
 
-log "Ensuring remote release dir"
-ssh "$SSH_HOST" "mkdir -p '$REMOTE_RELEASE'"
-
-log "Syncing dist/ to ${REMOTE_RELEASE} (dry-run=${DRY_RUN})"
+log "Syncing dist/ to ${REMOTE_BASE}"
 rsync ${RSYNC_OPTS} -e "ssh " dist/ "${SSH_HOST}:${REMOTE_RELEASE}/"
 
-if [[ "$DRY_RUN" != "true" ]]; then
-  log "Updating current symlink atomically"
-  ssh "$SSH_HOST" \
-    "set -euo pipefail; ln -sfn '${REMOTE_RELEASE}' '${REMOTE_BASE}/current.tmp'; mv -Tf '${REMOTE_BASE}/current.tmp' '${REMOTE_CURRENT}'"
-  log "Deploy complete -> ${REMOTE_CURRENT}"
-else
-  log "Dry-run only; symlink unchanged"
-fi
