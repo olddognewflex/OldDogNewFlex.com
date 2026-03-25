@@ -9,7 +9,11 @@ import ThemePills from './ThemePills.astro';
 
 <header>
   <nav id="main-nav">
-    <div class="w-1/2 md:w-32"></div>
+    <!-- Logo: visible on mobile, hidden on desktop (desktop uses the fixed logo-absolute) -->
+    <a href="/" class="logo-mobile-link md:hidden flex items-center" aria-label="Old Dog, New Flex - Home">
+      <img src='/images/odnf-mobile-logo.svg' alt="Old Dog, New Flex" class="h-12 w-auto" />
+    </a>
+    <div class="hidden md:block w-32"></div>
 
     <div class="internal-links hidden md:flex gap-4">
       <HeaderLink href="/">HOME</HeaderLink>
@@ -167,6 +171,19 @@ import ThemePills from './ThemePills.astro';
     .internal-links a {
       font-size: 0.7rem;
     }
+  }
+
+  /* Strip nav link styles from the mobile logo anchor */
+  .logo-mobile-link {
+    padding: 0 !important;
+    border-bottom: none !important;
+    color: inherit !important;
+  }
+
+  #mobile-menu nav {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
   }
 
   .icon-close { display: none; }
