@@ -5,6 +5,7 @@ import { getReadingTime } from '../../lib/blog';
 import { render } from 'astro:content';
 import { ArrowLeft, Calendar, Clock } from '@lucide/astro';
 import FormattedDate from '../../components/FormattedDate.astro';
+import Comments from '../../components/blog/Comments';
 
 const COLLECTION_LABELS: Record<string, string> = {
   learn: 'Learn',
@@ -91,5 +92,11 @@ const collectionLabel = COLLECTION_LABELS[post.collection] ?? post.collection;
     <div class="prose prose-lg max-w-none prose-ul:list-disc prose-ol:list-decimal prose-li:my-1 prose-ul:pl-6 prose-ol:pl-6">
       <Content />
     </div>
+
+    <!-- Comments -->
+    <section class="mt-12 pt-8 border-t border-overlay2">
+      <h2 class="text-xl font-semibold mb-6 text-text">Comments</h2>
+      <Comments client:load />
+    </section>
   </article>
 </BlogPost>
