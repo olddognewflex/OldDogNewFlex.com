@@ -1,16 +1,18 @@
 ---
 import type { ImageProps } from '../../types';
 
-const { 
-  src, 
-  alt, 
-  width = 1200, 
-  height = 630, 
+interface Props extends ImageProps {}
+
+const {
+  src,
+  alt,
+  width = 1200,
+  height = 630,
   class: className = '',
   loading = 'lazy',
   decoding = 'async',
   fetchpriority,
-}: ImageProps = Astro.props;
+} = Astro.props;
 ---
 
 <img 

@@ -15,7 +15,7 @@ const href = `/products/${product.slug}`;
       <p class="mt-2 text-sm text-subtext0">{product.subtitle}</p>
 
       <div class="mt-4 flex flex-wrap gap-2">
-        {product.badges?.map((b) => (
+        {product.badges?.map((b: string) => (
           <span class="rounded-full border border-surface2 bg-base px-3 py-1 text-xs text-subtext0">
             {b}
           </span>
