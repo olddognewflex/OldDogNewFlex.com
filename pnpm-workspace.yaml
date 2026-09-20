@@ -1,0 +1,5 @@
+# esbuild ships a platform binary and needs its install script to run.
+# Recorded here so `pnpm install --frozen-lockfile` works non-interactively
+# in .deploy.sh; without it pnpm 11 aborts asking for approval.
+allowBuilds:
+  esbuild: true
