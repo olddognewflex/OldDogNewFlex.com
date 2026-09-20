@@ -1,133 +1,150 @@
 ---
 // src/pages/index.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BlogCard from '../components/blog/BlogCard.astro';
 import Container from '../components/ui/Container.astro';
-import { getAllPosts, getFeaturedPosts } from '../lib/blog';
+import ProjectRow from '../components/projects/ProjectRow.astro';
+import WritingRow from '../components/writing/WritingRow.astro';
+import { getRecentWriting } from '../lib/blog';
+import { getAllProjects, getFeaturedProjects, getProjectUrl } from '../lib/projects';
 
-const [featuredPosts, recentPosts] = await Promise.all([
-  getFeaturedPosts(),
-  getAllPosts()
+const [featuredProjects, allProjects, recentWriting] = await Promise.all([
+  getFeaturedProjects(3),
+  getAllProjects(),
+  getRecentWriting(5),
 ]);
 
-const latestPosts = recentPosts.slice(0, 6);
+// Derived, not duplicated — the "currently building" line stays true on its own
+// because it reads the same project entries /projects does.
+const building = allProjects.filter(
+  (project) => project.data.status === 'building' && project.data.kind !== 'practice',
+);
 ---
 
 <BaseLayout 
   title="Old Dog, New Flex | Home" 
-  description="After nearly three decades of writing code, I've discovered the joy of diving headfirst into new and uncomfortable challenges. Join me on this ongoing journey—exploring fresh tech stacks, productivity experiments, and ventures beyond the keyboard."
+  description="Almost 30 years building software, still learning. What I'm building, learning, and thinking about — projects, notes, and writing from an engineer who keeps reinventing himself."
   heroImage="/images/odnf-home-hero.webp" 
-  heroAlt="An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, sitting confidently at a modern computer keyboard. The scene is colorful, vibrant, and filled with 80s-inspired nostalgia. The background is a cozy, cluttered room with toys and gadgets. The style is cinematic, realistic, and expressive, with dramatic lighting and detailed textures.">
+  heroAlt="An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, sitting confidently at a modern computer keyboard. The scene is colorful, vibrant, and filled with 80s-inspired nostalgia. The background is a cozy, cluttered room with toys and gadgets. The style is cinematic, realistic, and expressive, with dramatic lighting and detailed textures."
+  heroTagline="Proving it's never too late to refactor your comfort zone">
 
-  <div class="hero-image hidden md:block md:absolute md:left-20 md:w-2/3 lg:w-1/3 md:top-[140px]">
-		<p class="text-5xl font-extrabold text-left text-blue" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);">
-      Proving it's never too late to refactor your comfort zone
-    </p>
-  </div>
-
-  <!-- Hero: generous top padding, site intro -->
+  <!-- Identity: who this is, in a few seconds -->
   <section class="pt-16 pb-12">
-    <Container>
-      <div class="text-center">
-        <h1 class="text-5xl font-bold text-blue mb-4">Old Dog, New Flex</h1>
-        <h2 class="text-3xl font-bold text-blue mb-4">Experience isn't a liability. It's leverage.</h2>
-        <p class="text-xl text-text max-w-3xl mx-auto">
-          I've spent nearly three decades building software through multiple hype cycles, architectural shifts, and
-          "this changes everything" moments that... didn't.
-        </p>
-        <p class="mt-6 text-2xl">
-          This site is where I document how I am <b>learning</b>, <b>building</b>, and <b>shipping</b> <i>now</i> — in an era of AI,
-          automation, and accelerating noise — with context, restraint, and responsibility.
-        </p>
-				<p class="mt-6 text-2xl font-bold emphasized-point">
-					No hype.<br />
-          No predictions.<br />
-          Just durable thinking from someone who's seen a few things break.
-        </p>    
-      </div>
-    </Container>
-  </section>
-
-  <!-- What's here: tighter spacing, flows from the intro above -->
-  <section class="py-12 border-t border-surface1">
-    <Container>
-      <h2 class="text-3xl font-bold mb-8">What You'll Find Here</h2>
-      <div class="flex flex-col md:flex-row gap-6 text-left">
-        <div class="flex-1 p-6 rounded-lg bg-surface0 border border-surface1">
-          <h3 class="text-xl font-bold mb-3">Learn</h3>
-          <p class="text-xl text-subtext0">
-            Clear explanations of what's actually changing in tech — and what isn't — based on lived
-            experience, not launch blogs.
-          </p>
-        </div>
-        <div class="flex-1 p-6 rounded-lg bg-surface0 border border-surface1">
-          <h3 class="text-xl font-bold mb-3">Share</h3>
-          <p class="text-xl text-subtext0">
-            What I'm building, how I'm thinking about tools and systems, and why I make the tradeoffs I do.
-          </p>
-        </div>
-        <div class="flex-1 p-6 rounded-lg bg-surface0 border border-surface1">
-          <h3 class="text-xl font-bold mb-3">Journey</h3>
-          <p class="text-xl text-subtext0">
-            Reflections on longevity, burnout, reinvention, and staying useful in an industry obsessed with newness.
-          </p>
-        </div>
-      </div>
-    </Container>
-  </section>
-
-  <!-- Positioning statement: narrow, centered, visually distinct break -->
-  <section class="py-10 border-y border-surface1">
-    <Container size="sm">
-      <p class="text-xl text-center">
-        This isn't a news site. Not a trend report. Not a motivational feed.<br />
-        It's a long-game project for people who care about <strong>durability over novelty</strong>.<br />
-        If that resonates, you're in the right place.
+    <Container size="md">
+      <h1 class="text-5xl font-bold text-blue mb-4">Old Dog, New Flex</h1>
+      <h2 class="text-3xl font-bold text-blue mb-6">Experience isn't a liability. It's leverage.</h2>
+      <p class="text-xl text-text">
+        I've been building software for almost 30 years — through multiple hype cycles,
+        architectural shifts, and "this changes everything" moments that... didn't.
+      </p>
+      <p class="mt-5 text-xl text-text">
+        I'm still learning. Apparently I haven't learned my lesson.
+      </p>
+      <p class="mt-5 text-xl text-text">
+        This is my corner of the internet: what I'm building, what I'm learning, and what
+        I'm still arguing with myself about. The site is the record. The writing is the
+        commentary.
       </p>
     </Container>
   </section>
 
-  <!-- Featured Posts -->
-  {featuredPosts.length > 0 && (
-    <section class="py-14">
-      <Container>
-        <h2 class="text-3xl font-bold mb-8">Featured</h2>
-        <div class="grid md:grid-cols-2 gap-8">
-          {featuredPosts.map((post) => (
-            <BlogCard post={post} featured />
+  <!-- Currently -->
+  {building.length > 0 && (
+    <section class="py-10 border-t border-surface1">
+      <Container size="md">
+        <h2 class="text-sm font-bold uppercase tracking-wide text-subtext0 mb-4">Currently</h2>
+        <p class="text-xl text-text">
+          <span class="text-subtext0">Building</span>{' '}
+          {building.map((project, i) => (
+            <>
+              {i > 0 && <span class="text-overlay2"> · </span>}
+              <a href={getProjectUrl(project)} class="text-mauve hover:text-blue transition-colors">
+                {project.data.name}
+              </a>
+            </>
           ))}
-        </div>
+        </p>
+        <p class="mt-4">
+          <a href="/now" class="text-mauve hover:text-blue transition-colors">
+            What else I'm up to right now →
+          </a>
+        </p>
       </Container>
     </section>
   )}
 
-  <!-- Latest Posts -->
-  <section class="py-14 border-t border-surface1">
-    <Container>
-      <h2 class="text-3xl font-bold mb-8">Latest</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {latestPosts.map((post) => (
-          <BlogCard post={post} />
+  <!-- Projects -->
+  {featuredProjects.length > 0 && (
+    <section class="py-10 border-t border-surface1">
+      <Container size="md">
+        <h2 class="text-sm font-bold uppercase tracking-wide text-subtext0 mb-6">Projects</h2>
+        <div>
+          {featuredProjects.map((project) => (
+            <ProjectRow project={project} />
+          ))}
+        </div>
+        <p class="mt-8">
+          <a href="/projects" class="text-mauve hover:text-blue transition-colors">
+            All projects →
+          </a>
+        </p>
+      </Container>
+    </section>
+  )}
+
+  <!-- Recent writing -->
+  <section class="py-10 border-t border-surface1">
+    <Container size="md">
+      <h2 class="text-sm font-bold uppercase tracking-wide text-subtext0 mb-6">Recent writing</h2>
+      <div>
+        {recentWriting.map((item) => (
+          <WritingRow
+            url={item.url}
+            title={item.title}
+            date={item.date}
+            label={item.label}
+            summary={item.summary}
+          />
         ))}
       </div>
+      <p class="mt-8">
+        <a href="/writing" class="text-mauve hover:text-blue transition-colors">
+          All writing →
+        </a>
+      </p>
     </Container>
   </section>
 
-  <!-- Follow Along -->
-  <section class="py-16 border-t border-surface1">
+  <!-- Positioning: kept from the previous homepage, it still says the thing -->
+  <section class="py-10 border-y border-surface1">
+    <Container size="sm">
+      <p class="text-xl text-center">
+        No hype. No predictions. Just durable thinking from someone who's seen a few
+        things break.<br />
+        A long-game project for people who care about <strong>durability over novelty</strong>.
+      </p>
+    </Container>
+  </section>
+
+  <!-- Elsewhere -->
+  <section class="py-14">
     <Container size="md">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold text-blue mb-4">Stay in the loop</h2>
-        <p class="text-text mb-8">No newsletter yet — follow along where I post.</p>
-        <div class="bg-surface0 p-6 rounded-lg flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <a href="https://techhub.social/@olddognewflex" target="_blank" rel="noopener noreferrer" class="text-mauve hover:text-blue transition-colors">
-            Follow on Mastodon →
-          </a>
-          <span class="hidden sm:inline text-overlay2" aria-hidden="true">·</span>
-          <a href="https://x.com/OldDogNewFlex" target="_blank" rel="noopener noreferrer" class="text-mauve hover:text-blue transition-colors">
-            Follow on X →
-          </a>
-        </div>
+      <h2 class="text-sm font-bold uppercase tracking-wide text-subtext0 mb-6">Elsewhere</h2>
+      <div class="flex flex-wrap gap-x-8 gap-y-3">
+        <a href="https://github.com/olddognewflex" target="_blank" rel="noopener noreferrer" class="text-mauve hover:text-blue transition-colors">
+          GitHub →
+        </a>
+        <a href="https://techhub.social/@olddognewflex" target="_blank" rel="noopener noreferrer" class="text-mauve hover:text-blue transition-colors">
+          Mastodon →
+        </a>
+        <a href="https://x.com/OldDogNewFlex" target="_blank" rel="noopener noreferrer" class="text-mauve hover:text-blue transition-colors">
+          X →
+        </a>
+        <a href="/rss.xml" class="text-mauve hover:text-blue transition-colors">
+          RSS →
+        </a>
+        <a href="/contact" class="text-mauve hover:text-blue transition-colors">
+          Email →
+        </a>
       </div>
     </Container>
   </section>

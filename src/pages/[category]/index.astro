@@ -1,84 +1,83 @@
 ---
 // src/pages/[category]/index.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import BlogCard from '../../components/blog/BlogCard.astro';
-import { getAllPosts } from '../../lib/blog';
+import Container from '../../components/ui/Container.astro';
+import WritingRow from '../../components/writing/WritingRow.astro';
+import { BLOG_CATEGORIES, COLLECTION_LABELS, getAllPosts, getPostUrl } from '../../lib/blog';
 
 export async function getStaticPaths() {
-  return [
-    { params: { category: 'learn' } },
-    { params: { category: 'share' } },
-    { params: { category: 'journey' } }
-  ];
+  return BLOG_CATEGORIES.map((category) => ({ params: { category } }));
 }
 
 const { category } = Astro.params;
-const posts = await getAllPosts(category as 'learn' | 'share' | 'journey');
+const posts = await getAllPosts(category as (typeof BLOG_CATEGORIES)[number]);
 
 const categoryInfo = {
   learn: {
-    title: 'Learning & Technical Deep Dives',
+    title: 'Learn',
+    tagline: 'Things I have figured out',
     heroImage: '/images/old-dog-teaching.webp',
     heroAlt: 'An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, standing at a podium',
-    description: 'Exploring new technologies and sharing technical insights from the trenches.',
-    icon: '🎓',
+    description: 'Mental models, patterns, and tradeoffs — what is actually changing in tech and what is not, based on lived experience rather than launch blogs.',
   },
   share: {
-    title: 'Knowledge Sharing & Mentorship',  
+    title: 'Share',
+    tagline: 'Things I am building',
     heroImage: '/images/old-dog-sharing.webp',
     heroAlt: 'An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, talking to a group of people showing them something on a tablet',
-    description: 'Lessons learned from 30 years in software development, shared with the community.',
-    icon: '🤝',
+    description: 'Tools, workflows, and architectural decisions — what I am building and why I chose X over Y. Unfinished work is allowed.',
   },
   journey: {
-    title: 'Personal Learning Journey',
+    title: 'Journey',
+    tagline: 'Things I am still thinking about',
     heroImage: '/images/old-dog-hiking.webp',
     heroAlt: 'An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones, hiking up a mountain trail with a scenic view',
-    description: 'The real stories behind learning new things at any stage of your career.',
-    icon: '🚀',
+    description: 'Career longevity, burnout and recovery, and staying relevant without chasing. The human side of doing this for a long time.',
   },
 };
 
 const info = categoryInfo[category as keyof typeof categoryInfo];
 ---
 
-<BaseLayout title={`${info.title} | Old Dog, New Flex`} description={info.description} heroImage={info.heroImage} heroAlt={info.heroAlt}>
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <!-- Hero overlay text (decorative tagline over hero image) -->
-    <div class="hero-image hidden md:block" style="position: absolute; top: 140px; left: 30px; width: 40%;">
-		  <p class="text-5xl font-extrabold text-left text-blue" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);">
-		    {info.title}
-		  </p>
-    </div>
+<BaseLayout
+  title={`${info.title} | Old Dog, New Flex`}
+  description={info.description}
+  heroImage={info.heroImage}
+  heroAlt={info.heroAlt}
+  heroTagline={info.tagline}
+>
+  <section class="pt-16 pb-10">
+    <Container size="md">
+      <h1 class="text-4xl md:text-5xl font-bold text-blue mb-4">{info.title}</h1>
+      <p class="text-xl text-text">{info.description}</p>
+    </Container>
+  </section>
 
-    <!-- Category Header -->
-    <div class="text-center mb-12">
-      <div class="text-6xl mb-4" aria-hidden="true">{info.icon}</div>
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">
-        {info.title}
-      </h1>
-      <p class="text-xl max-w-3xl mx-auto">
-        {info.description}
-      </p>
-    </div>
-
-    <!-- Posts Grid -->
-    {posts.length > 0 ? (
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {posts.map((post) => (
-          <BlogCard post={post} />
-        ))}
-      </div>
-    ) : (
-      <div class="text-center py-16">
-        <div class="text-6xl mb-4" aria-hidden="true">📝</div>
-        <h2 class="text-2xl font-bold mb-4">
-          No posts here yet
-        </h2>
-        <p>
-          Check back soon — new {info.title.toLowerCase()} posts are on the way.
-        </p>
-      </div>
-    )}
-  </div>
+  <section class="py-10 border-t border-surface1">
+    <Container size="md">
+      {posts.length > 0 ? (
+        <div>
+          {posts.map((post) => (
+            <WritingRow
+              url={getPostUrl(post)}
+              title={post.data.title}
+              date={post.data.publishedDate}
+              label={COLLECTION_LABELS[post.collection] ?? post.collection}
+              summary={post.data.summary}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="py-6">
+          <h2 class="text-xl font-bold mb-2">Nothing here yet</h2>
+          <p class="text-subtext0">
+            This lens exists, it just has not earned a post yet. In the meantime there
+            is <a href="/writing" class="text-mauve hover:text-blue transition-colors">everything else</a>,
+            or the <a href="/projects" class="text-mauve hover:text-blue transition-colors">projects</a>
+            the writing usually comes out of.
+          </p>
+        </div>
+      )}
+    </Container>
+  </section>
 </BaseLayout>

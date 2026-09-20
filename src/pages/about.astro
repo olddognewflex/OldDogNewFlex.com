@@ -1,14 +1,5 @@
 ---
-import BlogCard from '../components/blog/BlogCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getAllPosts, getFeaturedPosts } from '../lib/blog';
-
-const [featuredPosts, recentPosts] = await Promise.all([
-  getFeaturedPosts(),
-  getAllPosts()
-]);
-
-const latestPosts = recentPosts.slice(0, 6);
 ---
 
 <BaseLayout
@@ -18,12 +9,9 @@ const latestPosts = recentPosts.slice(0, 6);
   an orange and pink jacket, neon sunglasses, and large headphones, sitting confidently at a modern computer keyboard.
   The scene is colorful, vibrant, and filled with 80s-inspired nostalgia. The background is a cozy, cluttered room with
   toys and gadgets. The style is cinematic, realistic, and expressive, with dramatic lighting and detailed textures.`}
+  heroTagline="The journey of a thousand lines of code begins with a single semicolon"
+  heroAlign="right"
 >
-  <div class="hero-image hidden md:block" style="position: absolute; top: 120px; right: 30px; width: 50%;">
-		<p class="text-5xl font-extrabold text-right text-blue" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.8);">
-			The journey of a thousand lines of code begins with a single semicolon
-		</p>
-  </div>
 
   <section class="pt-16 pb-10">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -187,12 +175,14 @@ const latestPosts = recentPosts.slice(0, 6);
 		</div>
 	</section>
 
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-surface1">
-    <h2 class="text-3xl font-bold text-blue mb-8">Latest</h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {latestPosts.map((post) => (
-        <BlogCard post={post} />
-      ))}
-    </div>
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-surface1">
+    <p class="text-xl">
+      If you'd rather see the work than read about it, the
+      <a href="/projects" class="text-mauve hover:text-blue transition-colors">projects</a>
+      are over here and the
+      <a href="/writing" class="text-mauve hover:text-blue transition-colors">writing</a>
+      is over there. <a href="/now" class="text-mauve hover:text-blue transition-colors">Now</a>
+      is what I'm doing today.
+    </p>
   </section>
 </BaseLayout>

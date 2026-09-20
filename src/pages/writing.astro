@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+import WritingRow from '../components/writing/WritingRow.astro';
+import { COLLECTION_LABELS, getPopulatedCategories, getRecentWriting } from '../lib/blog';
+
+// Lenses with nothing published are left out entirely — linking a reader into
+// an empty room is worse than not advertising the room.
+const [lenses, writing] = await Promise.all([
+  getPopulatedCategories(),
+  getRecentWriting(20),
+]);
+
+const LENS_BLURBS: Record<string, string> = {
+  learn: "Things I've figured out. Mental models, patterns, tradeoffs, lessons that age well.",
+  share: "Things I'm building. Tools, workflows, decisions, and why I chose X over Y.",
+  journey: 'Things I’m experiencing. Career longevity, learning later, staying relevant without chasing.',
+};
+---
+
+<BaseLayout
+  title="Writing | Old Dog, New Flex"
+  description="Essays, working notes, and short observations. Three editorial lenses, plus whatever didn't need to be an essay."
+>
+  <section class="pt-16 pb-10">
+    <Container size="md">
+      <h1 class="text-4xl md:text-5xl font-bold text-blue mb-4">Writing</h1>
+      <p class="text-xl text-text">
+        The commentary on the work. Some of it is long, some of it is a paragraph.
+        Missing a week is fine. Missing direction is not.
+      </p>
+    </Container>
+  </section>
+
+  <!-- Editorial lenses -->
+  <section class="py-10 border-t border-surface1">
+    <Container size="md">
+      <div class="grid gap-4 md:grid-cols-2">
+        {lenses.map((lens) => (
+          <a
+            href={`/${lens}`}
+            class="block p-5 rounded-lg border border-surface1 hover:border-mauve/50 transition-colors group"
+          >
+            <h2 class="text-lg font-bold text-text group-hover:text-blue transition-colors">
+              {COLLECTION_LABELS[lens]}
+            </h2>
+            <p class="text-sm text-subtext0 mt-1">{LENS_BLURBS[lens]}</p>
+          </a>
+        ))}
+        <a
+          href="/notes"
+          class="block p-5 rounded-lg border border-surface1 hover:border-mauve/50 transition-colors group"
+        >
+          <h2 class="text-lg font-bold text-text group-hover:text-blue transition-colors">Notes</h2>
+          <p class="text-sm text-subtext0 mt-1">
+            Shorter observations that didn't need to become essays. A discovery, an
+            opinion about a tool, something a project taught me.
+          </p>
+        </a>
+      </div>
+
+      <p class="mt-6 text-subtext0">
+        New here? <a href="/start-here" class="text-mauve hover:text-blue transition-colors">Start Here</a>{' '}
+        picks a first post based on what brought you.
+      </p>
+    </Container>
+  </section>
+
+  <!-- Everything, newest first -->
+  <section class="py-10 border-t border-surface1">
+    <Container size="md">
+      <h2 class="text-sm font-bold uppercase tracking-wide text-subtext0 mb-6">
+        Everything, newest first
+      </h2>
+      <div>
+        {writing.map((item) => (
+          <WritingRow
+            url={item.url}
+            title={item.title}
+            date={item.date}
+            label={item.label}
+            summary={item.summary}
+          />
+        ))}
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

@@ -17,11 +17,9 @@ import ThemePills from './ThemePills.astro';
 
     <div class="internal-links hidden md:flex gap-4">
       <HeaderLink href="/">HOME</HeaderLink>
-      <HeaderLink href="/learn">LEARN</HeaderLink>
-      <HeaderLink href="/journey">JOURNEY</HeaderLink>
-      <HeaderLink href="/share">SHARE</HeaderLink>
-      <HeaderLink href="/start-here">START HERE</HeaderLink>
-      <HeaderLink href="/products">PRODUCTS</HeaderLink>
+      <HeaderLink href="/now">NOW</HeaderLink>
+      <HeaderLink href="/projects">PROJECTS</HeaderLink>
+      <HeaderLink href="/writing">WRITING</HeaderLink>
       <HeaderLink href="/about">ABOUT</HeaderLink>
     </div>
 
@@ -77,12 +75,13 @@ import ThemePills from './ThemePills.astro';
     >
       <nav>
         <HeaderLink href="/" class="mobile-nav-link">HOME</HeaderLink>
-        <HeaderLink href="/learn" class="mobile-nav-link">LEARN</HeaderLink>
-        <HeaderLink href="/journey" class="mobile-nav-link">JOURNEY</HeaderLink>
-        <HeaderLink href="/share" class="mobile-nav-link">SHARE</HeaderLink>
+        <HeaderLink href="/now" class="mobile-nav-link">NOW</HeaderLink>
+        <HeaderLink href="/projects" class="mobile-nav-link">PROJECTS</HeaderLink>
+        <HeaderLink href="/writing" class="mobile-nav-link">WRITING</HeaderLink>
+        <HeaderLink href="/about" class="mobile-nav-link">ABOUT</HeaderLink>
         <HeaderLink href="/start-here" class="mobile-nav-link">START HERE</HeaderLink>
         <HeaderLink href="/products" class="mobile-nav-link">PRODUCTS</HeaderLink>
-        <HeaderLink href="/about" class="mobile-nav-link">ABOUT</HeaderLink>
+        <HeaderLink href="/contact" class="mobile-nav-link">CONTACT</HeaderLink>
       </nav>
       <div class="mt-6 pt-6 border-t border-surface1">
         <ThemePills />
@@ -160,16 +159,6 @@ import ThemePills from './ThemePills.astro';
 
     .internal-links a {
       font-size: clamp(0.75rem, 1.15vw, 1.05rem);
-    }
-  }
-
-  @media (min-width: 768px) and (max-width: 900px) {
-    .internal-links {
-      gap: 0.35rem;
-    }
-
-    .internal-links a {
-      font-size: 0.7rem;
     }
   }
 

@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import ProjectRow from '../../components/projects/ProjectRow.astro';
+import { getProjectsByKind } from '../../lib/projects';
+
+const groups = await getProjectsByKind();
+---
+
+<BaseLayout
+  title="Projects | Old Dog, New Flex"
+  description="Things I've built, am building, and occasionally wonder why I thought were a good idea."
+>
+  <section class="pt-16 pb-10">
+    <Container size="md">
+      <h1 class="text-4xl md:text-5xl font-bold text-blue mb-4">Projects</h1>
+      <p class="text-xl text-text">
+        Things I've built, am building, and occasionally wonder why I thought were
+        a good idea. Not a portfolio — a workbench. Some of this is finished. Most
+        of it isn't.
+      </p>
+    </Container>
+  </section>
+
+  {groups.map((group) => (
+    <section class="py-10 border-t border-surface1">
+      <Container size="md">
+        <h2 class="text-sm font-bold uppercase tracking-wide text-subtext0 mb-6">
+          {group.label}
+        </h2>
+        <div>
+          {group.projects.map((project) => (
+            <ProjectRow project={project} />
+          ))}
+        </div>
+      </Container>
+    </section>
+  ))}
+
+  <section class="py-12 border-t border-surface1">
+    <Container size="md">
+      <p class="text-subtext0">
+        Some of this work is packaged and for sale — that lives on
+        <a href="/products" class="text-mauve hover:text-blue transition-colors">Products</a>.
+      </p>
+    </Container>
+  </section>
+</BaseLayout>

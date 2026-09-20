@@ -1,0 +1,69 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { ArrowLeft } from '@lucide/astro';
+import { getPostSlug, type Note } from '../../lib/blog';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+
+  return notes
+    .filter((note) => !note.data.draft)
+    .map((note) => ({
+      params: { slug: getPostSlug(note) },
+      props: { note },
+    }));
+}
+
+type Props = { note: Note };
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+---
+
+<BaseLayout
+  title={`${note.data.title} | Old Dog, New Flex`}
+  description={note.data.summary ?? note.data.title}
+  article={true}
+  publishedDate={note.data.publishedDate}
+  updatedDate={note.data.updatedDate}
+  author="Old Dog New Flex"
+  tags={note.data.tags}
+>
+  <article class="pt-12 pb-20">
+    <Container size="sm">
+      <a href="/notes" class="inline-flex items-center gap-1 text-text hover:text-blue mb-8">
+        <ArrowLeft size="16" aria-hidden="true" />
+        Back to Notes
+      </a>
+
+      <header class="mb-8">
+        <h1 class="text-3xl font-bold mb-3">{note.data.title}</h1>
+        <div class="flex flex-wrap items-center gap-x-3 text-sm text-overlay2">
+          <FormattedDate date={note.data.publishedDate} />
+          <span aria-hidden="true">·</span>
+          <span>Note</span>
+        </div>
+      </header>
+
+      <div class="prose prose-lg max-w-none prose-ul:list-disc prose-ol:list-decimal prose-li:my-1 prose-ul:pl-6 prose-ol:pl-6">
+        <Content />
+      </div>
+
+      {note.data.link && (
+        <p class="mt-8">
+          <a
+            href={note.data.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-mauve hover:text-blue transition-colors"
+          >
+            {note.data.link} →
+          </a>
+        </p>
+      )}
+    </Container>
+  </article>
+</BaseLayout>

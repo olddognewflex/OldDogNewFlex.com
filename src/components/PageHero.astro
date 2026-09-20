@@ -4,29 +4,85 @@ import Image from './ui/Image.astro';
 export interface Props {
   heroImage: string;
   heroAlt: string;
-  heroTaglineElement?: any;
+  /** Overlay line. Rendered inside the hero, not absolutely positioned against the page. */
+  tagline?: string;
+  align?: 'left' | 'right';
 }
 
 // src/components/PageHero.astro
-const { heroImage, heroAlt, heroTaglineElement } = Astro.props;
+const { heroImage, heroAlt, tagline, align = 'left' } = Astro.props;
 ---
 
-<section
-  class="relative w-full"
-  style="aspect-ratio: 16/5;"
-  aria-label={heroAlt}
->
+<section class="hero relative w-full" aria-label={heroAlt}>
   <Image 
     src={heroImage}
     alt={heroAlt}
-    class="block w-full h-full object-cover"
+    class="hero-img"
     loading="eager"
     decoding="async"
     fetchpriority="high"
   />
-  {heroTaglineElement && (
-    <div class="relative z-10 flex items-center justify-center w-full h-full">
-      {heroTaglineElement}
+
+  {tagline && (
+    <div class={`hero-tagline hidden md:flex ${align === 'right' ? 'justify-end' : 'justify-start'}`}>
+      <p class={`hero-tagline-text ${align === 'right' ? 'text-right' : 'text-left'}`}>
+        {tagline}
+      </p>
     </div>
   )}
 </section>
+
+<style>
+  .hero {
+    aspect-ratio: 16 / 5;
+    overflow: hidden;
+  }
+
+  /* `:global` because the <img> is rendered by Image.astro and carries that
+     component's scope, not this one's.
+
+     The image must be taken out of flow for `aspect-ratio` to mean anything:
+     with an in-flow `h-full` image, the percentage height resolves against an
+     auto-height parent, collapses to auto, and the intrinsic image height wins.
+     That is why the hero was 783px tall on a 900px viewport instead of the
+     465px band it claimed to be. */
+  .hero :global(.hero-img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* The subject's face sits above centre in these renders. */
+    object-position: center 38%;
+    border-radius: 0;
+  }
+
+  /* A 16:5 letterbox on a phone is a 120px sliver, and cropping this hard loses
+     the subject entirely. Give it back some height on small screens. */
+  @media (max-width: 767px) {
+    .hero {
+      aspect-ratio: 3 / 2;
+    }
+  }
+
+  /* Was five copy-pasted `style="position:absolute; top:140px; left:30px"`
+     blocks, one per page, positioned against the document rather than the
+     image. Now it lives with the image it sits on. */
+  .hero-tagline {
+    position: absolute;
+    inset: 0;
+    align-items: center;
+    padding: 0 clamp(1.5rem, 5vw, 5rem);
+    pointer-events: none;
+  }
+
+  .hero-tagline-text {
+    max-width: min(34ch, 45%);
+    margin: 0;
+    color: var(--color-blue);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 3.4vw, 3rem);
+    line-height: 1.1;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85), 0 0 2px rgba(0, 0, 0, 0.9);
+  }
+</style>

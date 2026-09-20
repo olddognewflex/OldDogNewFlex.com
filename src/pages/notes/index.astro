@@ -1,0 +1,72 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { getAllNotes, getNoteUrl } from '../../lib/blog';
+
+const notes = await getAllNotes();
+
+// Notes are short by definition, so render them inline rather than making the
+// reader click through to a paragraph.
+const rendered = await Promise.all(
+  notes.map(async (note) => ({
+    note,
+    url: getNoteUrl(note),
+    Content: (await render(note)).Content,
+  }))
+);
+---
+
+<BaseLayout
+  title="Notes | Old Dog, New Flex"
+  description="Shorter observations that didn't need to become essays."
+>
+  <section class="pt-16 pb-10">
+    <Container size="sm">
+      <h1 class="text-4xl md:text-5xl font-bold text-blue mb-4">Notes</h1>
+      <p class="text-xl text-text">
+        Short things. A technical observation, something an experiment taught me,
+        a quick opinion about a tool. Not everything needs 1,500 words.
+      </p>
+    </Container>
+  </section>
+
+  <section class="py-6 border-t border-surface1">
+    <Container size="sm">
+      {rendered.length > 0 ? (
+        rendered.map(({ note, url, Content }) => (
+          <article class="border-b border-surface1 py-10 last:border-b-0">
+            <div class="flex flex-wrap items-center gap-x-3 text-sm text-overlay2 mb-2">
+              <FormattedDate date={note.data.publishedDate} />
+              <span aria-hidden="true">·</span>
+              <a href={url} class="hover:text-blue transition-colors">Permalink</a>
+            </div>
+            <h2 class="text-xl font-bold mb-3">
+              <a href={url} class="text-text hover:text-blue transition-colors">
+                {note.data.title}
+              </a>
+            </h2>
+            <div class="prose max-w-none prose-ul:list-disc prose-ol:list-decimal prose-ul:pl-6 prose-ol:pl-6">
+              <Content />
+            </div>
+            {note.data.link && (
+              <p class="mt-4">
+                <a
+                  href={note.data.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-mauve hover:text-blue transition-colors"
+                >
+                  {note.data.link} →
+                </a>
+              </p>
+            )}
+          </article>
+        ))
+      ) : (
+        <p class="py-10 text-subtext0">No notes yet.</p>
+      )}
+    </Container>
+  </section>
+</BaseLayout>
