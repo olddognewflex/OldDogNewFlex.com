@@ -1,31 +1,24 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
-import { getReadingTime } from '../../lib/blog';
+import { BLOG_CATEGORIES, COLLECTION_LABELS, getPostSlug, getReadingTime } from '../../lib/blog';
 import { render } from 'astro:content';
 import { ArrowLeft, Calendar, Clock } from '@lucide/astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Comments from '../../components/blog/Comments';
 
-const COLLECTION_LABELS: Record<string, string> = {
-  learn: 'Learn',
-  share: 'Share',
-  journey: 'Journey',
-};
-
 export async function getStaticPaths() {
-  const collections = await Promise.all([
-    getCollection('learn'),
-    getCollection('share'),
-    getCollection('journey')
-  ]);
-  
-  const posts = collections.flat();
-  
+  const collections = await Promise.all(
+    BLOG_CATEGORIES.map((category) => getCollection(category))
+  );
+
+  // Drafts must not get a live page — they used to build and be reachable by URL.
+  const posts = collections.flat().filter((post) => !post.data.draft);
+
   return posts.map((post) => ({
-    params: { 
-      category: post.collection, 
-      slug: post.filePath?.split('/').pop()?.replace('.md', '') || ''
+    params: {
+      category: post.collection,
+      slug: getPostSlug(post),
     },
     props: { post },
   }));

@@ -13,7 +13,8 @@ export interface Props {
   canonicalURL?: string;
   heroImage?: string;
   heroAlt?: string;
-  heroTaglineElement?: unknown;
+  heroTagline?: string;
+  heroAlign?: 'left' | 'right';
   article?: boolean;
   publishedDate?: Date;
   updatedDate?: Date;
@@ -27,6 +28,8 @@ const {
 	canonicalURL,
 	heroImage, 
 	heroAlt = "An elderly man with a long white beard and flowing hair, wearing bright, retro-futuristic clothes including an orange and pink jacket, neon sunglasses, and large headphones",
+	heroTagline,
+	heroAlign = 'left',
 	article = false,
 	publishedDate,
 	updatedDate,
@@ -63,7 +66,7 @@ const {
   <body>
 		<Header />
 		{heroImage && 
-		<PageHero heroImage={heroImage} heroAlt={heroAlt} />
+		<PageHero heroImage={heroImage} heroAlt={heroAlt} tagline={heroTagline} align={heroAlign} />
 		}
     <main id="main-content" class="flex-1 justify-center">
       <slot />
@@ -74,6 +77,18 @@ const {
         <div class="text-center">
 					<img src='/images/old-dog-new-flex-logo.svg' alt="Old Dog, New Flex Logo" class="footer-logo"/>
           <p class="footer-tagline">Built slowly. On purpose.</p>
+
+          <!-- Secondary destinations, demoted from the primary nav so the
+               personal site stays five items wide. -->
+          <nav class="footer-links" aria-label="Secondary">
+            <a href="/start-here">Start Here</a>
+            <a href="/writing">Writing</a>
+            <a href="/notes">Notes</a>
+            <a href="/projects">Projects</a>
+            <a href="/products">Products</a>
+            <a href="/contact">Contact</a>
+            <a href="/rss.xml">RSS</a>
+          </nav>
           <p class="footer-copyright">© {new Date().getFullYear()} Old Dog, New Flex. Built with Astro and TypeScript.</p>
         </div>
       </div>

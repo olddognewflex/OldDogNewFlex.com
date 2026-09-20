@@ -1,0 +1,31 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Container from '../components/ui/Container.astro';
+
+/**
+ * Layout for standalone markdown pages in src/pages (currently /now).
+ * Astro hands markdown-page frontmatter to the layout under `frontmatter`,
+ * which is why this exists rather than using BaseLayout directly.
+ */
+const { frontmatter } = Astro.props;
+const { title, description, heroImage, heroAlt, updated } = frontmatter ?? {};
+---
+
+<BaseLayout
+  title={`${title} | Old Dog, New Flex`}
+  description={description}
+  heroImage={heroImage}
+  heroAlt={heroAlt}
+>
+  <section class="pt-16 pb-20">
+    <Container size="sm">
+      <h1 class="text-4xl font-bold text-blue mb-3">{title}</h1>
+      {updated && (
+        <p class="text-sm text-subtext0 mb-10">Last updated {updated}</p>
+      )}
+      <div class="prose prose-lg max-w-none prose-ul:list-disc prose-ol:list-decimal prose-li:my-1 prose-ul:pl-6 prose-ol:pl-6">
+        <slot />
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

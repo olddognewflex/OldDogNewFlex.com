@@ -5,10 +5,13 @@ main {
   margin: 0 auto;
 }
 
-/* Reading column: constrains prose to a comfortable line length */
+/* Reading column: constrains prose to a comfortable line length.
+   Measured in `ch` so the column tracks the font rather than the viewport —
+   the old `70%` rule gave a 537px column inside a narrow container and a
+   900px+ one inside a wide page. */
 .prose {
   width: 100%;
-  max-width: 680px;
+  max-width: 68ch;
   margin: auto;
   padding: 1em;
   color: var(--color-text);
@@ -55,12 +58,28 @@ main {
 }
 
 @media (min-width: 768px) {
-  .prose {
-    max-width: 70%;
-  }
-
   .logo-absolute {
     position: fixed;
     width: 16.25rem;
   }
+}
+
+/* Footer secondary navigation — the demoted primary-nav destinations. */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.25rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.footer-links a {
+  color: var(--color-subtext0);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.footer-links a:hover {
+  color: var(--color-blue);
 }

@@ -1,0 +1,110 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/ui/Container.astro';
+import StatusPill from '../../components/projects/StatusPill.astro';
+import { ArrowLeft } from '@lucide/astro';
+import {
+  getProjectSlug,
+  getProjectUrl,
+  getRelatedProjects,
+  getRelatedWriting,
+  type Project,
+} from '../../lib/projects';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+
+  return projects
+    .filter((project) => !project.data.draft)
+    .map((project) => ({
+      params: { slug: getProjectSlug(project) },
+      props: { project },
+    }));
+}
+
+type Props = { project: Project };
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const [related, relatedWriting] = await Promise.all([
+  getRelatedProjects(project),
+  getRelatedWriting(project),
+]);
+---
+
+<BaseLayout
+  title={`${project.data.name} | Old Dog, New Flex`}
+  description={project.data.tagline}
+>
+  <article class="pt-12 pb-20">
+    <Container size="sm">
+      <a href="/projects" class="inline-flex items-center gap-1 text-text hover:text-blue mb-8">
+        <ArrowLeft size="16" aria-hidden="true" />
+        Back to Projects
+      </a>
+
+      <header class="mb-10">
+        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-3 mb-3">
+          <h1 class="text-4xl font-bold text-blue">{project.data.name}</h1>
+          <StatusPill status={project.data.status} />
+        </div>
+        <p class="text-xl text-text">{project.data.tagline}</p>
+
+        {project.data.tech && project.data.tech.length > 0 && (
+          <p class="mt-4 text-sm text-overlay2">{project.data.tech.join(' · ')}</p>
+        )}
+
+        {project.data.links && project.data.links.length > 0 && (
+          <div class="mt-6 flex flex-wrap gap-4">
+            {project.data.links.map((link) => (
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface0 border border-surface1 hover:border-mauve/50 text-text transition-colors text-sm"
+              >
+                {link.label} →
+              </a>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <div class="prose prose-lg max-w-none prose-ul:list-disc prose-ol:list-decimal prose-li:my-1 prose-ul:pl-6 prose-ol:pl-6">
+        <Content />
+      </div>
+
+      {related.length > 0 && (
+        <p class="mt-12 pt-8 border-t border-surface1 text-subtext0">
+          <span class="text-overlay2">Related:</span>
+          {related.map((sibling, i) => (
+            <>
+              {i > 0 && <span class="text-overlay2"> · </span>}
+              <a href={getProjectUrl(sibling)} class="text-mauve hover:text-blue transition-colors">
+                {sibling.data.name}
+              </a>
+            </>
+          ))}
+        </p>
+      )}
+
+      {relatedWriting.length > 0 && (
+        <section class="mt-10 pt-8 border-t border-surface1">
+          <h2 class="text-sm font-bold uppercase tracking-wide text-subtext0 mb-4">
+            Related writing
+          </h2>
+          <ul class="space-y-3">
+            {relatedWriting.map(({ post, url }) => (
+              <li>
+                <a href={url} class="text-text hover:text-blue transition-colors">
+                  {post.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+    </Container>
+  </article>
+</BaseLayout>

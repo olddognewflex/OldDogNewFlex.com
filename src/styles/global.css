@@ -193,57 +193,64 @@ main {
   padding-bottom: 1em;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0 0 0.5rem 0;
-  line-height: 1.2;
-}
+/* These element defaults MUST stay inside @layer base.
+   Tailwind v4 emits its utilities into cascade layers, and an unlayered
+   rule beats any layered one regardless of specificity — so a bare `h2`
+   here silently outranked `class="text-sm uppercase"` on every heading in
+   the site. Moving a rule out of this block reintroduces that bug. */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0 0 0.5rem 0;
+    line-height: 1.2;
+  }
 
-h1 {
-  color: var(--color-blue);
-  font-size: 3.052em;
-}
+  h1 {
+    color: var(--color-blue);
+    font-size: 3.052em;
+  }
 
-h2 {
-  color: var(--color-sapphire);
-  font-size: 2.441em;
-}
+  h2 {
+    color: var(--color-sapphire);
+    font-size: 2.441em;
+  }
 
-h3 {
-  color: var(--color-blue);
-  font-size: 1.953em;
-}
+  h3 {
+    color: var(--color-blue);
+    font-size: 1.953em;
+  }
 
-h4 {
-  color: var(--color-lavender);
-  font-size: 1.563em;
-}
+  h4 {
+    color: var(--color-lavender);
+    font-size: 1.563em;
+  }
 
-h5 {
-  color: var(--color-flamingo);
-  font-size: 1.25em;
-}
+  h5 {
+    color: var(--color-flamingo);
+    font-size: 1.25em;
+  }
 
-strong,
-b {
-  font-weight: 700;
-  color: var(--color-mauve);
-}
+  strong,
+  b {
+    font-weight: 700;
+    color: var(--color-mauve);
+  }
 
-a {
-  color: var(--color-mauve);
-}
+  a {
+    color: var(--color-mauve);
+  }
 
-a:hover {
-  color: var(--color-mauve);
-}
+  a:hover {
+    color: var(--color-mauve);
+  }
 
-p {
-  margin-bottom: 1em;
+  p {
+    margin-bottom: 1em;
+  }
 }
 
 .prose p {
@@ -387,4 +394,139 @@ hr {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ---------------------------------------------------------------------------
+   Syntax highlighting
+   Shiki emits both Catppuccin themes as CSS variables (see astro.config.mjs).
+   Three of the four site flavours are dark, so dark is the default and only
+   `latte` opts into the light one.
+--------------------------------------------------------------------------- */
+
+.astro-code,
+.astro-code span {
+  color: var(--shiki-dark, inherit) !important;
+  font-style: var(--shiki-dark-font-style, inherit) !important;
+  font-weight: var(--shiki-dark-font-weight, inherit) !important;
+  text-decoration: var(--shiki-dark-text-decoration, inherit) !important;
+}
+
+/* Shiki's own background matches --color-base in macchiato, so a code block
+   dissolved into the page. Use mantle, which steps away from the page in every
+   flavour, and keep only shiki's syntax colours. */
+.astro-code {
+  background-color: var(--color-mantle) !important;
+}
+
+:root[data-theme="latte"] .astro-code,
+:root[data-theme="latte"] .astro-code span {
+  color: var(--shiki-light, inherit) !important;
+  font-style: var(--shiki-light-font-style, inherit) !important;
+  font-weight: var(--shiki-light-font-weight, inherit) !important;
+  text-decoration: var(--shiki-light-text-decoration, inherit) !important;
+}
+
+
+
+/* ---------------------------------------------------------------------------
+   Prose rhythm
+   The global heading scale is display-sized, which is right for page titles and
+   far too loud inside an article. Long-form headings get their own scale.
+--------------------------------------------------------------------------- */
+
+.prose h2 {
+  font-size: 1.75em;
+  margin-top: 2.25em;
+  margin-bottom: 0.6em;
+}
+
+.prose h3 {
+  font-size: 1.35em;
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+}
+
+.prose h4 {
+  font-size: 1.1em;
+  margin-top: 1.5em;
+  margin-bottom: 0.4em;
+}
+
+/* 2em between paragraphs was doubling the gap after headings and lists. */
+.prose p {
+  margin-bottom: 1.4em;
+  line-height: 1.7;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose blockquote {
+  font-size: 1.1em;
+  color: var(--color-subtext1);
+  font-style: italic;
+}
+
+.prose pre {
+  margin-bottom: 1.6em;
+}
+
+/* ---------------------------------------------------------------------------
+   Long-form colour
+   @tailwindcss/typography ships light-mode defaults (near-black headings, body
+   and links) through --tw-prose-* variables, and its `:where()` rules sit in a
+   cascade layer that outranks anything in @layer base. Point the variables at
+   the Catppuccin tokens so prose follows whichever flavour is active.
+--------------------------------------------------------------------------- */
+
+.prose {
+  --tw-prose-body: var(--color-text);
+  --tw-prose-headings: var(--color-blue);
+  --tw-prose-lead: var(--color-subtext1);
+  --tw-prose-links: var(--color-mauve);
+  --tw-prose-bold: var(--color-mauve);
+  --tw-prose-counters: var(--color-subtext0);
+  --tw-prose-bullets: var(--color-overlay1);
+  --tw-prose-hr: var(--color-surface1);
+  --tw-prose-quotes: var(--color-subtext1);
+  --tw-prose-quote-borders: var(--color-mauve);
+  --tw-prose-captions: var(--color-subtext0);
+  --tw-prose-kbd: var(--color-text);
+  --tw-prose-code: var(--color-peach);
+  --tw-prose-pre-code: var(--color-text);
+  --tw-prose-pre-bg: var(--color-mantle);
+  --tw-prose-th-borders: var(--color-surface1);
+  --tw-prose-td-borders: var(--color-surface1);
+}
+
+/* The two-tone heading rhythm the site had before prose colours were centralised. */
+.prose h2 {
+  color: var(--color-sapphire);
+}
+
+.prose h1,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: var(--color-blue);
+}
+
+.prose a {
+  color: var(--color-mauve);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in oklab, var(--color-mauve) 45%, transparent);
+}
+
+.prose a:hover {
+  color: var(--color-blue);
+  text-decoration-color: currentColor;
+}
+
+.prose strong,
+.prose b {
+  color: var(--color-mauve);
 }

@@ -1,0 +1,27 @@
+---
+import FormattedDate from '../FormattedDate.astro';
+
+export interface Props {
+  url: string;
+  title: string;
+  date: Date;
+  label: string;
+  summary?: string;
+}
+
+const { url, title, date, label, summary } = Astro.props;
+---
+
+<article class="writing-row group border-t border-surface1 py-5 first:border-t-0">
+  <div class="flex flex-wrap items-center gap-x-3 text-sm text-overlay2 mb-1">
+    <FormattedDate date={date} />
+    <span aria-hidden="true">·</span>
+    <span>{label}</span>
+  </div>
+  <h3 class="text-lg font-bold leading-snug">
+    <a href={url} class="text-text group-hover:text-blue transition-colors">
+      {title}
+    </a>
+  </h3>
+  {summary && <p class="mt-1 text-subtext0">{summary}</p>}
+</article>

@@ -8,6 +8,13 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   site: "https://olddognewflex.com",
   output: "static",
+
+  // /blog was the writing hub before the site stopped being a blog. Keep the
+  // URL alive rather than breaking anyone's bookmark.
+  redirects: {
+    "/blog": "/writing",
+  },
+
   image: {
     service: passthroughImageService(),
   },
@@ -20,7 +27,14 @@ export default defineConfig({
 
   markdown: {
     shikiConfig: {
-      theme: "github-light",
+      // The site ships four Catppuccin flavours, three dark and one light, so a
+      // single baked-in theme is always wrong somewhere. Emitting both as CSS
+      // variables lets `data-theme` pick at runtime — see global.css.
+      themes: {
+        light: "catppuccin-latte",
+        dark: "catppuccin-macchiato",
+      },
+      defaultColor: false,
       wrap: true,
     },
   },

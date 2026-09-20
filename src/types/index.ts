@@ -42,18 +42,6 @@ export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
 }
 
-export interface CardProps {
-  variant?: 'default' | 'featured' | 'elevated';
-  padding?: 'sm' | 'md' | 'lg';
-  class?: string;
-}
-
-export interface BadgeProps {
-  variant?: 'default' | 'collection' | 'tag' | 'featured';
-  size?: 'sm' | 'md' | 'lg';
-  class?: string;
-}
-
 export interface ContainerProps {
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   padding?: 'none' | 'sm' | 'md' | 'lg';
@@ -79,12 +67,16 @@ export interface HeaderLinkProps {
 export interface PageHeroProps {
   heroImage: string;
   heroAlt: string;
-  heroTaglineElement?: unknown;
+  tagline?: string;
+  align?: 'left' | 'right';
 }
 
-export interface BlogCardProps {
-  post: BlogPost;
-  featured?: boolean;
+export interface WritingRowProps {
+  url: string;
+  title: string;
+  date: Date;
+  label: string;
+  summary?: string;
 }
 
 export interface FormattedDateProps {
