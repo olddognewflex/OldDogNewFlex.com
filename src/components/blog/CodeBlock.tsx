@@ -1,5 +1,5 @@
 // src/components/blog/CodeBlock.tsx
-import { Check, Copy } from "@lucide/astro";
+import { Check, Copy } from "lucide-react";
 import React, { useState } from "react";
 
 interface CodeBlockProps {

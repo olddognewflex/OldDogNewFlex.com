@@ -1,14 +1,10 @@
-import { defineConfig } from "vitest/config";
-import { fileURLToPath } from "node:url";
+/// <reference types="vitest/config" />
+import { getViteConfig } from "astro/config";
 
-export default defineConfig({
-  resolve: {
-    alias: {
-      // See tests/stubs/astro-content.ts — the virtual module has no
-      // implementation outside an Astro build.
-      "astro:content": fileURLToPath(
-        new URL("./tests/stubs/astro-content.ts", import.meta.url),
-      ),
-    },
+// Use Astro's Vite config so tests can resolve virtual modules like
+// `astro:content` that `src/lib/blog.ts` imports.
+export default getViteConfig({
+  test: {
+    // add test-specific options here
   },
 });
