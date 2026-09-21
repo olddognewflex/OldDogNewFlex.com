@@ -38,3 +38,6 @@ drafts/
 # Local Netlify folder
 .netlify
 /.opencode/skills
+
+# mex: scaffold is committed; the code graph is generated (rebuild: mex graph)
+.mex/graph.db*
