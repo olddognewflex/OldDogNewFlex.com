@@ -1,6 +1,6 @@
 ---
 name: content-pipeline
-description: How a markdown file in src/content becomes a URL — collections, the Zod schema, the three competing slug derivations, draft/featured filtering, and RSS. Load before touching posts, routes, or src/lib/blog.ts.
+description: How a markdown file in src/content becomes a URL — collections, the Zod schema, the single slug helper and why it exists, draft/featured filtering, and RSS. Load before touching posts, routes, or src/lib/blog.ts.
 triggers:
   - "post"
   - "content collection"
@@ -33,20 +33,29 @@ grounds_to:
     fingerprint: "mh:64:7b226d696e68617368223a5b3132363730353432382c3134323037373935372c3137373931353135372c3130383538333939332c34373830363431312c33303133353032342c3130303137383737392c343137323934392c31323732353739302c32333232373733322c3131383237343633342c3232343333303335322c36303336323334302c32343837333139332c3331303338333730392c3130393434393032372c3236313736323339382c3135383430353935342c3635333636352c33353335323837352c33303733313930342c3338373436333434332c3134363134393630342c34383139353833382c34373436363733322c3335333436323933302c3131373035333337312c3233313633303837332c3134353936333230322c3130313933303030352c3131393932313635332c37323632343133322c32373733383333372c3137353336303630392c31343134333938332c313934333631382c31333731333236362c3131393936353135342c34383932333430322c3137373930393231312c35363833373139302c35383830323930362c34383834343735332c39343334303633382c373435383831382c32383934373634372c38373330343132352c36333334393834332c3230323532373930382c3133353933343932322c31363634353237302c35333536323533322c3238343934323834322c3531323232323334302c3132303333303831342c31353033333735322c3130373532333635382c313130363330332c32353633383936312c3130383433353031322c3136323033393134372c393134333130362c3134393338343633342c35303535323236345d2c226e65696768626f7273223a5b2266756e6374696f6e3a6334323430393332643965336562303232393436393934363164373830636236225d2c22746f6b656e436f756e74223a34367d"
   - node: "function:a23737293404e3e9b38254635fb9ad87"
     fingerprint: "mh:64:7b226d696e68617368223a5b32393538343533312c32313036363539332c32393535353836342c333437383039392c34373830363431312c3132383630333531352c32303831383332352c343137323934392c31323732353739302c333739393934392c31373931303839362c35383132383035332c35303439373036322c33323732323635302c3137303237303139372c3132323637383634322c373333373733392c38313637313331362c363337393530382c32333636393532352c35323331333632372c36333339373932372c313830393030342c34383139353833382c34373338303537342c34323533363137332c323034383432372c353934393336342c33323435303830362c313639323235392c33363436383430372c34373834333231352c3131323532393832342c33323433363235352c31343237343234332c313934333631382c31383433383939352c34363339333336342c33343238303331372c383431393834362c39303538363132342c34383535313237302c34383834343735332c313236363537352c353630353534392c393135353936312c32363234373734362c36333334393834332c38393938383733302c32323332343235392c34353934333130312c31353232313031332c37393238343239302c33393531323233342c32313334363639322c3236333734353933312c383238323730312c32363531373633392c393736393036392c34333833313432332c3130323539343134302c393134333130362c32303933393132392c31313732363932355d2c226e65696768626f7273223a5b5d2c22746f6b656e436f756e74223a3136387d"
-last_updated: 2026-08-10
+last_updated: 2026-09-21
 ---
 
 # Content Pipeline
 
-## The three collections
+## The collections
 
-`src/content.config.ts` defines `learn`, `share` and `journey`. Each is a
-`defineCollection({ loader: glob({ base: "./src/content/<name>", pattern: "**/*.{md,mdx}" }), schema: blogSchema })`.
-All three share one schema. There is no fourth collection and adding one is not a
-one-file change — see "Adding a collection" below.
+`src/content.config.ts` defines five collections through a small
+`collectionFor(dir, schema)` helper, each a `glob()` loader over
+`src/content/<dir>/**/*.{md,mdx}`:
 
-Current contents: `learn` has six posts, `journey` has two, **`share` is empty**. Every
-file on disk today is `.md`; there are no `.mdx` files, which matters (see the hazard).
+| Collection | Schema | Routes |
+|---|---|---|
+| `learn`, `share`, `journey` | `blogSchema`, shared | `/<lens>`, `/<lens>/<slug>` |
+| `notes` | `notesSchema` — no required `summary` | `/notes`, `/notes/<slug>` |
+| `projects` | `projectsSchema` — `kind`, `status`, `related`, `writingTags` | `/projects`, `/projects/<slug>` |
+
+The three blog collections are *lenses* on one kind of writing. `notes` and `projects`
+are different kinds of content with their own schemas and routes — not lenses.
+
+Current contents: `learn` six posts, `journey` two, **`share` empty**
+(`src/content/share/.gitkeep` keeps the directory), one note, five projects. Every file
+is `.md`.
 
 ## The schema
 
@@ -63,7 +72,8 @@ time** — a violation fails `astro build`, never at runtime:
 | `heroImage` | no | path string, e.g. `/images/posts/x.webp` |
 | `tags` | no | `string[]` |
 | `featured` | no | boolean — surfaces the post on the home page |
-| `draft` | no | boolean — `true` excludes it from every listing |
+| `draft` | no | boolean — `true` excludes it from listings, RSS and `getStaticPaths()`: no page |
+| `section`, `status` | no | strings. Declared so existing frontmatter stops being silently stripped; nothing reads them |
 
 Nothing in the schema is *removed* at build; `draft` filtering is done in application
 code, which is why the exclusion is only as reliable as the helper you call.
@@ -71,43 +81,43 @@ code, which is why the exclusion is only as reliable as the helper you call.
 ## Reading posts
 
 [`getAllPosts()`](mex://function:c4240932d9e3eb02294699461d780cb6) is the intended entry
-point. Given no argument it fans out over all three collections; given a category it
+point. Given no argument it fans out over `BLOG_CATEGORIES`; given a category it
 loads just that one. In both cases it drops `draft: true` and sorts by `publishedDate`
 descending.
 
 [`getFeaturedPosts()`](mex://function:c17fefe9f9cbeefb06a2a2c3a27ceb8e) layers on top:
-`featured === true`, then `.slice(0, 3)`. **The 3 is a hardcoded literal**, not
-`FEATURED_POSTS_LIMIT` from `src/constants/index.ts` — changing that constant changes
-nothing.
+`featured === true`, then `.slice(0, limit)` with `limit` defaulting to
+`FEATURED_POSTS_LIMIT`. **Nothing calls it.** The personal-site transition removed every
+Featured section, so `featured: true` on a post currently has no visible effect.
 
-Two places bypass `getAllPosts()` and call `getCollection()` themselves, and therefore do
-**not** filter drafts:
+The rest of the writing helpers:
 
-- `src/pages/[category]/[slug].astro` — `getStaticPaths()`. A draft post still gets a
-  static page built; it just isn't linked from anywhere.
-- `src/pages/rss.xml.js` — [`GET()`](mex://function:a23737293404e3e9b38254635fb9ad87).
-  **Drafts appear in the RSS feed.** This is a live bug, not a design choice.
+- `getAllNotes()` — the notes equivalent of `getAllPosts()`: drafts dropped, newest first.
+- `getRecentWriting(limit)` — posts and notes interleaved by date. Feeds the homepage and
+  `/writing`.
+- `getPopulatedCategories()` — the lenses with at least one published post. `/writing`
+  uses it to hide empty lenses rather than link readers into an empty page.
 
-## The three slug derivations — the sharpest edge in this repo
+Nothing bypasses these any more. `[slug].astro`'s `getStaticPaths()` filters drafts itself
+(it needs every entry, not the sorted list), and
+[`GET()`](mex://function:a23737293404e3e9b38254635fb9ad87) in `rss.xml.js` goes through
+`getAllPosts()` and `getAllNotes()`. Until the personal-site transition, both called
+`getCollection()` directly — drafts got live pages and appeared in the feed.
+
+## One slug derivation — and why that matters
 
 Under the glob loader, `post.id` is the extensionless slug and `post.filePath` is the
-project-relative path (`src/content/learn/my-post.md`). Three places turn one of those
-into a URL segment, by three different rules:
+project-relative path (`src/content/learn/my-post.md`). `getPostSlug()` strips
+`/\.(md|mdx)$/` from the basename of `filePath`, falling back to `id`. `getPostUrl()`,
+`getNoteUrl()`, `[slug].astro` and `notes/[slug].astro` all go through it;
+`src/lib/projects.ts` has `getProjectSlug()` with the same rule.
 
-| Where | Source | Rule | `my-post.md` | `my-post.mdx` |
-|---|---|---|---|---|
-| [`getPostUrl()`](mex://function:455f6c97bf78e06c647c83f80b2d6235) | `filePath` | regex `/\.(md\|mdx)$/` | `my-post` | `my-post` |
-| `[slug].astro` `getStaticPaths()` | `filePath` | **string** `.replace('.md','')` | `my-post` | `my-postx` |
-| `rss.xml.js` | `post.id` | regex `/\.(md\|mdx)$/` | `my-post` | `my-post` |
-
-For `.md` all three agree, which is why nothing is broken today. **The first `.mdx` post
-added to this repo will build a page at `/learn/my-postx` while every link on the site
-points at `/learn/my-post` — a 404 with a green build.** The loader accepts `.mdx` and
-`@astrojs/mdx` is installed, so this is reachable without any config change.
-
-If you add MDX content, fix `[slug].astro` to use the same regex first. If you change any
-of the three, change all three, and extend `tests/blog.test.ts` — it already covers both
-extensions for `getPostUrl` and is the only regression guard that exists.
+This used to be three independent derivations. `[slug].astro` used a literal
+`.replace('.md','')`, so the first `.mdx` post would have built at `/learn/my-postx` while
+every link pointed at `/learn/my-post` — a 404 with a green build. **Do not reintroduce a
+local derivation.** If a new route needs a slug, call the helper. `tests/blog.test.ts`
+pins its behaviour for `.md`, `.mdx`, the `id` fallback and an empty entry, and is the
+only regression guard that exists.
 
 ## Reading time
 
@@ -115,19 +125,21 @@ extensions for `getPostUrl` and is the only regression guard that exists.
 string. Callers must guard: `post.body` is optional under the content layer, so
 `[slug].astro` does `post.body ? getReadingTime(post.body) : 'Unknown'`.
 
-## Adding a collection
+## Adding a lens
 
-Not a one-file change. A fourth collection requires edits in all of:
+A fourth *blog lens* — same schema as `learn`/`share`/`journey` — is now mostly data:
 
-1. `src/content.config.ts` — the loader plus the `collections` export
-2. `src/pages/[category]/[slug].astro` — the hardcoded `Promise.all([...])` and the
-   `COLLECTION_LABELS` map
-3. `src/pages/[category]/index.astro` — the hardcoded `getStaticPaths()` array and the
-   `categoryInfo` map (title, hero image, alt text, description, icon)
-4. `src/pages/rss.xml.js` — its own hardcoded `Promise.all([...])`
-5. `src/lib/blog.ts` — the `category?: "learn" | "share" | "journey"` union
-6. `src/constants/index.ts` — the `COLLECTIONS` const (cosmetic; nothing reads it)
-7. `src/components/Header.astro` — navigation
+1. `src/content.config.ts` — add `collectionFor("<name>", blogSchema)` to `collections`
+2. `src/lib/blog.ts` — add it to the `BlogCategory` type, `BLOG_CATEGORIES` and
+   `COLLECTION_LABELS`. `BLOG_CATEGORIES` drives `getAllPosts()`, RSS, and both
+   `[category]` routes' `getStaticPaths()`.
+3. `src/pages/[category]/index.astro` — add an entry to the `categoryInfo` map (title,
+   tagline, hero image, alt text, description). **Miss this and the build fails**: the
+   lookup returns `undefined` and the page throws reading `info.title`.
+4. `src/pages/writing.astro` — add a blurb to `LENS_BLURBS`, or the lens card on
+   `/writing` renders with no description.
 
-Miss one and the failure is silent: the collection loads but has no route, or the route
-exists with no hero content.
+Lenses are not in the primary nav; readers reach them through `/writing`.
+
+A different *kind* of content, like `notes` or `projects`, is not a lens. Give it its own
+schema in `content.config.ts`, its own helpers in `src/lib/`, and its own routes.

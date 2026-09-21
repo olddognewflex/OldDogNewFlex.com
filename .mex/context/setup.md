@@ -17,7 +17,7 @@ edges:
     condition: when the goal is to publish, not to run locally
   - target: patterns/debug-build-routing.md
     condition: when the build or dev server fails rather than the install
-last_updated: 2026-08-10
+last_updated: 2026-09-21
 grounds_to: []
 ---
 
@@ -74,13 +74,13 @@ Deploy-time overrides in `.deploy.sh` (shell variables, not app config):
 `getViteConfig()` from `astro/config`. A plain `defineConfig` from `vitest/config` will
 break every test that touches `src/lib/blog.ts`.
 
-**A post exists but 404s:** almost always `draft: true`, or a filename/slug mismatch. See
-`patterns/debug-build-routing.md` — `getAllPosts()` and `[slug].astro`'s
-`getStaticPaths()` derive slugs by different rules.
+**A post exists but 404s:** almost always `draft: true` — a draft gets no page at all —
+or a filename/slug mismatch. See `patterns/debug-build-routing.md`.
 
-**`npm ci` fails during `.deploy.sh`:** the script uses npm and `package-lock.json` while
-day-to-day development uses pnpm. The two lockfiles drift. Either refresh
-`package-lock.json` or switch the script to pnpm with a frozen lockfile.
+**Installing fails with `ERR_PNPM_IGNORED_BUILDS`:** a dependency wants to run an
+install script that has not been approved. Add it under `allowBuilds` in
+`pnpm-workspace.yaml` (esbuild is already there). This also breaks `pnpm build` and
+`pnpm test`, because pnpm runs a dependency check before any script.
 
 **Prettier reformats Tailwind classes oddly:** `.prettierrc` points at
 `src/styles/glolbal.css` (typo) and a `tailwind.config.js` that no longer exists, so the

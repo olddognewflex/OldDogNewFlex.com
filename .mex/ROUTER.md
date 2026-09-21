@@ -16,9 +16,11 @@ edges:
     condition: when the task touches posts, collections, slugs, RSS, or src/lib/blog.ts
   - target: context/theming.md
     condition: when the task touches colours, Tailwind tokens, or theme switching
+  - target: context/personal-site-transition.md
+    condition: when the task touches navigation, the homepage, /now, /projects, /writing, /notes, or the personal-site IA
   - target: patterns/INDEX.md
     condition: when starting a task — check the pattern index for a matching pattern file
-last_updated: 2026-08-10
+last_updated: 2026-09-21
 ---
 
 # Session Bootstrap
@@ -31,41 +33,58 @@ Then read this file fully before doing anything else in this session.
 
 **Working:**
 - Astro 7 static build of the whole site; `pnpm build` is green and `dist/` deploys.
-- Three content collections (`learn`, `share`, `journey`) with one shared Zod schema;
-  8 published posts (6 in `learn`, 2 in `journey`).
-- Routing: home, `/blog`, `/about`, `/contact`, `/start-here`, `/404`, `/products`,
-  `/products/responsible-ai-adult`, plus `/[category]` listings and `/[category]/[slug]`
-  post pages.
+- Five content collections: `learn`, `share`, `journey` (one shared Zod schema),
+  plus `notes` (short-form, no required summary) and `projects`. 8 published posts
+  (6 in `learn`, 2 in `journey`), 1 note, 5 projects.
+- Routing: home, `/now`, `/projects` + `/projects/[slug]`, `/writing`,
+  `/notes` + `/notes/[slug]`, `/about`, `/contact`, `/start-here`, `/404`,
+  `/products`, `/products/responsible-ai-adult`, plus `/[category]` listings and
+  `/[category]/[slug]` post pages. `/blog` is a static redirect to `/writing`.
+- Primary nav is five items: HOME · NOW · PROJECTS · WRITING · ABOUT. Start Here,
+  Products, Contact and RSS live in the footer. See
+  `context/personal-site-transition.md`.
 - RSS at `/rss.xml` and an automatic sitemap via `@astrojs/sitemap`.
 - Four-flavour Catppuccin theming with `localStorage` persistence and a working
   anti-FOUC inline script.
 - giscus comments on post pages, theme-synced to the site.
-- Manual deploy via `.deploy.sh` (rsync over SSH).
+- Manual deploy via `.deploy.sh`: a frozen-lockfile pnpm install, `pnpm build`, then
+  rsync over SSH. See `patterns/deploy-site.md`.
 
 **Not yet built:**
 - Any CI/CD. `.github/` is empty — nothing builds, tests, or typechecks on push or PR.
-- Test coverage beyond `tests/blog.test.ts`, which asserts on `getPostUrl` only.
-  `getStaticPaths()`, the schema, and every component are untested.
-- The `share` collection has no posts, so the `/share` route has never rendered content.
-- MDX content. `@astrojs/mdx` is installed and the loaders accept `.mdx`, but no `.mdx`
-  file exists — and the post route cannot slug one correctly (see Known issues).
+- Test coverage beyond `tests/blog.test.ts`, which covers the pure slug/URL helpers
+  (`getPostSlug`, `getPostUrl`, `getNoteUrl`). `getStaticPaths()`, the schemas, and every
+  component are untested.
+- The `share` collection still has no posts. `/share` remains a valid URL but the
+  lens is hidden from the `/writing` filter bar until something is published there.
+- MDX content. `@astrojs/mdx` is installed and the loaders accept `.mdx`, but no
+  `.mdx` file exists yet. The slug bug that would have 404'd them is fixed.
 - Pagination. `POSTS_PER_PAGE` exists as a constant but nothing reads it.
 
 **Known issues:**
-- **`.mdx` posts will 404.** `[slug].astro`'s `getStaticPaths()` uses a literal
-  `.replace('.md','')` while `getPostUrl()` uses `/\.(md|mdx)$/`, so `x.mdx` builds at
-  `/c/xx` but links to `/c/x`. Details in `context/content-pipeline.md`.
-- **Drafts leak into RSS.** `src/pages/rss.xml.js` calls `getCollection()` directly and
-  never filters `draft: true`; `[slug].astro` also builds a live page for every draft.
+- ~~`.mdx` posts will 404.~~ **Fixed.** `getPostSlug()` in `src/lib/blog.ts` is now
+  the single source of truth; `getStaticPaths()` and every link builder go through it.
+- ~~Drafts leak into RSS.~~ **Fixed.** `rss.xml.js` goes through `getAllPosts()` /
+  `getAllNotes()`, and `[slug].astro` filters drafts out of `getStaticPaths()`.
 - **`CodeBlock.tsx` is dead code** — no file imports it, so the copy-to-clipboard button
   has never shipped. The only hydrated island on the site is `<Comments client:load />`.
-- **Syntax highlighting is a light theme on a dark site.** `astro.config.mjs` pins
-  Shiki to `github-light`, baked in at build time.
-- **Most of `src/constants/index.ts` is unread.** `POSTS_PER_PAGE`, `FEATURED_POSTS_LIMIT`,
-  `COLLECTIONS`, `THEME_COLORS`, `BREAKPOINTS` and `SOCIAL_LINKS` have no consumers;
-  `getFeaturedPosts()` hardcodes its own limit of 3.
-- **Two lockfiles.** Development uses pnpm; `.deploy.sh` runs `npm ci` against the older
-  `package-lock.json`.
+  Left in place deliberately; deleting it is a call for the owner, not a cleanup.
+- ~~Syntax highlighting is a light theme on a dark site.~~ **Fixed.** Shiki now emits
+  both Catppuccin themes as CSS variables and `global.css` selects on `data-theme`.
+- **Empty-collection build noise.** Astro logs "The collection \"share\" does not
+  exist or is empty" on every page that calls `getAllPosts()`. Harmless, non-fatal,
+  and it goes away as soon as a `share` post exists.
+- **`featured: true` on a post currently does nothing.** The personal-site transition
+  removed the Featured sections from `/`, `/blog` and `/about`, and nothing else calls
+  `getFeaturedPosts()`. Five posts carry the flag. Either give featured posts a surface
+  again or stop setting it — see `context/content-pipeline.md`.
+- **Most of `src/constants/index.ts` is unread.** `POSTS_PER_PAGE`, `COLLECTIONS`,
+  `THEME_COLORS`, `BREAKPOINTS` and `SOCIAL_LINKS` have no consumers.
+  `FEATURED_POSTS_LIMIT` is read by `getFeaturedPosts()`, which itself has no callers.
+- ~~Two lockfiles.~~ **Fixed.** The npm lockfile is gone; `pnpm-lock.yaml` is the only
+  lockfile and `.deploy.sh` installs from it with `--frozen-lockfile`.
+- **The deploy host throttles rapid SSH connections** and resets them mid-handshake
+  (`kex_exchange_identification: read: Connection reset by peer`). Retrying succeeds.
 - **Stale docs in the repo.** Root `README.md` describes a Tailwind JS config, a functions
   directory, a scripts directory, port 3000 and Netlify deployment — none of which exist.
   Root `AGENTS.md` says Astro 5.x. `.prettierrc` points at a misspelled stylesheet
@@ -84,6 +103,7 @@ Load the relevant file based on the current task. Always load `context/architect
 | Setting up or running the project | `context/setup.md` |
 | Posts, collections, slugs, RSS, `src/lib/blog.ts` | `context/content-pipeline.md` |
 | Colours, Tailwind tokens, `data-theme`, dark mode | `context/theming.md` |
+| Navigation, homepage, `/now`, `/projects`, `/writing`, `/notes`, site IA | `context/personal-site-transition.md` |
 | Any specific task | Check `patterns/INDEX.md` for a matching pattern |
 
 ## Code Graph Caveat

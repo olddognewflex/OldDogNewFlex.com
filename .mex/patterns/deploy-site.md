@@ -16,7 +16,7 @@ edges:
   - target: patterns/debug-build-routing.md
     condition: when the build is failing rather than the transfer
 grounds_to: []
-last_updated: 2026-08-10
+last_updated: 2026-09-21
 ---
 
 # Deploy the Site
@@ -27,16 +27,18 @@ There is no CI. `.github/` is empty, nothing runs on push, and nothing runs on m
 `.deploy.sh` executed from a developer's laptop **is** the deployment pipeline.
 
 What it does, in order:
-1. Checks `ssh`, `rsync`, `npm`, `node` are on PATH
+1. Checks `ssh`, `rsync`, `pnpm`, `node` are on PATH
 2. Logs a `NODE_VERSION` read from `.nvmrc` — **which does not exist in this repo** — and
    silently falls back to `node -v`. It is logged only; nothing enforces it.
-3. `npm ci` — note: **npm and `package-lock.json`**, while local development uses pnpm and
-   `pnpm-lock.yaml`. The deploy can install a different dependency set than you tested.
-4. `npm run build` (the script's own npm invocation) producing `dist/`
-5. `rsync -az --delete dist/ box.thedanielfactor.com:/home/user-data/www/olddognewflex.com/`
+3. A pnpm install with `--frozen-lockfile` (and `CI=true`) — the same lockfile you
+   develop against
+4. `pnpm build`, producing `dist/`
+5. `rsync -az --delete --delete-excluded --exclude='.DS_Store' --exclude='*.afphoto'
+   dist/ box.thedanielfactor.com:/home/user-data/www/olddognewflex.com/`
 
 The `--delete` is the dangerous part: anything on the server not present in `dist/` is
-removed. There are no timestamped releases and no previous version kept on the box.
+removed, and `--delete-excluded` also removes any excluded file already on the server.
+There are no timestamped releases and no previous version kept on the box.
 **The only rollback is to check out an older commit, rebuild, and deploy again.**
 
 ## Steps
@@ -56,16 +58,19 @@ removed. There are no timestamped releases and no previous version kept on the b
 ## Gotchas
 
 - **`--delete` with an incomplete `dist/` wipes production.** If step 4 of the script
-  (`npm run build`) partially fails but the script continues, rsync happily mirrors the
+  (`pnpm build`) partially fails but the script continues, rsync happily mirrors the
   gap. This is why the dry run is not optional.
-- **`npm ci` needs `package-lock.json` to be current.** It is the older of the two
-  lockfiles in the repo. If `npm ci` fails or installs unexpected versions, that is the
-  cause — refresh the npm lockfile or convert the script to
-  pnpm with a frozen lockfile, and record the change in `context/decisions.md`.
-- **Host, user, path and key are hardcoded** in `.deploy.sh`. It needs
-  `~/.ssh/miab_deploy_key` with correct permissions. The script sets `SSH_PORT` and
-  `SSH_USER` variables but the actual `rsync -e "ssh "` invocation uses neither — it
-  relies on your SSH config.
+- **pnpm 11 blocks unapproved install scripts.** Installing fails with
+  `ERR_PNPM_IGNORED_BUILDS` if a dependency's install script is not listed under
+  `allowBuilds` in `pnpm-workspace.yaml`. esbuild is approved there; a new dependency that
+  needs one stops the deploy until it is added.
+- **The host throttles rapid SSH connections.** Several connections in quick succession
+  get `kex_exchange_identification: read: Connection reset by peer`. Wait and retry — it
+  is not an authentication failure.
+- **Host and path are hardcoded** in `.deploy.sh`. The script also sets `SSH_USER`,
+  `SSH_PORT` and `SSH_KEY=~/.ssh/miab_deploy_key`, but the `rsync -e "ssh "` invocation
+  uses none of them — it relies on your ssh config and agent. The key file does not need
+  to exist, and currently does not.
 - **No staging environment exists.** `pnpm preview` against local `dist/` is the closest
   thing to a pre-production check.
 - **Deploying does not tag or record anything.** Correlate a deploy to a commit yourself.
@@ -84,8 +89,10 @@ removed. There are no timestamped releases and no previous version kept on the b
 
 ## Debug
 
-**`Missing tool: X`** — `ssh`/`rsync`/`npm`/`node` not on PATH for this shell.
-**`npm ci` fails** — lockfile drift between npm and pnpm; see the gotcha above.
+**`Missing tool: X`** — `ssh`/`rsync`/`pnpm`/`node` not on PATH for this shell.
+**`ERR_PNPM_IGNORED_BUILDS`** — approve the dependency under `allowBuilds` in
+`pnpm-workspace.yaml`; see the gotcha above.
+**`Connection reset by peer` during the sync** — host-side throttling; retry.
 **Build fails during deploy** — stop; fix locally with `patterns/debug-build-routing.md`
 and start over. Do not rsync a partial `dist/`.
 **rsync permission denied** — the deploy key's permissions or the server-side path

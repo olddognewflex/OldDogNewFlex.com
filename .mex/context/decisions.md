@@ -23,12 +23,41 @@ edges:
 grounds_to:
   - node: "function:e4b52ddeda60b29f9fc19bbb5520847c"
     fingerprint: "mh:64:7b226d696e68617368223a5b3231373836303036362c3130353931373734352c3333323834383336312c3133373137323931372c34373830363431312c33303133353032342c3130303137383737392c35303232353939342c3132343734393131312c32333232373733322c31373931303839362c3138323838363835372c36303336323334302c373735353530302c3331303338333730392c323038323932322c3231343535353238372c3135383430353935342c36363939323630362c3138303335343938322c39353435343335342c3136333739353239322c3133373832313233342c363736383239302c3135333330393631332c3135303135313137312c34313937323036332c3439393732353331362c3333333535363632302c3130313933303030352c33363737343630322c3331343438373436392c32393338393836312c3130383633383538372c3236303137313032382c313934333631382c3230333234303239382c34373936323638392c36393830333139372c35303036303435312c3138383234373531312c3237373537373335362c36303030303437352c39343334303633382c39373531363434342c39383639303032362c32333535343436372c36333334393834332c37383937323536352c3135353032363532342c3132383134363431332c35333536323533322c3535383838392c38323434343230362c38363439353230312c33353733343434372c36353435333637382c3339393634333130332c3135393739323234342c3130383433353031322c3130343031363033332c393134333130362c3330353737383239372c39383130393938375d2c226e65696768626f7273223a5b2266756e6374696f6e3a6162353961656433393836636137363661336264323636313066626663613335225d2c22746f6b656e436f756e74223a34307d"
-last_updated: 2026-08-10
+last_updated: 2026-09-21
 ---
 
 # Decisions
 
 ## Decision Log
+
+### Deploy from the pnpm lockfile
+**Date:** 2026-09-20
+**Status:** Active
+**Decision:** Delete the npm lockfile. `.deploy.sh` installs with pnpm using
+`--frozen-lockfile`, then runs `pnpm build`. Record esbuild's install script under
+`allowBuilds` in `pnpm-workspace.yaml`. Exclude `.DS_Store` and `*.afphoto` from the sync
+with `--delete-excluded`.
+**Reasoning:** The npm lockfile still pinned astro 5.16.9 after the move to Astro 7, so
+every deploy would have built the site on the wrong major. pnpm 11 aborts
+non-interactively on unapproved install scripts, which would have failed the deploy
+outright. A 7.1MB Affinity Photo source had been published to the web root since March.
+**Alternatives considered:** Regenerating the npm lockfile to match (rejected — two
+lockfiles was the thing that drifted in the first place).
+**Consequences:** pnpm is required on the deploying machine. A new dependency with an
+install script needs an `allowBuilds` entry before the next deploy.
+
+### Evolve the blog into a personal site
+**Date:** 2026-09-20
+**Status:** Active
+**Decision:** Add `projects` and `notes` collections and `/now`, `/projects`, `/writing`
+and `/notes` routes; cut the primary nav to five items; redirect `/blog` to `/writing`.
+Keep every existing post URL unchanged.
+**Reasoning:** The site's purpose outgrew "blog". Projects and short notes needed a home
+that did not require writing an essay to use.
+**Alternatives considered:** Nesting posts under `/writing/<lens>/<slug>` (rejected —
+eight redirects for no benefit).
+**Consequences:** See `context/personal-site-transition.md`. `featured` on posts lost its
+only surface and currently does nothing.
 
 ### Upgrade to Astro 7 and switch the lockfile to pnpm
 **Date:** 2026-07-14
@@ -44,7 +73,8 @@ likely to be wrong).
 **Consequences:** Astro 5 documentation and the repo's own root `AGENTS.md` are now
 wrong about the version. `package-lock.json` was left in the tree while `.deploy.sh`
 still runs `npm ci`, so the deploy path installs from the *older* lockfile. Reconcile
-this before trusting a production build.
+this before trusting a production build. *Resolved 2026-09-20 — see "Deploy from the
+pnpm lockfile" above.*
 
 ### Configure Tailwind in CSS, delete the JS config
 **Date:** 2026-03-23
@@ -97,9 +127,11 @@ category silently produces an empty comment box with no build error.
 ### Deploy by rsync over SSH rather than a hosting platform
 **Date:** 2026-03-22
 **Status:** Active
-**Decision:** `.deploy.sh` runs `npm ci && npm run build` then
-`rsync -az --delete dist/ box.thedanielfactor.com:/home/user-data/www/olddognewflex.com/`,
-authenticating with `~/.ssh/miab_deploy_key`.
+**Decision:** `.deploy.sh` installs and builds, then
+`rsync -az --delete dist/ box.thedanielfactor.com:/home/user-data/www/olddognewflex.com/`.
+The install step moved from npm to pnpm on 2026-09-20 (see above). The script declares
+`SSH_KEY=~/.ssh/miab_deploy_key`, but nothing uses it and the file does not exist; the sync
+authenticates through the user's ssh config.
 **Reasoning:** The site already shares a self-hosted mail-in-a-box server; static files
 cost nothing extra there.
 **Alternatives considered:** Netlify — it was set up first and its badge is still in

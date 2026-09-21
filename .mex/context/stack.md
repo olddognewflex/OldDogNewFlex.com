@@ -21,7 +21,7 @@ edges:
   - target: patterns/INDEX.md
     condition: when the library question is really "how do I do X here" — a pattern may answer it
 grounds_to: []
-last_updated: 2026-08-10
+last_updated: 2026-09-21
 ---
 
 # Stack
@@ -86,8 +86,11 @@ last_updated: 2026-08-10
   consult Astro 7 docs, since content-collection APIs moved between majors.
 - **Tailwind v4, not v3.** No `@tailwind base/components/utilities` directives, no
   `theme.extend`. It is `@import "tailwindcss"`, `@plugin "..."`, and `@theme { }`.
-- **Two lockfiles are checked in** (`pnpm-lock.yaml` and `package-lock.json`). `pnpm` is
-  the live one; `.deploy.sh` still runs `npm ci` against the npm lockfile. Do not
-  regenerate either casually — they can drift apart and the deploy uses the stale one.
+- **pnpm is the only package manager.** `pnpm-lock.yaml` is the sole lockfile —
+  `package-lock.json` was deleted because `.deploy.sh` used to `npm ci` from it while it
+  still pinned Astro 5. Do not reintroduce npm. pnpm 11 also refuses to run unapproved
+  dependency install scripts: approvals live under `allowBuilds` in `pnpm-workspace.yaml`,
+  and a new dependency that needs one makes pnpm's install step fail with
+  `ERR_PNPM_IGNORED_BUILDS` until it is added.
 - **`@astrojs/markdown-satteri` is installed but unreferenced.** `astro.config.mjs`
   configures Shiki via `markdown.shikiConfig`. Do not assume it is active.

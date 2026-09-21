@@ -1,21 +1,23 @@
 ---
 name: agents
 description: Always-loaded project anchor. Read this first. Contains project identity, non-negotiables, commands, and pointer to ROUTER.md for full context.
-last_updated: 2026-08-10
+last_updated: 2026-09-21
 ---
 
 # Old Dog New Flex
 
 ## What This Is
 
-A statically built Astro 7 blog (`olddognewflex.com`) that renders markdown posts from
-three content collections into HTML, with a four-flavour Catppuccin theme and GitHub
-Discussions comments.
+A statically built Astro 7 personal site (`olddognewflex.com`) — projects, a `/now`
+page, and writing — rendered from five markdown content collections into HTML, with a
+four-flavour Catppuccin theme and GitHub Discussions comments.
 
 ## Non-Negotiables
 
-- **Never derive a post URL by hand** — use `getPostUrl()` from `src/lib/blog.ts`. Three
-  slug derivations already exist and they disagree on `.mdx`.
+- **Never derive a slug or URL by hand** — use `getPostSlug()` / `getPostUrl()` /
+  `getNoteUrl()` from `src/lib/blog.ts`, or `getProjectSlug()` / `getProjectUrl()` from
+  `src/lib/projects.ts`. Hand-rolled derivations are how `.mdx` posts used to build at one
+  path and get linked at another.
 - **Never add a React component for static markup.** `.astro` is the default; `.tsx` needs
   browser state or a browser API, and every usage needs a `client:*` directive.
 - **Never hardcode a colour.** All colours come from the `--color-*` tokens in the
